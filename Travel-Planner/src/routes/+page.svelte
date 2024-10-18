@@ -7,18 +7,12 @@
 		getMap: () => map
 	});
 
-	// Define the structure of the temperature data using an interface
-	interface TemperatureData {
-		code: string;
-		temp: number;
-	}
-
 	let map: Map;
-	let temperatureData: TemperatureData[] = [];
+	let temperatureData = [];
 
 	// Load JSON file with temperature data
 	async function loadTemperatureData() {
-		const response = await fetch('/average_temp.json'); // Adjust path if necessary
+		const response = await fetch('/average_temp.json');
 		if (response.ok) {
 			temperatureData = await response.json();
 		} else {
@@ -26,45 +20,47 @@
 		}
 	}
 
-	// Function to map temperature to a color
-	function getColorByTemperature(temp: number): string {
-		if (temp > 30) {
-			return '#FF4500'; // Deep red for hot temperatures
-		} else if (temp > 15) {
-			return '#FFA500'; // Orange for warm temperatures
-		} else if (temp > 0) {
-			return '#FFFFE0'; // Light yellow/white for mild temperatures
+	// Function to map temperature to a gradient color based on thresholds
+	function getGradientColorByTemperature(temp: number): string {
+		if (temp > 15) {
+			const hue = 60 - ((temp - 15) / (30 - 15)) * 60;
+			return `hsl(${hue}, 100%, 50%)`;
 		} else {
-			return '#1E90FF'; // Deep blue for cold temperatures
+			if (temp >= 0) {
+				const lightness = 100 - (temp / 15) * 50;
+				return `hsl(180, 100%, ${lightness}%)`;
+			} else {
+				const lightness = 50 + (-temp / 30) * 50;
+				return `hsl(240, 100%, ${lightness}%)`;
+			}
 		}
 	}
 
 	// Initialize Mapbox map
+	//first load the temp data and then the click layer on top so it is always the last layer
 	async function initMap(container: HTMLDivElement) {
-		// First, load the temperature data
 		await loadTemperatureData();
 
 		map = new mapboxgl.Map({
 			container: container,
-			style: 'mapbox://styles/mapbox/dark-v10', // You can choose any style you prefer
-			center: [-103.5917, 40.6699], // Adjust this center as needed
-			zoom: 2,
+			style: 'mapbox://styles/mapbox/light-v10',
+			center: [0, 20],
+			zoom: 1.5,
 			projection: 'globe'
 		});
 
 		map.on('load', () => {
-			// Add the country boundaries source (Mapbox's country boundaries dataset)
 			map.addSource('countries', {
-				type: 'vector',
-				url: 'mapbox://mapbox.country-boundaries-v1'
+				type: 'geojson',
+				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			});
 
-			// Build the match expression to map temperature data to colors
-			const matchExpression: (string | number)[] = ['match', ['get', 'iso_3166_1_alpha_3'] as any];
+			// Build the match expression to map temperature data to gradient colors
+			const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
 
-			// Loop over the temperature data and map each country to its color
+			// Loop over the temperature data and map each country to its gradient color
 			for (const row of temperatureData) {
-				const color = getColorByTemperature(row.temp); // Get color based on temperature range
+				const color = getGradientColorByTemperature(row.temp); // Get gradient color based on temperature
 				matchExpression.push(row.code, color);
 			}
 
@@ -73,19 +69,38 @@
 
 			// Add a fill layer to color countries based on the temperature
 			map.addLayer({
-				id: 'countries-fill',
+				id: 'country-fills',
 				type: 'fill',
 				source: 'countries',
-				'source-layer': 'country_boundaries',
+				layout: {},
 				paint: {
-					'fill-color': matchExpression as any, // Cast to any to satisfy TypeScript's requirements
+					'fill-color': matchExpression as any,
 					'fill-opacity': 0.75
+				}
+			});
+
+			// Add the clickable country border layer last so it's on top
+			map.addLayer({
+				id: 'country-borders',
+				type: 'line',
+				source: 'countries',
+				paint: {
+					'line-color': '#ffffff',
+					'line-width': 1
+				}
+			});
+
+			// Click event to log and show alert
+			map.on('click', 'country-fills', (e) => {
+				if (e.features.length > 0) {
+					const country = e.features[0];
+					console.log(`Clicked on country: ${country.properties.ADMIN}`);
+					alert(`You clicked on ${country.properties.ADMIN}`);
 				}
 			});
 		});
 	}
 
-	// Clean up the map on destroy
 	onDestroy(() => {
 		if (map) map.remove();
 	});

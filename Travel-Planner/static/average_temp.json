@@ -1,0 +1,46 @@
+[
+    {
+        "code": "USA",
+        "temp": -2
+    },
+    {
+        "code": "CAN",
+        "temp": -10
+    },
+    {
+        "code": "BRA",
+        "temp": 27
+    },
+    {
+        "code": "RUS",
+        "temp": -15
+    },
+    {
+        "code": "AUS",
+        "temp": 25
+    },
+    {
+        "code": "ZAF",
+        "temp": 20
+    },
+    {
+        "code": "IND",
+        "temp": 15
+    },
+    {
+        "code": "EGY",
+        "temp": 18
+    },
+    {
+        "code": "CHN",
+        "temp": 2
+    },
+    {
+        "code": "DEU",
+        "temp": 0
+    },
+    {
+        "code": "JPN",
+        "temp": 5
+    }
+]

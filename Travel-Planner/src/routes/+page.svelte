@@ -8,13 +8,14 @@
 	});
 
 	let map: Map;
-	let temperatureData = [];
+	let temperatureData: String[] = [];
 
 	// Load JSON file with temperature data
 	async function loadTemperatureData() {
 		const response = await fetch('/average_temp.json');
 		if (response.ok) {
 			temperatureData = await response.json();
+			temperatureData = [...new Set(temperatureData)];
 		} else {
 			console.error('Failed to load temperature data.');
 		}

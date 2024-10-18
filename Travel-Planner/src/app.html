@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
 
 	%sveltekit.head%
 </head>
@@ -17,6 +18,11 @@
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
+	}
+
+	.mapboxgl-ctrl-logo,
+	.mapboxgl-ctrl-attrib-inner {
+		display: none !important;
 	}
 </style>
 

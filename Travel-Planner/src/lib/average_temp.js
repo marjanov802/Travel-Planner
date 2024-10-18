@@ -1,15 +1,47 @@
-[
+export const averageTemps = [
     {
-        "code": "GRL",
-        "temp": -18.62
+        "code": "USA",
+        "temp": -2
     },
     {
         "code": "CAN",
-        "temp": -4.22
+        "temp": -10
+    },
+    {
+        "code": "BRA",
+        "temp": 27
     },
     {
         "code": "RUS",
-        "temp": -2.87
+        "temp": -15
+    },
+    {
+        "code": "AUS",
+        "temp": 25
+    },
+    {
+        "code": "ZAF",
+        "temp": 20
+    },
+    {
+        "code": "IND",
+        "temp": 15
+    },
+    {
+        "code": "EGY",
+        "temp": 18
+    },
+    {
+        "code": "CHN",
+        "temp": 2
+    },
+    {
+        "code": "DEU",
+        "temp": 0
+    },
+    {
+        "code": "GRL",
+        "temp": -18.62
     },
     {
         "code": "MNG",
@@ -480,6 +512,10 @@
         "temp": 24.71
     },
     {
+        "code": "HND",
+        "temp": 24.71
+    },
+    {
         "code": "COL",
         "temp": 24.71
     },
@@ -518,6 +554,10 @@
     {
         "code": "HTI",
         "temp": 25.01
+    },
+    {
+        "code": "COG",
+        "temp": 25.05
     },
     {
         "code": "TON",
@@ -810,5 +850,9 @@
     {
         "code": "BFA",
         "temp": 29.28
+    },
+    {
+        "code": "JPN",
+        "temp": 5
     }
 ]

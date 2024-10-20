@@ -38,3 +38,6 @@ However a issue here is i dont want to hard code all the countries for each mont
 I am currently looking into using an api to request data such as temperature by month for countries and then using the apu data to colour coordinate the map.
 API makes it complicated as no service has the specific data that i need and that can be accessed through a api.
 Have moved onto using a json or csv file to store the data and then call it in the code
+
+20/10/2024 - To create the nav bar i will use a UI library in conjunction with my code
+Currently i am thinking of using tailwind due to its oop design meaning i could create a class and reuse it throughout the website by calling it

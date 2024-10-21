@@ -105,9 +105,21 @@
 	onDestroy(() => {
 		if (map) map.remove();
 	});
+
+	import { Datepicker, P } from 'flowbite-svelte';
+	let dateRange = { from: null, to: null };
 </script>
 
-<div use:initMap></div>
+<div use:initMap />
+
+<div class="mb-64 md:w-1/2 absolute z-10 top-1 left-0">
+	<Datepicker range bind:rangeFrom={dateRange.from} bind:rangeTo={dateRange.to} />
+	<p class="mt-4">
+		Selected range:
+		{dateRange.from ? dateRange.from.toLocaleDateString() : 'None'} -
+		{dateRange.to ? dateRange.to.toLocaleDateString() : 'None'}
+	</p>
+</div>
 
 <style>
 	* {

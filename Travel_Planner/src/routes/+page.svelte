@@ -8,17 +8,29 @@
 	});
 
 	let map: Map;
-	let temperatureData: String[] = [];
+	let temperatureData: any[] = [];
 
-	// Load JSON file with temperature data
-	async function loadTemperatureData() {
-		const response = await fetch('/average_temp.json');
+	// Function to load JSON file with temperature data dynamically based on the selected month
+	async function loadTemperatureData(filePath: string) {
+		const response = await fetch(filePath);
 		if (response.ok) {
 			temperatureData = await response.json();
-			temperatureData = [...new Set(temperatureData)];
+			temperatureData = [...new Set(temperatureData)]; // Remove duplicates
+			updateMapWithTemperatureData();
 		} else {
-			console.error('Failed to load temperature data.');
+			console.error('Failed to load temperature data from ' + filePath);
 		}
+	}
+
+	// Function to handle the month selection and load the appropriate dataset
+	function selectMonth(month: string) {
+		let filePath = '';
+		if (month === 'January') {
+			filePath = '/average_temp.json'; // Path for January dataset
+		} else if (month === 'July') {
+			filePath = '/test_temp.json'; // Path for July dataset
+		}
+		loadTemperatureData(filePath); // Load the selected dataset
 	}
 
 	// Function to map temperature to a gradient color based on thresholds
@@ -38,10 +50,7 @@
 	}
 
 	// Initialize Mapbox map
-	//first load the temp data and then the click layer on top so it is always the last layer
 	async function initMap(container: HTMLDivElement) {
-		await loadTemperatureData();
-
 		map = new mapboxgl.Map({
 			container: container,
 			style: 'mapbox://styles/mapbox/light-v10',
@@ -56,19 +65,28 @@
 				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			});
 
-			// Build the match expression to map temperature data to gradient colors
-			const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
+			// Initially update map with the default data (no color coding until a dataset is selected)
+			updateMapWithTemperatureData();
+		});
+	}
 
-			// Loop over the temperature data and map each country to its gradient color
-			for (const row of temperatureData) {
-				const color = getGradientColorByTemperature(row.temp); // Get gradient color based on temperature
-				matchExpression.push(row.code, color);
-			}
+	// Function to update the map colors with the loaded temperature data
+	function updateMapWithTemperatureData() {
+		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
 
-			// Default color for countries with no data
-			matchExpression.push('rgba(0, 0, 0, 0)');
+		// Loop over the temperature data and map each country to its gradient color
+		for (const row of temperatureData) {
+			const color = getGradientColorByTemperature(row.temp); // Get gradient color based on temperature
+			matchExpression.push(row.code, color);
+		}
 
-			// Add a fill layer to color countries based on the temperature
+		// Default color for countries with no data
+		matchExpression.push('rgba(0, 0, 0, 0)');
+
+		// If the layer already exists, update it; otherwise, add the layer
+		if (map.getLayer('country-fills')) {
+			map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
+		} else {
 			map.addLayer({
 				id: 'country-fills',
 				type: 'fill',
@@ -80,7 +98,6 @@
 				}
 			});
 
-			// Add the clickable country border layer last so it's on top
 			map.addLayer({
 				id: 'country-borders',
 				type: 'line',
@@ -90,35 +107,22 @@
 					'line-width': 1
 				}
 			});
-
-			// Click event to log and show alert
-			map.on('click', 'country-fills', (e) => {
-				if (e.features.length > 0) {
-					const country = e.features[0];
-					console.log(`Clicked on country: ${country.properties.ADMIN}`);
-					alert(`You clicked on ${country.properties.ADMIN}`);
-				}
-			});
-		});
+		}
 	}
 
+	// Cleanup map on destroy
 	onDestroy(() => {
 		if (map) map.remove();
 	});
-
-	import { Datepicker, P } from 'flowbite-svelte';
-	let dateRange = { from: null, to: null };
 </script>
 
-<div use:initMap />
-
-<div class="mb-64 md:w-1/2 absolute z-10 top-1 left-0">
-	<Datepicker range bind:rangeFrom={dateRange.from} bind:rangeTo={dateRange.to} />
-	<p class="mt-4">
-		Selected range:
-		{dateRange.from ? dateRange.from.toLocaleDateString() : 'None'} -
-		{dateRange.to ? dateRange.to.toLocaleDateString() : 'None'}
-	</p>
+<!-- Main Content -->
+<div use:initMap>
+	<!-- Buttons to select month (January and July) -->
+	<div class="buttons-container">
+		<button class="btn btn-primary" on:click={() => selectMonth('January')}> January </button>
+		<button class="btn btn-primary" on:click={() => selectMonth('July')}> July </button>
+	</div>
 </div>
 
 <style>
@@ -132,5 +136,29 @@
 	:global(.mapboxgl-canvas-container) {
 		width: 100vw;
 		height: 100vh;
+	}
+
+	.buttons-container {
+		display: flex;
+		gap: 10px;
+		z-index: 1000;
+	}
+
+	.btn {
+		padding: 10px 20px;
+		background-color: #4f46e5;
+		color: white;
+		font-weight: bold;
+		border-radius: 8px;
+		cursor: pointer;
+	}
+
+	.btn-primary {
+		background-color: #1f2937;
+		color: white;
+	}
+
+	.btn-primary:hover {
+		background-color: #4f46e5;
 	}
 </style>

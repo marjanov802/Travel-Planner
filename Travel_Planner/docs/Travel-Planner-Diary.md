@@ -41,3 +41,8 @@ Have moved onto using a json or csv file to store the data and then call it in t
 
 20/10/2024 - To create the nav bar i will use a UI library in conjunction with my code
 Currently i am thinking of using tailwind due to its oop design meaning i could create a class and reuse it throughout the website by calling it
+
+23/10/2024 - Nav bar scrapped for now , need to get functionality working
+Best sites or applications focus on UI not UX so lets get the interaction good
+Created some reusable functions and the month selector to switch files also works.
+Now am going to create a drop down for things such as rain , temp and danger so different data is loaded in that reguard onto the map.

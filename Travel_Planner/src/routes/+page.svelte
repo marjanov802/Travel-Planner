@@ -8,44 +8,68 @@
 	});
 
 	let map: Map;
-	let temperatureData: any[] = [];
+	let countryRecommendationData = []; // To store country recommendation data
 
-	// Function to load JSON file with temperature data dynamically based on the selected month
-	async function loadTemperatureData(filePath: string) {
-		const response = await fetch(filePath);
-		if (response.ok) {
-			temperatureData = await response.json();
-			temperatureData = [...new Set(temperatureData)]; // Remove duplicates
-			updateMapWithTemperatureData();
-		} else {
-			console.error('Failed to load temperature data from ' + filePath);
-		}
-	}
-
-	// Function to handle the month selection and load the appropriate dataset
-	function selectMonth(month: string) {
-		let filePath = '';
-		if (month === 'January') {
-			filePath = '/average_temp.json'; // Path for January dataset
-		} else if (month === 'July') {
-			filePath = '/test_temp.json'; // Path for July dataset
-		}
-		loadTemperatureData(filePath); // Load the selected dataset
-	}
-
-	// Function to map temperature to a gradient color based on thresholds
-	function getGradientColorByTemperature(temp: number): string {
-		if (temp > 15) {
-			const hue = 60 - ((temp - 15) / (30 - 15)) * 60;
-			return `hsl(${hue}, 100%, 50%)`;
-		} else {
-			if (temp >= 0) {
-				const lightness = 100 - (temp / 15) * 50;
-				return `hsl(180, 100%, ${lightness}%)`;
+	// Load JSON file based on selected month
+	async function loadRecommendationData(month: string) {
+		try {
+			// Path to the file for the selected month (you can change this to match your structure)
+			const response = await fetch(`/recommendations/${month.toLowerCase()}_recommendations.json`);
+			if (response.ok) {
+				const data = await response.json();
+				countryRecommendationData = [...new Set(data)];
+				applyRecommendationDataToGlobe(countryRecommendationData);
 			} else {
-				const lightness = 50 + (-temp / 30) * 50;
-				return `hsl(240, 100%, ${lightness}%)`;
+				console.error(`Failed to load recommendation data for ${month}`);
 			}
+		} catch (error) {
+			console.error('Error fetching recommendation data:', error);
+		}
+	}
+
+	// Function to map recommendation data to the globe using colors
+	function applyRecommendationDataToGlobe(data: any[]) {
+		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
+
+		// Loop over the data and map each country to its gradient color based on the recommendation value
+		for (const row of data) {
+			const color = getColorForRecommendation(row.value); // Calculate the color based on the recommendation value
+			matchExpression.push(row.code, color); // Match country code to color
+		}
+
+		// Default color for countries with no data
+		matchExpression.push('rgba(0, 0, 0, 0)');
+
+		// Update the map layer with the new color data
+		if (map.getLayer('country-fills')) {
+			map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
+		} else {
+			map.addLayer({
+				id: 'country-fills',
+				type: 'fill',
+				source: 'countries',
+				layout: {},
+				paint: {
+					'fill-color': matchExpression as any,
+					'fill-opacity': 0.75
+				}
+			});
+		}
+	}
+
+	// Function to calculate color based on recommendation value
+	function getColorForRecommendation(value: number): string {
+		// Shades of green: stronger green for higher recommendation
+		const hue = 120; // Green color
+		const lightness = 100 - Math.min(value * 10, 100); // Darker green for higher values
+		return `hsl(${hue}, 100%, ${lightness}%)`;
+	}
+
+	// Handle month selection from the dropdown and load the appropriate dataset
+	function handleMonthSelection(event: Event) {
+		const selectedMonth = (event.target as HTMLSelectElement).value;
+		if (selectedMonth !== 'none') {
+			loadRecommendationData(selectedMonth); // Load the appropriate recommendation data for the selected month
 		}
 	}
 
@@ -64,53 +88,9 @@
 				type: 'geojson',
 				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			});
-
-			// Initially update map with the default data (no color coding until a dataset is selected)
-			updateMapWithTemperatureData();
 		});
 	}
 
-	// Function to update the map colors with the loaded temperature data
-	function updateMapWithTemperatureData() {
-		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
-
-		// Loop over the temperature data and map each country to its gradient color
-		for (const row of temperatureData) {
-			const color = getGradientColorByTemperature(row.temp); // Get gradient color based on temperature
-			matchExpression.push(row.code, color);
-		}
-
-		// Default color for countries with no data
-		matchExpression.push('rgba(0, 0, 0, 0)');
-
-		// If the layer already exists, update it; otherwise, add the layer
-		if (map.getLayer('country-fills')) {
-			map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
-		} else {
-			map.addLayer({
-				id: 'country-fills',
-				type: 'fill',
-				source: 'countries',
-				layout: {},
-				paint: {
-					'fill-color': matchExpression as any,
-					'fill-opacity': 0.75
-				}
-			});
-
-			map.addLayer({
-				id: 'country-borders',
-				type: 'line',
-				source: 'countries',
-				paint: {
-					'line-color': '#ffffff',
-					'line-width': 1
-				}
-			});
-		}
-	}
-
-	// Cleanup map on destroy
 	onDestroy(() => {
 		if (map) map.remove();
 	});
@@ -118,10 +98,24 @@
 
 <!-- Main Content -->
 <div use:initMap>
-	<!-- Buttons to select month (January and July) -->
-	<div class="buttons-container">
-		<button class="btn btn-primary" on:click={() => selectMonth('January')}> January </button>
-		<button class="btn btn-primary" on:click={() => selectMonth('July')}> July </button>
+	<!-- Dropdown for selecting a month -->
+	<div class="dropdown-container">
+		<label for="monthDropdown">Select a Month:</label>
+		<select id="monthDropdown" on:change={handleMonthSelection}>
+			<option value="none" disabled selected>Select a Month</option>
+			<option value="January">January</option>
+			<option value="February">February</option>
+			<option value="March">March</option>
+			<option value="April">April</option>
+			<option value="May">May</option>
+			<option value="June">June</option>
+			<option value="July">July</option>
+			<option value="August">August</option>
+			<option value="September">September</option>
+			<option value="October">October</option>
+			<option value="November">November</option>
+			<option value="December">December</option>
+		</select>
 	</div>
 </div>
 
@@ -138,27 +132,21 @@
 		height: 100vh;
 	}
 
-	.buttons-container {
-		display: flex;
-		gap: 10px;
+	.dropdown-container {
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		background-color: white;
+		padding: 10px;
+		border-radius: 5px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		z-index: 1000;
+		height: 10vh;
 	}
-
-	.btn {
-		padding: 10px 20px;
-		background-color: #4f46e5;
-		color: white;
-		font-weight: bold;
-		border-radius: 8px;
-		cursor: pointer;
-	}
-
-	.btn-primary {
-		background-color: #1f2937;
-		color: white;
-	}
-
-	.btn-primary:hover {
-		background-color: #4f46e5;
+	select {
+		height: 10vh;
+		padding: 5px;
+		border-radius: 4px;
+		border: 1px solid #ccc;
 	}
 </style>

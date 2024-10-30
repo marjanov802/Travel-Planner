@@ -46,3 +46,5 @@ Currently i am thinking of using tailwind due to its oop design meaning i could 
 Best sites or applications focus on UI not UX so lets get the interaction good
 Created some reusable functions and the month selector to switch files also works.
 Now am going to create a drop down for things such as rain , temp and danger so different data is loaded in that reguard onto the map.
+
+Data of how many tourists enter and exit countries every month does not exist online through my research so i will either have to create my own recommendation data by personal experience or create a algorithm that will use other factors to decide whether the country would be recommended to visit or not during that month.

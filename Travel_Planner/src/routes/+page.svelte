@@ -35,6 +35,7 @@
 			const response = await fetch(`/${filter}/${month.toLowerCase()}_${filter}.json`);
 			if (response.ok) {
 				const data = await response.json();
+				console.log('Filter Data:', data); // Check if data is loaded correctly
 				applyFilterDataToGlobe(data, filter);
 			} else {
 				console.error(`Failed to load ${filter} data for ${month}`);
@@ -71,43 +72,75 @@
 	// Function to map filter data (e.g., temperature, danger, rainfall) to the globe using colors
 	function applyFilterDataToGlobe(data: any[], filter: string) {
 		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
+
 		data.forEach((row) => {
-			const color = getColorForFilter(row.value, filter);
-			matchExpression.push(row.code, color);
+			const value = row.value; // Always use 'value' for any filter
+
+			// Ensure the value exists before applying it
+			if (value !== undefined) {
+				const color = getColorForFilter(value, filter); // Use the filter-specific color calculation
+				console.log(`Country: ${row.code}, Value: ${value}, Color: ${color}`);
+				matchExpression.push(row.code, color);
+			}
 		});
-		matchExpression.push('rgba(0, 0, 0, 0)');
+
+		matchExpression.push('rgba(0, 0, 0, 0)'); // Fallback color for countries without data
+		console.log('Match Expression:', matchExpression);
 		map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
 	}
 
 	// Color function for recommendations: dark gray for values <= 5, green for values > 5
 	function getColorForRecommendation(value: number): string {
-		if (value > 5) {
-			return `hsl(120, 100%, 40%)`; // Strong green for values over 5
-		} else {
-			return `hsl(0, 0%, 60%)`; // Neutral gray for values <= 5
-		}
+		// Ensure value is between 1 and 100
+		const normalizedValue = Math.max(1, Math.min(value, 100));
+
+		// Interpolate lightness: 40% (green) to 60% (gray)
+		const lightness = 60 - (normalizedValue / 100) * 20;
+
+		// Interpolate saturation: 100% (green) to 0% (gray)
+		const saturation = (normalizedValue / 100) * 100;
+
+		// Return the color as HSL, with a hue of 120 (green) and interpolated saturation and lightness
+		return `hsl(120, ${saturation}%, ${lightness}%)`;
 	}
 
 	// Color function for temperature (yellow to red), danger (red), and rainfall (blue)
 	function getColorForFilter(value: number, filter: string): string {
 		if (filter === 'temperature') {
-			if (value > 10) {
-				return 'red'; // Set color to red for values above 10
-			} else {
-				return 'rgba(0, 0, 0, 0.5)'; // Gray for lower values
-			}
+			// Normalize temperature: assuming -50 (coldest) to 50 (hottest)
+			const minTemp = -50;
+			const maxTemp = 50;
+			const normalizedValue = (value - minTemp) / (maxTemp - minTemp); // Normalize between 0 and 1
+
+			// Interpolate hue: from deep blue (240°) to red (0°), skipping green (no 120° hue)
+			// We transition directly from blue (240°) to yellow (60°) to red (0°)
+			const hue =
+				normalizedValue < 0.5
+					? 240 - normalizedValue * 2 * 60 // Blue to yellow range
+					: 60 - (normalizedValue - 0.5) * 2 * 60; // Yellow to red range
+
+			const saturation = 100; // Keep saturation at 100% for vibrant colors
+			const lightness = 50; // Constant lightness for clear visibility
+
+			// Return the color in HSL format
+			return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 		} else if (filter === 'danger') {
-			const hue = 0; // Red hue
-			const lightness = 100 - Math.min(value * 10, 100); // Darker red for higher danger values
-			return `hsl(${hue}, 100%, ${lightness}%)`;
+			// Normalize danger value: assuming danger is between 0 and 100
+			const dangerValue = Math.min(value, 100);
+			const lightness = 90 - (dangerValue / 100) * 70; // Map danger values to lightness (from 90% to 20%)
+			return `hsl(0, 100%, ${lightness}%)`; // Red hue (0°), with varying lightness
 		} else if (filter === 'rainfall') {
-			if (value > 15) {
-				return 'blue'; // Set color to blue for values above 15
-			} else {
-				return 'rgba(0, 0, 0, 0.5)'; // Gray for lower values
-			}
+			// Normalize rainfall: assuming 0 to 50 mm as a typical range
+			const maxRainfall = 50;
+			const normalizedRainfall = Math.min(value / maxRainfall, 1);
+
+			// Interpolate between light blue and dark blue
+			const blueLightness = 60 - normalizedRainfall * 40; // 60% light blue to 20% dark blue
+			return `hsl(240, 100%, ${blueLightness}%)`; // Blue hue (240°)
 		}
-		return 'rgba(0, 0, 0, 0)'; // Default color for no data
+
+		// Default color for no data
+		return 'rgba(0, 0, 0, 0)';
 	}
 
 	// Function to reset the globe to a plain view

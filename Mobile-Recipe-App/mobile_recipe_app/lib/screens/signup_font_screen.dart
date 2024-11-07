@@ -13,10 +13,15 @@ class SignUpFontScreen extends StatefulWidget {
 class _SignUpFontScreenState extends State<SignUpFontScreen> {
   double _selectedFontSize = 16.0; // Default font size
   final List<double> predefinedFontSizes = [
+    10.0,
     14.0,
     18.0,
-    24.0
-  ]; // Predefined options
+    24.0,
+    30.0,
+    36.0,
+    42.0,
+    48.0
+  ]; // Larger range
 
   void _finishSetup() {
     Navigator.pushReplacement(
@@ -49,112 +54,109 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Text Size'),
+        title: const Text('Select Font Size'),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: textColor),
         titleTextStyle:
             TextStyle(color: textColor, fontSize: _selectedFontSize),
       ),
       body: Container(
-        color: backgroundColor, // Set the background color
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Select your preferred text size',
-              style: TextStyle(
-                fontSize: _selectedFontSize,
-                fontWeight: FontWeight.bold,
-                color: textColor, // Apply text color from palette
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            // Predefined options for quick selection
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: predefinedFontSizes.map((size) {
-                return ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectedFontSize = size;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    backgroundColor: secondaryColor,
-                  ),
+        color: backgroundColor,
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Enhanced Preview Area
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: secondaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
                   child: Text(
-                    size == _selectedFontSize
-                        ? 'Selected'
-                        : '${size.toInt()} pt',
+                    'Sample Text Preview',
                     style: TextStyle(
-                      fontSize: size,
-                      color: _getContrastColor(secondaryColor),
+                      fontSize: _selectedFontSize,
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 20),
-            // Slider for custom font size selection
-            Text(
-              'Custom Size',
-              style: TextStyle(
-                fontSize: _selectedFontSize,
-                fontWeight: FontWeight.bold,
-                color: textColor, // Apply text color from palette
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Slider(
-              value: _selectedFontSize,
-              min: 12.0,
-              max: 30.0,
-              divisions: 18,
-              label: _selectedFontSize.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _selectedFontSize = value;
-                });
-              },
-              activeColor: secondaryColor, // Apply secondary color for slider
-              inactiveColor:
-                  secondaryColor.withOpacity(0.5), // Lighter for inactive part
-            ),
-            // Live preview of selected font size
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: secondaryColor,
-              child: Text(
-                'This is how your text will look',
-                style: TextStyle(
-                  fontSize: _selectedFontSize,
-                  color: _getContrastColor(secondaryColor),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _finishSetup,
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                backgroundColor: secondaryColor,
-              ),
-              child: Text(
-                'Finish',
-                style: TextStyle(
-                  fontSize: _selectedFontSize,
-                  color: _getContrastColor(secondaryColor),
                 ),
               ),
-            ),
-          ],
+              // Predefined Font Size Chips
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: predefinedFontSizes.map((size) {
+                  return ChoiceChip(
+                    label: Text(
+                      '${size.toInt()} pt',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: _getContrastColor(size == _selectedFontSize
+                            ? secondaryColor
+                            : secondaryColor.withOpacity(0.5)),
+                        fontWeight: size == _selectedFontSize
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    selected: _selectedFontSize == size,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _selectedFontSize = size;
+                      });
+                    },
+                    selectedColor: secondaryColor,
+                    backgroundColor: secondaryColor.withOpacity(0.3),
+                    labelPadding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 4.0),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 24),
+              // Slider with Larger Range
+              Slider(
+                value: _selectedFontSize,
+                min: 10.0,
+                max: 48.0,
+                divisions: 38,
+                label: _selectedFontSize.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _selectedFontSize = value;
+                  });
+                },
+                activeColor: secondaryColor,
+                inactiveColor: secondaryColor.withOpacity(0.4),
+              ),
+              const SizedBox(height: 24),
+              // Finish Button
+              ElevatedButton(
+                onPressed: _finishSetup,
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
+                  backgroundColor: secondaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  'Finish',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: _getContrastColor(secondaryColor),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

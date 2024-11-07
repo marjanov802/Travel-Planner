@@ -15,16 +15,16 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              decoration: const InputDecoration(
+            const TextField(
+              decoration: InputDecoration(
                 labelText: 'Username or Email',
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
-            TextField(
+            const TextField(
               obscureText: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),

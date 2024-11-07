@@ -79,20 +79,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildDotsIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (index) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          height: 8,
-          width: _currentPage == index ? 16 : 8,
-          decoration: BoxDecoration(
-            color: _currentPage == index ? Colors.blueAccent : Colors.grey,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        );
-      }),
+    return Padding(
+      padding: const EdgeInsets.only(
+          bottom: 16.0), // Move dots up slightly from the bottom
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(3, (index) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            height: 8,
+            width: _currentPage == index ? 16 : 8,
+            decoration: BoxDecoration(
+              color: _currentPage == index ? Colors.blueAccent : Colors.grey,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          );
+        }),
+      ),
     );
   }
 }
@@ -101,8 +105,7 @@ class _SignUpFormPage extends StatefulWidget {
   final VoidCallback onNext;
   final ValueChanged<bool> onFormCompleted;
 
-  const _SignUpFormPage(
-      {super.key, required this.onNext, required this.onFormCompleted});
+  const _SignUpFormPage({required this.onNext, required this.onFormCompleted});
 
   @override
   _SignUpFormPageState createState() => _SignUpFormPageState();

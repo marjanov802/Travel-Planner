@@ -16,3 +16,5 @@ Will focus on navigation and implemting functions within the navigation
 Next step is to focus on the filters which will load other datasets , and how to implement them by passing the months through the function as well.
 
 27/10/2024 - Attemping to gather all datapoints needed for all of the different filters however some do not exist causing the issue of missing datapoints which i must create based on real data gathered by nations or companies that measure geographical data.
+
+10/11/2024 - Globe complete with seperate diary within the globe branch, now working on the recipe app

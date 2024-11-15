@@ -22,9 +22,12 @@ class MainHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home',
-            style: TextStyle(fontSize: selectedFontSize, color: textColor)),
+        title: Text(
+          'Home',
+          style: TextStyle(fontSize: selectedFontSize, color: textColor),
+        ),
         backgroundColor: primaryColor,
+        automaticallyImplyLeading: false, // This removes the back button
       ),
       body: Container(
         color: backgroundColor, // Set the background color

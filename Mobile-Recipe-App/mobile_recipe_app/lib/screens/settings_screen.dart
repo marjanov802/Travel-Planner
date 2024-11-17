@@ -8,10 +8,10 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        backgroundColor: Colors.teal, // Customizable as per your theme
       ),
       body: Center(
-        child:
-            const Text('This is the Settings Screen. Customize your app here!'),
+        child: const Text('Settings Page'),
       ),
     );
   }

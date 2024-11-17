@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'recipes_list_screen.dart'; // Ensure these files exist
+import 'recipes_list_screen.dart';
 import 'settings_screen.dart';
 
 class MainHomePage extends StatelessWidget {
@@ -29,7 +29,7 @@ class MainHomePage extends StatelessWidget {
           style: TextStyle(fontSize: selectedFontSize, color: textColor),
         ),
         backgroundColor: primaryColor,
-        automaticallyImplyLeading: false, // Removes the back button
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         color: backgroundColor,
@@ -115,7 +115,7 @@ class MainHomePage extends StatelessWidget {
         ),
         elevation: 4,
         child: Container(
-          width: double.infinity, // Ensures the card takes the full width
+          width: double.infinity,
           padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),

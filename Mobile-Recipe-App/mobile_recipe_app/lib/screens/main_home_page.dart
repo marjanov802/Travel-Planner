@@ -46,7 +46,15 @@ class MainHomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const RecipesListScreen()),
+                    builder: (context) => RecipesListScreen(
+                      primaryColor: primaryColor,
+                      secondaryColor: secondaryColor,
+                      accentColor: accentColor,
+                      backgroundColor: backgroundColor,
+                      textColor: textColor,
+                      selectedFontSize: selectedFontSize,
+                    ),
+                  ),
                 );
               },
             ),

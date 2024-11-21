@@ -10,3 +10,14 @@ for example , main.dart , would call setup.dart when the user reaches the setup 
 
 
 Also having second thoughts about the apps login page as elderly people may not want to go through the hassle
+May include a skip button and let them enter as a guest , that way they will be able to enter with default settings and if they want to they can change them by accessing the settings.
+
+Main menu-
+Using large cards to hold different options, if font size to large user can scroll
+Going to use icons which are recognisable to make navigation easier, and text as well
+
+Explore Recipes -
+Recipes are all on cards. Not sure on whether to include images yet as some images could be similar.
+
+Ingredients page- 
+ISSUE - when font size is max the buttons go over the size of the screen

@@ -21,7 +21,7 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
     36.0,
     42.0,
     48.0
-  ]; // Larger range
+  ];
 
   void _finishSetup() {
     Navigator.pushReplacement(

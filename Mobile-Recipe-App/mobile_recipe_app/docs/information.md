@@ -21,3 +21,54 @@ Recipes are all on cards. Not sure on whether to include images yet as some imag
 
 Ingredients page- 
 ISSUE - when font size is max the buttons go over the size of the screen
+
+
+
+BACKGROUND INFORMATION -
+ISSUE
+cognitive load
+Complex interfaces with too many features overwhelm users
+https://ieeexplore.ieee.org/document/7002686
+
+Unfamiliar gestures
+Advanced gestures like pinch-to-zoom or multi-finger swipes are unintuitive for some elderly users
+https://link.springer.com/article/10.1007/s10209-022-00933-4
+ TO FIX
+Use large, easily tappable buttons and high-contrast, readable fonts.
+Example: Samsung's "Easy Mode," which simplifies the interface.
+https://www.samsung.com/uk/sustainability/accessibility/overview/
+
+ISSUES
+Inaccessible Text and Colors:
+Small fonts and low-contrast text make reading difficult for users with low vision.
+https://link.springer.com/article/10.1007/s10209-022-00933-4
+
+Screen Reader Compatibility:
+Many apps fail to label buttons and icons properly for screen readers.
+
+Navigation Challenges:
+Lack of audio cues or tactile feedback creates difficulties in identifying app elements.
+https://www.android.com/accessibility/vision/
+
+SOLUTION
+High-Contrast Themes:
+Offer dark mode and high-contrast options as standard features.
+https://www.android.com/accessibility/vision/
+
+Screen Reader Integration:
+Ensure apps are fully compatible with VoiceOver (iOS) and TalkBack (Android).
+https://www.android.com/accessibility/vision/
+
+Customizable Settings:
+Allow users to adjust font sizes, contrast levels, and button spacing.
+https://www.samsung.com/au/support/mobile-devices/using-easy-mode/?srsltid=AfmBOoqgsXOOkUSjodEiEEuW7vSJOPFhJkYG0Y0vqiDIMD6kVxzQhSld
+
+Haptic Feedback:
+Add vibrations to confirm button presses or navigation actions.
+https://support.google.com/accessibility/android/answer/9031274?hl=en-GB
+
+Auditory Cues:
+Use sounds to signal errors, successful actions, or guidance prompts.
+https://www.android.com/accessibility/vision/
+
+

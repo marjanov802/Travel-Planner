@@ -4,9 +4,9 @@ class StepScreen extends StatefulWidget {
   final String recipeTitle;
   final List<String> steps;
   final Color primaryColor;
+  final Color accentColor;
   final Color backgroundColor;
   final Color textColor;
-  final Color accentColor;
   final double selectedFontSize;
 
   const StepScreen({
@@ -14,9 +14,9 @@ class StepScreen extends StatefulWidget {
     required this.recipeTitle,
     required this.steps,
     required this.primaryColor,
+    required this.accentColor,
     required this.backgroundColor,
     required this.textColor,
-    required this.accentColor,
     required this.selectedFontSize,
   });
 
@@ -25,111 +25,116 @@ class StepScreen extends StatefulWidget {
 }
 
 class _StepScreenState extends State<StepScreen> {
-  int currentStep = 0;
+  int _currentStepIndex = 0;
 
   void _nextStep() {
-    if (currentStep < widget.steps.length - 1) {
+    if (_currentStepIndex < widget.steps.length - 1) {
       setState(() {
-        currentStep++;
+        _currentStepIndex++;
       });
+    } else {
+      Navigator.pop(context); // Navigate back to the main menu after last step
     }
   }
 
   void _previousStep() {
-    if (currentStep > 0) {
+    if (_currentStepIndex > 0) {
       setState(() {
-        currentStep--;
+        _currentStepIndex--;
       });
     }
   }
 
-  void _finishCooking() {
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final double progress = (currentStep + 1) / widget.steps.length;
-    final int percentage = (progress * 100).toInt();
+    final int totalSteps = widget.steps.length;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.recipeTitle,
-          style: TextStyle(color: widget.textColor),
-        ),
+        title: Text('Step-by-Step', style: TextStyle(color: widget.textColor)),
         backgroundColor: widget.primaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         color: widget.backgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Progress Bar with Percentage
-            Column(
+            // Step Progress Bar
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: widget.primaryColor.withOpacity(0.3),
-                  valueColor: AlwaysStoppedAnimation<Color>(widget.accentColor),
-                ),
-                const SizedBox(height: 8),
                 Text(
-                  '$percentage% Complete',
+                  'Step ${_currentStepIndex + 1} of $totalSteps',
                   style: TextStyle(
-                    fontSize: widget.selectedFontSize * 0.8,
+                    fontSize: widget.selectedFontSize,
                     fontWeight: FontWeight.bold,
                     color: widget.textColor,
                   ),
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            LinearProgressIndicator(
+              value: (_currentStepIndex + 1) / totalSteps,
+              backgroundColor: widget.backgroundColor.withOpacity(0.5),
+              valueColor: AlwaysStoppedAnimation(widget.accentColor),
+            ),
             const SizedBox(height: 16),
-            // Step Content
+            // Current Step Card
             Expanded(
-              child: Center(
-                child: Text(
-                  widget.steps[currentStep],
-                  style: TextStyle(
-                    fontSize: widget.selectedFontSize + 2,
-                    color: widget.textColor,
-                    fontWeight: FontWeight.bold,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 4,
+                // Explicitly set card color to ensure consistency
+                color: widget.primaryColor
+                    .withOpacity(0.1), // Consistent with the main menu
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: Text(
+                      widget.steps[_currentStepIndex],
+                      style: TextStyle(
+                        fontSize: widget.selectedFontSize,
+                        color: widget.textColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),
             const SizedBox(height: 16),
             // Navigation Buttons
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Previous Button
-                if (currentStep > 0)
-                  ElevatedButton(
-                    onPressed: _previousStep,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: widget.primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 24.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.arrow_back),
-                        SizedBox(width: 8),
-                        Text('Previous'),
-                      ],
+                ElevatedButton(
+                  onPressed: _previousStep,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _currentStepIndex > 0
+                        ? widget.accentColor
+                        : widget.backgroundColor.withOpacity(0.5),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 24.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                // Next or Finish Button
+                  child: Text(
+                    'Previous',
+                    style: TextStyle(
+                      fontSize: widget.selectedFontSize * 0.9,
+                      color: _currentStepIndex > 0
+                          ? widget.textColor
+                          : widget.textColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
                 ElevatedButton(
-                  onPressed: currentStep == widget.steps.length - 1
-                      ? _finishCooking
-                      : _nextStep,
+                  onPressed: _nextStep,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: widget.accentColor,
                     padding: const EdgeInsets.symmetric(
@@ -138,18 +143,12 @@ class _StepScreenState extends State<StepScreen> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        currentStep == widget.steps.length - 1
-                            ? 'Finish'
-                            : 'Next',
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(currentStep == widget.steps.length - 1
-                          ? Icons.check
-                          : Icons.arrow_forward),
-                    ],
+                  child: Text(
+                    _currentStepIndex == totalSteps - 1 ? 'Finish' : 'Next',
+                    style: TextStyle(
+                      fontSize: widget.selectedFontSize * 0.9,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],

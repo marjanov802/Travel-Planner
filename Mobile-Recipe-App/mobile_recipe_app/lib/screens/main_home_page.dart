@@ -4,7 +4,6 @@ import 'settings_screen.dart';
 
 class MainHomePage extends StatelessWidget {
   final Color primaryColor;
-  final Color secondaryColor;
   final Color accentColor;
   final Color backgroundColor;
   final Color textColor;
@@ -13,7 +12,6 @@ class MainHomePage extends StatelessWidget {
   const MainHomePage({
     super.key,
     required this.primaryColor,
-    required this.secondaryColor,
     required this.accentColor,
     required this.backgroundColor,
     required this.textColor,
@@ -41,14 +39,12 @@ class MainHomePage extends StatelessWidget {
               title: 'Explore Recipes',
               description: 'Find and create delicious recipes.',
               icon: Icons.kitchen,
-              color: primaryColor,
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => RecipesListScreen(
                       primaryColor: primaryColor,
-                      secondaryColor: secondaryColor,
                       accentColor: accentColor,
                       backgroundColor: backgroundColor,
                       textColor: textColor,
@@ -64,12 +60,18 @@ class MainHomePage extends StatelessWidget {
               title: 'Settings',
               description: 'Adjust preferences and personalize your app.',
               icon: Icons.settings,
-              color: primaryColor,
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SettingsScreen()),
+                    builder: (context) => SettingsScreen(
+                      primaryColor: primaryColor,
+                      accentColor: accentColor,
+                      backgroundColor: backgroundColor,
+                      textColor: textColor,
+                      selectedFontSize: selectedFontSize,
+                    ),
+                  ),
                 );
               },
             ),
@@ -79,11 +81,15 @@ class MainHomePage extends StatelessWidget {
               title: 'Favorites',
               description: 'View and manage your favorite recipes.',
               icon: Icons.favorite,
-              color: primaryColor,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Favorites feature coming soon!')),
+                  SnackBar(
+                    content: Text(
+                      'Favorites feature coming soon!',
+                      style: TextStyle(color: textColor),
+                    ),
+                    backgroundColor: primaryColor,
+                  ),
                 );
               },
             ),
@@ -93,11 +99,15 @@ class MainHomePage extends StatelessWidget {
               title: 'Help & Support',
               description: 'Get assistance and contact support.',
               icon: Icons.help_outline,
-              color: primaryColor,
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Help & Support feature coming soon!')),
+                  SnackBar(
+                    content: Text(
+                      'Help & Support feature coming soon!',
+                      style: TextStyle(color: textColor),
+                    ),
+                    backgroundColor: primaryColor,
+                  ),
                 );
               },
             ),
@@ -112,7 +122,6 @@ class MainHomePage extends StatelessWidget {
     required String title,
     required String description,
     required IconData icon,
-    required Color color,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
@@ -127,11 +136,11 @@ class MainHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: color,
+            color: backgroundColor,
           ),
           child: Row(
             children: [
-              Icon(icon, size: 48, color: Colors.white),
+              Icon(icon, size: 48, color: accentColor),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -142,15 +151,15 @@ class MainHomePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: textColor,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       description,
                       style: TextStyle(
-                        fontSize: selectedFontSize,
-                        color: Colors.white.withOpacity(0.9),
+                        fontSize: selectedFontSize * 0.9,
+                        color: textColor.withOpacity(0.8),
                       ),
                     ),
                   ],

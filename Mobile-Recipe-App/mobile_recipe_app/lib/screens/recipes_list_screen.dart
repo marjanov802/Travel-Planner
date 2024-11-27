@@ -3,7 +3,6 @@ import 'recipe_detail_screen.dart';
 
 class RecipesListScreen extends StatelessWidget {
   final Color primaryColor;
-  final Color secondaryColor;
   final Color accentColor;
   final Color backgroundColor;
   final Color textColor;
@@ -12,7 +11,6 @@ class RecipesListScreen extends StatelessWidget {
   const RecipesListScreen({
     super.key,
     required this.primaryColor,
-    required this.secondaryColor,
     required this.accentColor,
     required this.backgroundColor,
     required this.textColor,
@@ -27,20 +25,18 @@ class RecipesListScreen extends StatelessWidget {
         'description':
             'Classic Italian pasta with eggs, cheese, pancetta, and pepper.',
         'ingredients': [
-          '200g Pancetta',
-          '100g Parmesan Cheese',
-          '3 Large Eggs',
-          '400g Spaghetti',
-          'Salt and Pepper',
+          '200g spaghetti',
+          '100g pancetta',
+          '2 large eggs',
+          '50g pecorino cheese',
+          'Salt and black pepper'
         ],
         'steps': [
-          'Bring a large pot of salted water to a boil.',
-          'Cook the spaghetti according to the package instructions.',
-          'While the spaghetti cooks, heat a pan over medium heat and cook the pancetta.',
-          'In a bowl, whisk the eggs and Parmesan cheese together.',
-          'Drain the spaghetti and add it to the pan with pancetta. Remove from heat.',
-          'Quickly mix the egg and cheese mixture into the pasta.',
-          'Season with salt and pepper, then serve immediately.',
+          'Cook spaghetti in salted boiling water until al dente.',
+          'Fry pancetta until crispy.',
+          'Whisk eggs and cheese together in a bowl.',
+          'Drain spaghetti and mix with pancetta and egg mixture.',
+          'Serve with a sprinkle of pepper and cheese.'
         ],
       },
       {
@@ -48,24 +44,22 @@ class RecipesListScreen extends StatelessWidget {
         'description':
             'A flavorful and spicy curry with tender chicken pieces.',
         'ingredients': [
-          '500g Chicken',
-          '2 Onions',
-          '3 Tomatoes',
-          '4 Cloves of Garlic',
-          'Spices (Curry Powder, Turmeric, Cumin)',
-          'Salt and Pepper',
+          '500g chicken thighs',
+          '2 onions, chopped',
+          '3 garlic cloves, minced',
+          '200ml coconut milk',
+          '2 tbsp curry powder'
         ],
         'steps': [
-          'Chop the onions, tomatoes, and garlic.',
-          'Heat oil in a pan and sauté the onions and garlic.',
-          'Add the chicken and cook until browned.',
-          'Add the tomatoes and spices, then simmer for 20 minutes.',
-          'Season with salt and pepper. Serve hot.',
+          'Sauté onions and garlic until soft.',
+          'Add chicken and cook until browned.',
+          'Stir in curry powder and cook for 1 minute.',
+          'Pour in coconut milk and simmer for 20 minutes.',
+          'Serve with rice.'
         ],
       },
+      // Add more recipes as needed
     ];
-
-    final int crossAxisCount = selectedFontSize > 30 ? 1 : 2;
 
     return Scaffold(
       appBar: AppBar(
@@ -75,64 +69,61 @@ class RecipesListScreen extends StatelessWidget {
       body: Container(
         color: backgroundColor,
         padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-            childAspectRatio: 0.7,
-          ),
+        child: ListView.builder(
           itemCount: recipes.length,
           itemBuilder: (context, index) {
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 4,
-              color: secondaryColor,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(16),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RecipeDetailScreen(
-                        recipeTitle: recipes[index]['title'],
-                        ingredients: recipes[index]['ingredients'],
-                        steps: recipes[index]['steps'],
-                        primaryColor: primaryColor,
-                        backgroundColor: backgroundColor,
-                        textColor: textColor,
-                        accentColor: accentColor,
-                        selectedFontSize: selectedFontSize,
-                      ),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: accentColor.withOpacity(0.4),
-                          border: Border.all(color: accentColor, width: 2),
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 4,
+                color: primaryColor.withOpacity(0.1),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipeDetailScreen(
+                          recipeTitle: recipes[index]['title']!,
+                          ingredients: recipes[index]['ingredients'],
+                          steps: recipes[index]['steps'],
+                          primaryColor: primaryColor,
+                          accentColor: accentColor,
+                          backgroundColor: backgroundColor,
+                          textColor: textColor,
+                          selectedFontSize: selectedFontSize,
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.fastfood,
-                            size: 60,
-                            color: Colors.white,
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Image Placeholder
+                        Container(
+                          width: double.infinity,
+                          height: selectedFontSize > 30 ? 160 : 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: accentColor.withOpacity(0.4),
+                            border: Border.all(color: accentColor, width: 2),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.fastfood,
+                              size: 60,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Flexible(
-                        child: Text(
+                        const SizedBox(height: 12),
+                        // Recipe Title
+                        Text(
                           recipes[index]['title']!,
                           style: TextStyle(
                             fontSize:
@@ -140,23 +131,22 @@ class RecipesListScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: textColor,
                           ),
-                          overflow: TextOverflow.ellipsis,
                           maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      Expanded(
-                        child: Text(
+                        const SizedBox(height: 8),
+                        // Recipe Description
+                        Text(
                           recipes[index]['description']!,
                           style: TextStyle(
                             fontSize: selectedFontSize * 0.8,
                             color: textColor.withOpacity(0.7),
                           ),
-                          maxLines: 3,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

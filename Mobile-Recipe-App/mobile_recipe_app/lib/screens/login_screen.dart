@@ -17,28 +17,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final String _hardcodedPassword = 'password123';
 
   // Default colors to match the Sign-Up screen's initial palette
-  final Color _defaultPrimaryColor =
-      Colors.blue; // Matches Sign-Up's primary color
-  final Color _defaultSecondaryColor =
-      Colors.white; // Matches Sign-Up's secondary color
-  final Color _defaultAccentColor =
-      Colors.grey; // Matches Sign-Up's accent color
-  final Color _defaultBackgroundColor =
-      Colors.blueAccent; // Matches Sign-Up's background color
-  final Color _defaultTextColor = Colors.white; // Matches Sign-Up's text color
-  final double _defaultFontSize =
-      18.0; // Default font size, matches Sign-Up preferences
+  //updated so no secondary coulours as its too complicated
+  final Color _defaultPrimaryColor = Colors.blue; // Primary color
+  final Color _defaultAccentColor = Colors.amber; // Accent color
+  final Color _defaultBackgroundColor = Colors.blueAccent; // Background color
+  final Color _defaultTextColor = Colors.white; // Text color
+  final double _defaultFontSize = 18.0; // Default font size
 
   void _handleLogin() {
     if (_emailController.text == _hardcodedEmail &&
         _passwordController.text == _hardcodedPassword) {
-      // Navigate to MainHomePage with default colors matching Sign-Up screen's palette
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => MainHomePage(
             primaryColor: _defaultPrimaryColor,
-            secondaryColor: _defaultSecondaryColor,
             accentColor: _defaultAccentColor,
             backgroundColor: _defaultBackgroundColor,
             textColor: _defaultTextColor,
@@ -59,32 +52,63 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
+        backgroundColor: _defaultPrimaryColor,
       ),
-      body: Padding(
+      body: Container(
+        color: _defaultBackgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: _defaultTextColor),
+                border: const OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: _defaultAccentColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: _defaultAccentColor, width: 2),
+                ),
               ),
+              style: TextStyle(color: _defaultTextColor),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: _defaultTextColor),
+                border: const OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: _defaultAccentColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: _defaultAccentColor, width: 2),
+                ),
               ),
-              obscureText: true, // Hide password input
+              style: TextStyle(color: _defaultTextColor),
+              obscureText: true,
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _handleLogin,
-              child: const Text('Login'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: _defaultAccentColor,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: _defaultFontSize,
+                  color: _defaultTextColor,
+                ),
+              ),
             ),
           ],
         ),

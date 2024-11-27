@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'step_screen.dart';
 
-class RecipeDetailScreen extends StatefulWidget {
+class RecipeDetailScreen extends StatelessWidget {
   final String recipeTitle;
   final List<String> ingredients;
   final List<String> steps;
   final Color primaryColor;
+  final Color accentColor;
   final Color backgroundColor;
   final Color textColor;
-  final Color accentColor;
   final double selectedFontSize;
 
   const RecipeDetailScreen({
@@ -17,45 +17,24 @@ class RecipeDetailScreen extends StatefulWidget {
     required this.ingredients,
     required this.steps,
     required this.primaryColor,
+    required this.accentColor,
     required this.backgroundColor,
     required this.textColor,
-    required this.accentColor,
     required this.selectedFontSize,
   });
 
-  @override
-  _RecipeDetailScreenState createState() => _RecipeDetailScreenState();
-}
-
-class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
-  late List<bool> _checkedIngredients;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkedIngredients = List<bool>.filled(widget.ingredients.length, false);
-  }
-
-  void _toggleSelectAll() {
-    final allSelected = _checkedIngredients.every((isChecked) => isChecked);
-    setState(() {
-      _checkedIngredients =
-          List<bool>.filled(widget.ingredients.length, !allSelected);
-    });
-  }
-
-  void _navigateToSteps() {
+  void _navigateToSteps(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => StepScreen(
-          recipeTitle: widget.recipeTitle,
-          steps: widget.steps,
-          primaryColor: widget.primaryColor,
-          backgroundColor: widget.backgroundColor,
-          textColor: widget.textColor,
-          accentColor: widget.accentColor,
-          selectedFontSize: widget.selectedFontSize,
+          recipeTitle: recipeTitle,
+          steps: steps,
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          backgroundColor: backgroundColor,
+          textColor: textColor,
+          selectedFontSize: selectedFontSize,
         ),
       ),
     );
@@ -65,27 +44,29 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(widget.recipeTitle, style: TextStyle(color: widget.textColor)),
-        backgroundColor: widget.primaryColor,
+        title: Text(
+          recipeTitle,
+          style: TextStyle(color: textColor),
+        ),
+        backgroundColor: primaryColor,
       ),
       body: Container(
-        color: widget.backgroundColor,
+        color: backgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
               'Ingredients',
               style: TextStyle(
-                fontSize: widget.selectedFontSize + 4,
+                fontSize: selectedFontSize + 4,
                 fontWeight: FontWeight.bold,
-                color: widget.textColor,
+                color: textColor,
               ),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.ingredients.length,
+                itemCount: ingredients.length,
                 itemBuilder: (context, index) {
                   return Card(
                     shape: RoundedRectangleBorder(
@@ -93,39 +74,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     ),
                     elevation: 4,
                     margin: const EdgeInsets.only(bottom: 16),
-                    color: widget.primaryColor.withOpacity(0.1),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () {
-                        setState(() {
-                          _checkedIngredients[index] =
-                              !_checkedIngredients[index];
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              activeColor: widget.accentColor,
-                              value: _checkedIngredients[index],
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _checkedIngredients[index] = value ?? false;
-                                });
-                              },
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Text(
-                                widget.ingredients[index],
-                                style: TextStyle(
-                                  fontSize: widget.selectedFontSize,
-                                  color: widget.textColor,
-                                ),
-                              ),
-                            ),
-                          ],
+                    color: primaryColor.withOpacity(0.1),
+                    child: ListTile(
+                      leading: Icon(Icons.check_box_outline_blank,
+                          color: accentColor),
+                      title: Text(
+                        ingredients[index],
+                        style: TextStyle(
+                          fontSize: selectedFontSize,
+                          color: textColor,
                         ),
                       ),
                     ),
@@ -135,33 +92,32 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  onPressed: _toggleSelectAll,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.accentColor,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 24.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                if (selectedFontSize <= 24)
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: accentColor,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 24.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      'Select All',
+                      style: TextStyle(
+                        fontSize: selectedFontSize * 0.9,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    _checkedIngredients.every((isChecked) => isChecked)
-                        ? 'Unselect All'
-                        : 'Select All',
-                    style: TextStyle(
-                      fontSize: widget.selectedFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 ElevatedButton(
-                  onPressed: _navigateToSteps,
+                  onPressed: () => _navigateToSteps(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.accentColor,
+                    backgroundColor: accentColor,
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 24.0),
                     shape: RoundedRectangleBorder(
@@ -171,7 +127,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                   child: Text(
                     'Start Cooking',
                     style: TextStyle(
-                      fontSize: widget.selectedFontSize,
+                      fontSize: selectedFontSize * 0.9,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

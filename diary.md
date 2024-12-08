@@ -29,4 +29,9 @@ Next step is to focus on the filters which will load other datasets , and how to
 
 26/11/2024 - Implement the set up page and strucutre of the rest of the app including the main page
 
+30/11/2024 - Started gathering information for interim report
+
+
+
+
 28/11/2024 - Going back to find better colour palletes

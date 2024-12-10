@@ -10,17 +10,40 @@ class SignUpColorScreen extends StatefulWidget {
 
 class _SignUpColorScreenState extends State<SignUpColorScreen> {
   final List<Map<String, Color>> colorPalettes = [
+    // Palette 1: Calm Blue (For Visually Impaired - High Contrast)
     {
-      'primary': const Color(0xFF005EB8),
-      'background': const Color(0xFFFFFFFF),
-      'text': const Color(0xFF000000),
-      'accent': const Color(0xFFFF5722),
+      'primary': const Color(0xFF004A99), // Dark blue
+      'background': const Color(0xFFEFF6FF), // Very light blue/white
+      'text': const Color(0xFF000000), // Black
+      'accent': const Color(0xFFFFC107), // Bright yellow
     },
+    // Palette 2: Soft Warm (For Older Adults - Warm Tones)
     {
-      'primary': const Color(0xFF1E1E1E),
-      'background': const Color(0xFF121212),
-      'text': const Color(0xFFFFFFFF),
-      'accent': const Color(0xFFBB86FC),
+      'primary': const Color(0xFF6D4C41), // Dark brown
+      'background': const Color(0xFFF9F4EF), // Cream
+      'text': const Color(0xFF2C2C2C), // Dark gray
+      'accent': const Color(0xFFFF7043), // Warm orange
+    },
+    // Palette 3: High Contrast (For Color Blindness)
+    {
+      'primary': const Color(0xFF000000), // Black
+      'background': const Color(0xFFFFFFFF), // White
+      'text': const Color(0xFF000000), // Black
+      'accent': const Color(0xFF00897B), // Teal
+    },
+    // Palette 4: Cool Neutral (For General Use - Low Eye Strain)
+    {
+      'primary': const Color(0xFF37474F), // Dark grayish blue
+      'background': const Color(0xFFECEFF1), // Light gray
+      'text': const Color(0xFF102027), // Very dark gray/blue
+      'accent': const Color(0xFF29B6F6), // Bright blue
+    },
+    // Palette 5: Soft Green (For Color Blind Friendly and Calmness)
+    {
+      'primary': const Color(0xFF2E7D32), // Dark green
+      'background': const Color(0xFFE8F5E9), // Pale green
+      'text': const Color(0xFF1B5E20), // Deep green
+      'accent': const Color(0xFF81C784), // Soft green
     },
   ];
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'step_screen.dart';
 
-class RecipeDetailScreen extends StatelessWidget {
+class RecipeDetailScreen extends StatefulWidget {
   final String recipeTitle;
   final List<String> ingredients;
   final List<String> steps;
@@ -23,18 +23,39 @@ class RecipeDetailScreen extends StatelessWidget {
     required this.selectedFontSize,
   });
 
-  void _navigateToSteps(BuildContext context) {
+  @override
+  _RecipeDetailScreenState createState() => _RecipeDetailScreenState();
+}
+
+class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
+  late List<bool> _checkedIngredients;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkedIngredients = List<bool>.filled(widget.ingredients.length, false);
+  }
+
+  void _toggleSelectAll() {
+    final allSelected = _checkedIngredients.every((isChecked) => isChecked);
+    setState(() {
+      _checkedIngredients =
+          List<bool>.filled(widget.ingredients.length, !allSelected);
+    });
+  }
+
+  void _navigateToSteps() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => StepScreen(
-          recipeTitle: recipeTitle,
-          steps: steps,
-          primaryColor: primaryColor,
-          accentColor: accentColor,
-          backgroundColor: backgroundColor,
-          textColor: textColor,
-          selectedFontSize: selectedFontSize,
+          recipeTitle: widget.recipeTitle,
+          steps: widget.steps,
+          primaryColor: widget.primaryColor,
+          accentColor: widget.accentColor,
+          backgroundColor: widget.backgroundColor,
+          textColor: widget.textColor,
+          selectedFontSize: widget.selectedFontSize,
         ),
       ),
     );
@@ -44,29 +65,27 @@ class RecipeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          recipeTitle,
-          style: TextStyle(color: textColor),
-        ),
-        backgroundColor: primaryColor,
+        title:
+            Text(widget.recipeTitle, style: TextStyle(color: widget.textColor)),
+        backgroundColor: widget.primaryColor,
       ),
       body: Container(
-        color: backgroundColor,
+        color: widget.backgroundColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
               'Ingredients',
               style: TextStyle(
-                fontSize: selectedFontSize + 4,
+                fontSize: widget.selectedFontSize + 4,
                 fontWeight: FontWeight.bold,
-                color: textColor,
+                color: widget.textColor,
               ),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
-                itemCount: ingredients.length,
+                itemCount: widget.ingredients.length,
                 itemBuilder: (context, index) {
                   return Card(
                     shape: RoundedRectangleBorder(
@@ -74,16 +93,34 @@ class RecipeDetailScreen extends StatelessWidget {
                     ),
                     elevation: 4,
                     margin: const EdgeInsets.only(bottom: 16),
-                    color: primaryColor.withOpacity(0.1),
-                    child: ListTile(
-                      leading: Icon(Icons.check_box_outline_blank,
-                          color: accentColor),
-                      title: Text(
-                        ingredients[index],
-                        style: TextStyle(
-                          fontSize: selectedFontSize,
-                          color: textColor,
-                        ),
+                    color: widget.primaryColor.withOpacity(0.1),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            activeColor: widget.accentColor,
+                            value: _checkedIngredients[index],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _checkedIngredients[index] = value ?? false;
+                              });
+                            },
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Text(
+                              widget.ingredients[index],
+                              style: TextStyle(
+                                fontSize: widget.selectedFontSize,
+                                color: widget.textColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -92,32 +129,33 @@ class RecipeDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (selectedFontSize <= 24)
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: accentColor,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 24.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(
-                      'Select All',
-                      style: TextStyle(
-                        fontSize: selectedFontSize * 0.9,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                ElevatedButton(
+                  onPressed: _toggleSelectAll,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.accentColor,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 24.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
+                  child: Text(
+                    _checkedIngredients.every((isChecked) => isChecked)
+                        ? 'Unselect All'
+                        : 'Select All',
+                    style: TextStyle(
+                      fontSize: widget.selectedFontSize * 0.9,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 ElevatedButton(
-                  onPressed: () => _navigateToSteps(context),
+                  onPressed: _navigateToSteps,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: accentColor,
+                    backgroundColor: widget.accentColor,
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 24.0),
                     shape: RoundedRectangleBorder(
@@ -127,7 +165,7 @@ class RecipeDetailScreen extends StatelessWidget {
                   child: Text(
                     'Start Cooking',
                     style: TextStyle(
-                      fontSize: selectedFontSize * 0.9,
+                      fontSize: widget.selectedFontSize * 0.9,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

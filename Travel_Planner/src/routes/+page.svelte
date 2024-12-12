@@ -32,6 +32,7 @@
 	// Function to load filter data (e.g., temperature, danger, rainfall)
 	async function loadFilterData(filter: string, month: string) {
 		try {
+			//why no work? filter month in lower case and the seelcted filter with an underscore. THAT IS FILE NAME
 			const response = await fetch(`/${filter}/${month.toLowerCase()}_${filter}.json`);
 			if (response.ok) {
 				const data = await response.json();

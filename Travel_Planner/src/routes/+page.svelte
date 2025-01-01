@@ -144,14 +144,14 @@
 			return `hsl(240, 100%, ${blueLightness}%)`; // Blue hue (240°)
 		}
 
-		// Default color for no data
+		// Default colour for no data
 		return 'rgba(0, 0, 0, 0)';
 	}
 
 	// Function to reset the globe to a plain view
 	function resetGlobeToPlain() {
 		if (map.getLayer('country-fills')) {
-			map.removeLayer('country-fills');
+			map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
 		}
 	}
 
@@ -193,15 +193,28 @@
 				type: 'geojson',
 				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			});
-		});
 
-		// Click event to log and show alert
-		map.on('click', 'country-fills', (e) => {
-			if (e.features.length > 0) {
-				const country = e.features[0];
-				console.log(`Clicked on country: ${country.properties.ADMIN}`);
-				alert(`You clicked on ${country.properties.ADMIN}`);
+			if (!map.getLayer('country-fills')) {
+				map.addLayer({
+					id: 'country-fills',
+					type: 'fill',
+					source: 'countries',
+					layout: {},
+					paint: {
+						'fill-color': 'rgba(0, 0, 0, 0)', // Default to transparent
+						'fill-opacity': 0.75
+					}
+				});
 			}
+
+			// Add the click event listener
+			map.on('click', 'country-fills', (e) => {
+				if (e.features.length > 0) {
+					const country = e.features[0];
+					console.log(`Clicked on country: ${country.properties.ADMIN}`);
+					alert(`You clicked on ${country.properties.ADMIN}`);
+				}
+			});
 		});
 	}
 

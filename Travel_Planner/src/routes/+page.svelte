@@ -16,6 +16,7 @@
 	// Load JSON file based on selected month
 	async function loadRecommendationData(month: string) {
 		try {
+			// Fetches the correct json file to be mapped onto the globe
 			const response = await fetch(`/recommendations/${month.toLowerCase()}_recommendations.json`);
 			if (response.ok) {
 				const data = await response.json();
@@ -32,7 +33,8 @@
 	// Function to load filter data (e.g., temperature, danger, rainfall)
 	async function loadFilterData(filter: string, month: string) {
 		try {
-			//why no work? filter month in lower case and the seelcted filter with an underscore. THAT IS FILE NAME
+			//why no work? filter month in lower case and the selected filter with an underscore. THAT IS FILE NAME
+			//inspect element, console log with throw error or data used to know if it works
 			const response = await fetch(`/${filter}/${month.toLowerCase()}_${filter}.json`);
 			if (response.ok) {
 				const data = await response.json();
@@ -48,12 +50,12 @@
 
 	// Function to map recommendation data to the globe using colors
 	function applyRecommendationDataToGlobe(data: any[]) {
-		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
+		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']]; // ISO is the code in the json file
 		data.forEach((row) => {
 			const color = getColorForRecommendation(row.value);
 			matchExpression.push(row.code, color);
 		});
-		matchExpression.push('rgba(0, 0, 0, 0)'); // Default color for countries with no data
+		matchExpression.push('rgba(0, 0, 0, 0)'); // Default color for countries with no data, the globe will be clear
 		if (map.getLayer('country-fills')) {
 			map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
 		} else {
@@ -113,8 +115,10 @@
 			const maxTemp = 50;
 			const normalizedValue = (value - minTemp) / (maxTemp - minTemp); // Normalize between 0 and 1
 
-			// Interpolate hue: from deep blue (240°) to red (0°), skipping green (no 120° hue)
+			// Interpolate hue: from deep blue (240°) to red (0°), skipping green (no 120° hue) because colour theory i researched is for red to blue
+			// Green (120° hue) would not be intutitve for the user
 			// We transition directly from blue (240°) to yellow (60°) to red (0°)
+			// All are rgb values
 			const hue =
 				normalizedValue < 0.5
 					? 240 - normalizedValue * 2 * 60 // Blue to yellow range
@@ -189,6 +193,15 @@
 				type: 'geojson',
 				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			});
+		});
+
+		// Click event to log and show alert
+		map.on('click', 'country-fills', (e) => {
+			if (e.features.length > 0) {
+				const country = e.features[0];
+				console.log(`Clicked on country: ${country.properties.ADMIN}`);
+				alert(`You clicked on ${country.properties.ADMIN}`);
+			}
 		});
 	}
 

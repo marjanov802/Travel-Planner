@@ -12,3 +12,8 @@ What to remember - Naming conventions.
              I need to create a function that will keep the coutnry-fills always present.
              Fixed by editing the reset function to reset the country fills instead of removing it.
              
+02/01/2025 - Need to create tests to see how users normally navigate to plan their trips.
+             I will start with myself, choose a desination that i know nothing about, and record all of the searches, websites and paths i take to gather the information that i want. 
+             The same tests will be given the other potential users to see what their process is as well.
+             Through the data i will analyse what the main steps are through all the users and focal points to encorperate within the program.
+             

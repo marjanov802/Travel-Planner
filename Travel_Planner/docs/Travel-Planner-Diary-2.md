@@ -16,4 +16,5 @@ What to remember - Naming conventions.
              I will start with myself, choose a desination that i know nothing about, and record all of the searches, websites and paths i take to gather the information that i want. 
              The same tests will be given the other potential users to see what their process is as well.
              Through the data i will analyse what the main steps are through all the users and focal points to encorperate within the program.
+
              

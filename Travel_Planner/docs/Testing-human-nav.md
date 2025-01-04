@@ -31,4 +31,8 @@ The activities listed and the location that I would have to be in meaning I woul
 Next I saw the easiest way to get to Brazil's main cities. And transport between the cities that I would like to see or activities I would want to participate in.
 
 
+CONCLUSIONS:
+Images of activites needed, very visual
+Once activites are selected they should be sorted in proximity of area or trips that can be taken from certain major cities.
+Distances between the places should be calculated , and method to get there should be know.
 

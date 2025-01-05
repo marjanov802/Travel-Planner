@@ -191,7 +191,7 @@
 		map.on('load', () => {
 			map.addSource('countries', {
 				type: 'geojson',
-				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
+				data: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson' // GeoJson is currently online, potentially move this locally in the future.
 			});
 
 			if (!map.getLayer('country-fills')) {
@@ -207,12 +207,29 @@
 				});
 			}
 
-			// Add the click event listener
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
+					const countryISO = country.properties.ISO_A3;
+					const countryCenter = e.lngLat;
+
 					console.log(`Clicked on country: ${country.properties.ADMIN}`);
-					alert(`You clicked on ${country.properties.ADMIN}`);
+
+					map.flyTo({
+						center: [countryCenter.lng, countryCenter.lat],
+						zoom: 5,
+						speed: 1.5,
+						curve: 1.2
+					});
+
+					map.setFeatureState({ source: 'countries', id: country.id }, { selected: true });
+
+					map.setPaintProperty('country-fills', 'fill-opacity', [
+						'case',
+						['==', ['get', 'ISO_A3'], countryISO],
+						1,
+						0.2
+					]);
 				}
 			});
 		});

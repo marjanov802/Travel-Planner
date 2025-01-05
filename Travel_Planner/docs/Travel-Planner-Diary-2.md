@@ -17,4 +17,13 @@ What to remember - Naming conventions.
              The same tests will be given the other potential users to see what their process is as well.
              Through the data i will analyse what the main steps are through all the users and focal points to encorperate within the program.
 
+03/01/2025 - Plan for next steps after testing has been complete:
+             Wish to create the selected country as centre of attention.
+             Information about the destination around. 
+             Options to plan itinarary or see blog.
+
+            Used flyTo property to move the the coutnry selected however the coordinates of the mouse click are centred instead of being the whole country.
+
+            Need to calculate the centre of each country or find another geoJson file online or to download.
+            Will use turf js for spatial awareness of countries to find the centre point.
              

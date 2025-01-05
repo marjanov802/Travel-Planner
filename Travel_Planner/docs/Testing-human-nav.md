@@ -4,6 +4,9 @@ All the searches, and steps that the participant takes will be recorded.
 At a later date the information will be compared across all tests and i will try to understand why certain measures have been taken as well as understanding what needs to be implemented in my page.
 
 Participant 1:
+Age 20
+Experienced in travelling
+Has a method to planning
 Dennis Marjanov (Myself) - Brazil
 
 First though was iconic images of Brazil, what is the first thing that comes to mind.

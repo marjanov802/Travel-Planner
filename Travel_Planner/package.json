@@ -54,6 +54,7 @@
 		"node": ">=16.0.0"
 	},
 	"dependencies": {
+		"@turf/turf": "^7.2.0",
 		"mapbox-gl": "^3.7.0"
 	}
 }

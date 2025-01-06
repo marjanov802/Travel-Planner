@@ -2,6 +2,7 @@
 	import { onDestroy, setContext } from 'svelte';
 	import { mapboxgl, key } from './mapboxgl.js';
 	import type { Map } from 'mapbox-gl';
+	import * as turf from '@turf/turf';
 
 	setContext(key, {
 		getMap: () => map
@@ -201,7 +202,7 @@
 					source: 'countries',
 					layout: {},
 					paint: {
-						'fill-color': 'rgba(0, 0, 0, 0)', // Default to transparent
+						'fill-color': 'rgba(0, 0, 0, 0)',
 						'fill-opacity': 0.75
 					}
 				});
@@ -211,18 +212,22 @@
 				if (e.features.length > 0) {
 					const country = e.features[0];
 					const countryISO = country.properties.ISO_A3;
-					const countryCenter = e.lngLat;
+					const countryGeometry = country.geometry;
 
-					console.log(`Clicked on country: ${country.properties.ADMIN}`);
+					const bbox = turf.bbox(countryGeometry);
 
-					map.flyTo({
-						center: [countryCenter.lng, countryCenter.lat],
-						zoom: 5,
-						speed: 1.5,
-						curve: 1.2
+					if (!bbox) {
+						console.error('Could not calculate bounding box for the selected country.');
+						return;
+					}
+
+					console.log(`Clicked on country: ${country.properties.ADMIN}, Bounding Box: [${bbox}]`);
+
+					map.fitBounds(bbox, {
+						padding: 20,
+						maxZoom: 7,
+						duration: 1500
 					});
-
-					map.setFeatureState({ source: 'countries', id: country.id }, { selected: true });
 
 					map.setPaintProperty('country-fills', 'fill-opacity', [
 						'case',

@@ -211,30 +211,60 @@
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
-					const countryISO = country.properties.ISO_A3;
-					const countryGeometry = country.geometry;
+					const countryISO = country.properties.ISO_A3; // Retreve the ISO_A3
+					const countryGeometry = country.geometry; // Get the geometry of the selected country
 
+					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
 
-					if (!bbox) {
-						console.error('Could not calculate bounding box for the selected country.');
-						return;
-					}
-
-					console.log(`Clicked on country: ${country.properties.ADMIN}, Bounding Box: [${bbox}]`);
+					// Get the current zoom level as the baseline
+					const baselineZoom = map.getZoom();
 
 					map.fitBounds(bbox, {
 						padding: 20,
 						maxZoom: 7,
-						duration: 1500
+						duration: 1500,
+						linear: true
 					});
+
+					map.setPaintProperty('country-fills', 'fill-color', [
+						'case',
+						['==', ['get', 'ISO_A3'], countryISO],
+						'rgba(0, 0, 0, 0)',
+						'rgba(50, 50, 50, 0.8)'
+					]);
 
 					map.setPaintProperty('country-fills', 'fill-opacity', [
 						'case',
 						['==', ['get', 'ISO_A3'], countryISO],
-						1,
-						0.2
+						0,
+						1
 					]);
+
+					map.on('zoom', () => {
+						const currentZoom = map.getZoom();
+
+						if (currentZoom < baselineZoom) {
+							// If zoomed out past the baseline, reset the colours
+							map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
+							map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
+						} else {
+							// If zoomed in or at baseline, keep the overlay settings
+							map.setPaintProperty('country-fills', 'fill-color', [
+								'case',
+								['==', ['get', 'ISO_A3'], countryISO],
+								'rgba(0, 0, 0, 0)',
+								'rgba(50, 50, 50, 0.8)'
+							]);
+
+							map.setPaintProperty('country-fills', 'fill-opacity', [
+								'case',
+								['==', ['get', 'ISO_A3'], countryISO],
+								0, // Selected country
+								1 // Other countries
+							]);
+						}
+					});
 				}
 			});
 		});

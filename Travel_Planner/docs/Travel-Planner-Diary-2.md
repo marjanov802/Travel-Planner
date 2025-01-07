@@ -26,4 +26,10 @@ What to remember - Naming conventions.
 
             Need to calculate the centre of each country or find another geoJson file online or to download.
             Will use turf js for spatial awareness of countries to find the centre point.
+
+07/01/2025 - Turf has been used to calculate the centre of the countries. However, countries have small islands and territories
+             that are part of the country. The makes the centre point of the countries visually of centre but mathematically correct.
+             I will just use the mathematically correct points for now as they enlarge the selected countries well and certain parts that have been pressed.
+             Need to add comments to understand everything as this is getting more and more complex as i am implementing more features.
+             
              

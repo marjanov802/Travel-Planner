@@ -208,23 +208,26 @@
 				});
 			}
 
+			let baselineZoom: number = null; // Store the baseline zoom level
+
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
-					const countryISO = country.properties.ISO_A3; // Retreve the ISO_A3
+					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
 					const countryGeometry = country.geometry; // Get the geometry of the selected country
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
-
-					// Get the current zoom level as the baseline
-					const baselineZoom = map.getZoom();
 
 					map.fitBounds(bbox, {
 						padding: 20,
 						maxZoom: 7,
 						duration: 1500,
 						linear: true
+					});
+
+					map.once('moveend', () => {
+						baselineZoom = map.getZoom();
 					});
 
 					map.setPaintProperty('country-fills', 'fill-color', [
@@ -240,31 +243,18 @@
 						0,
 						1
 					]);
+				}
+			});
 
-					map.on('zoom', () => {
-						const currentZoom = map.getZoom();
+			// Follow the zoom changes so that i know when to change the overlay of the other coutnries
+			map.on('zoomend', () => {
+				if (baselineZoom !== null) {
+					const currentZoom = map.getZoom();
 
-						if (currentZoom < baselineZoom) {
-							// If zoomed out past the baseline, reset the colours
-							map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
-							map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
-						} else {
-							// If zoomed in or at baseline, keep the overlay settings
-							map.setPaintProperty('country-fills', 'fill-color', [
-								'case',
-								['==', ['get', 'ISO_A3'], countryISO],
-								'rgba(0, 0, 0, 0)',
-								'rgba(50, 50, 50, 0.8)'
-							]);
-
-							map.setPaintProperty('country-fills', 'fill-opacity', [
-								'case',
-								['==', ['get', 'ISO_A3'], countryISO],
-								0, // Selected country
-								1 // Other countries
-							]);
-						}
-					});
+					if (currentZoom < baselineZoom) {
+						map.setPaintProperty('country-fills', 'fill-opacity', 1);
+						map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
+					}
 				}
 			});
 		});

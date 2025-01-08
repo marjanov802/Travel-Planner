@@ -209,12 +209,22 @@
 			}
 
 			let baselineZoom: number = null; // Store the baseline zoom level
+			let originalFilterState: any[] = null;
+
+			// Apply a filter (e.g., temperature, danger, etc.)
+			function applyFilterToGlobe(filterExpression: any[]) {
+				map.setPaintProperty('country-fills', 'fill-color', filterExpression);
+			}
 
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
 					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
 					const countryGeometry = country.geometry; // Get the geometry of the selected country
+
+					if (!originalFilterState) {
+						originalFilterState = map.getPaintProperty('country-fills', 'fill-color');
+					}
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
@@ -252,8 +262,12 @@
 					const currentZoom = map.getZoom();
 
 					if (currentZoom < baselineZoom) {
-						map.setPaintProperty('country-fills', 'fill-opacity', 1);
-						map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
+						if (originalFilterState) {
+							applyFilterToGlobe(originalFilterState);
+						}
+
+						baselineZoom = null;
+						originalFilterState = null;
 					}
 				}
 			});

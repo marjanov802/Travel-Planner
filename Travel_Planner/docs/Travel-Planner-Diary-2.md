@@ -31,5 +31,10 @@ What to remember - Naming conventions.
              that are part of the country. The makes the centre point of the countries visually of centre but mathematically correct.
              I will just use the mathematically correct points for now as they enlarge the selected countries well and certain parts that have been pressed.
              Need to add comments to understand everything as this is getting more and more complex as i am implementing more features.
+
+08/01/2025 - If the country is selected the other countries turn dark grey to emphasise the selected country. 
+             However if a country is selected and then zoomed out the dark grey filter disappears.
+             But the filters before did not remain. This was fixed, so now the previous filters still remain. 
+             But the selected country is not effected by the filters now, so i need to make sure that it is.
              
              

@@ -155,16 +155,25 @@
 			map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
 		}
 	}
-
 	// Handle month selection from the dropdown and load the recommendation data
 	function handleMonthSelection(event: Event) {
 		selectedMonth = (event.target as HTMLSelectElement).value;
+
 		if (selectedMonth === 'none') {
 			isMonthSelected = false;
-			resetGlobeToPlain(); // Reset to the plain globe if no month is selected
+			resetGlobeToPlain();
 		} else {
 			isMonthSelected = true;
-			loadRecommendationData(selectedMonth); // Load the default recommendation data
+			selectedFilter = 'none';
+
+			const radioButtons = document.getElementsByName('filter');
+			radioButtons.forEach((radio: HTMLInputElement) => {
+				if (radio.value === 'none') {
+					radio.checked = true;
+				}
+			});
+
+			loadRecommendationData(selectedMonth);
 		}
 	}
 

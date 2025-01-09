@@ -38,5 +38,12 @@ What to remember - Naming conventions.
              But the selected country is not effected by the filters now, so i need to make sure that it is.
              
              Worst case scenario, hard code to get the ISO_A3 of the selected country, and map the colour data from only that country as a single as all of the rest of the countries are mapped.
+
+09/01/2025 - Fixed the filters after country deseelction.
+             
+             Issue - During month selection the radio buttons are not reset to none meaning that they visually provide false information in correlation to the data that is being mapped.
+             Fixed - Chnaged the function to reset the radio button to none when a new month is selected.
+
+             Need to decide what information will be displayed upon selection before the user is redirected to create itinararies.
              
              

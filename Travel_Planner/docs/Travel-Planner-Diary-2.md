@@ -37,4 +37,6 @@ What to remember - Naming conventions.
              But the filters before did not remain. This was fixed, so now the previous filters still remain. 
              But the selected country is not effected by the filters now, so i need to make sure that it is.
              
+             Worst case scenario, hard code to get the ISO_A3 of the selected country, and map the colour data from only that country as a single as all of the rest of the countries are mapped.
+             
              

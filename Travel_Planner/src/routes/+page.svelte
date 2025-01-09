@@ -209,22 +209,35 @@
 			}
 
 			let baselineZoom: number = null; // Store the baseline zoom level
-			let originalFilterState: any[] = null;
+			let selectedCountryISO: string = null; // Track the currently selected country's ISO_A3
 
-			// Apply a filter (e.g., temperature, danger, etc.)
-			function applyFilterToGlobe(filterExpression: any[]) {
-				map.setPaintProperty('country-fills', 'fill-color', filterExpression);
+			function resetSelectedCountry() {
+				if (selectedCountryISO) {
+					selectedCountryISO = null;
+
+					if (selectedFilter && selectedFilter !== 'none' && selectedMonth) {
+						console.log(`Reapplying filter: ${selectedFilter} for month: ${selectedMonth}`);
+						loadFilterData(selectedFilter, selectedMonth);
+					} else if (selectedMonth) {
+						console.log(`Reapplying recommendations for month: ${selectedMonth}`);
+						loadRecommendationData(selectedMonth);
+					} else {
+						console.log('No filter or recommendations to apply. Clearing map.');
+						resetGlobeToPlain();
+					}
+
+					map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
+				}
 			}
 
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
 					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
-					const countryGeometry = country.geometry; // Get the geometry of the selected country
+					const countryGeometry = country.geometry;
 
-					if (!originalFilterState) {
-						originalFilterState = map.getPaintProperty('country-fills', 'fill-color');
-					}
+					// Set the new selected country
+					selectedCountryISO = countryISO;
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
@@ -256,18 +269,14 @@
 				}
 			});
 
-			// Follow the zoom changes so that i know when to change the overlay of the other coutnries
 			map.on('zoomend', () => {
 				if (baselineZoom !== null) {
 					const currentZoom = map.getZoom();
 
 					if (currentZoom < baselineZoom) {
-						if (originalFilterState) {
-							applyFilterToGlobe(originalFilterState);
-						}
-
+						console.log('Zoomed out past baseline. Resetting...');
+						resetSelectedCountry();
 						baselineZoom = null;
-						originalFilterState = null;
 					}
 				}
 			});

@@ -44,6 +44,10 @@ What to remember - Naming conventions.
              Issue - During month selection the radio buttons are not reset to none meaning that they visually provide false information in correlation to the data that is being mapped.
              Fixed - Chnaged the function to reset the radio button to none when a new month is selected.
 
+            Will add outline to countries when the users hovers over then as it is not clear with the mapped colours where the border is.
+            I have to create a new layer on the map that will be called hover.
+            A listener willl wait for the mouse to move over a country fills layer and retrive the ISO_A3 and then does the layer on the map.
+            It maps the layer to the retrieved ISO_A3
              Need to decide what information will be displayed upon selection before the user is redirected to create itinararies.
-             
+
              

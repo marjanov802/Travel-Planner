@@ -217,6 +217,57 @@
 				});
 			}
 
+			map.addLayer({
+				id: 'hover-outline',
+				type: 'line',
+				source: 'countries',
+				layout: {},
+				paint: {
+					'line-color': '#000000',
+					'line-width': 2,
+					'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0]
+				}
+			});
+
+			let hoveredCountryISO: string | null = null;
+
+			map.on('mousemove', 'country-fills', (e) => {
+				if (e.features.length > 0) {
+					const hoveredFeature = e.features[0];
+					const hoveredISO = hoveredFeature.properties.ISO_A3;
+
+					if (hoveredCountryISO !== hoveredISO) {
+						if (hoveredCountryISO !== null) {
+							map.setPaintProperty('hover-outline', 'line-opacity', [
+								'case',
+								['==', ['get', 'ISO_A3'], hoveredCountryISO],
+								0,
+								1
+							]);
+						}
+
+						hoveredCountryISO = hoveredISO;
+						map.setPaintProperty('hover-outline', 'line-opacity', [
+							'case',
+							['==', ['get', 'ISO_A3'], hoveredCountryISO],
+							1,
+							0
+						]);
+					}
+				}
+			});
+
+			map.on('mouseleave', 'country-fills', () => {
+				if (hoveredCountryISO !== null) {
+					map.setPaintProperty('hover-outline', 'line-opacity', [
+						'case',
+						['==', ['get', 'ISO_A3'], hoveredCountryISO],
+						0
+					]);
+					hoveredCountryISO = null;
+				}
+			});
+
 			let baselineZoom: number = null; // Store the baseline zoom level
 			let selectedCountryISO: string = null; // Track the currently selected country's ISO_A3
 

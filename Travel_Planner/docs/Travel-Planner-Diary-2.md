@@ -50,4 +50,8 @@ What to remember - Naming conventions.
             It maps the layer to the retrieved ISO_A3
              Need to decide what information will be displayed upon selection before the user is redirected to create itinararies.
 
+10/01/2025 - Will attempt to add markers for recommended locations. If successful will progress to make the markers hierarchical based on
+             the users level of zoom into the selected country.
+             
+
              

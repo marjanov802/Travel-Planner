@@ -39,3 +39,4 @@ Images of activites needed, very visual
 Once activites are selected they should be sorted in proximity of area or trips that can be taken from certain major cities.
 Distances between the places should be calculated , and method to get there should be know.
 
+

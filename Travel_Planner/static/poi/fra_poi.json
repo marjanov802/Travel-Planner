@@ -1,0 +1,34 @@
+{
+    "pointsOfInterest": [
+        {
+            "name": "Eiffel Tower",
+            "description": "A world-famous landmark in Paris.",
+            "coordinates": [
+                2.2945,
+                48.8584
+            ],
+            "image": "/images/eiffel-tower.jpg",
+            "zoomLevel": 5
+        },
+        {
+            "name": "Louvre Museum",
+            "description": "A historic monument and the world's largest art museum.",
+            "coordinates": [
+                2.3364,
+                48.8606
+            ],
+            "image": "/images/visiting-the-louvre.jpg",
+            "zoomLevel": 7
+        },
+        {
+            "name": "Montmartre",
+            "description": "A large hill in Paris's 18th arrondissement.",
+            "coordinates": [
+                2.3430,
+                48.8867
+            ],
+            "image": "/images/Montmartre.jpg",
+            "zoomLevel": 10
+        }
+    ]
+}

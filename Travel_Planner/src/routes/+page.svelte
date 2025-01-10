@@ -13,7 +13,7 @@
 	let selectedMonth = ''; // Store the selected month for later use
 	let selectedFilter = ''; // Store the selected filter (e.g., temp, danger, rainfall, etc.)
 	let isMonthSelected = false;
-
+	let poiMarkers: mapboxgl.Marker[] = [];
 	// Load JSON file based on selected month
 	async function loadRecommendationData(month: string) {
 		try {
@@ -46,6 +46,59 @@
 			}
 		} catch (error) {
 			console.error(`Error fetching ${filter} data:`, error);
+		}
+	}
+
+	async function loadPOIData(countryISO: string) {
+		try {
+			console.log(`Loading POI data for: ${countryISO}`);
+			const response = await fetch(`/pois/${countryISO.toLowerCase()}_pois.json`);
+			if (response.ok) {
+				const data = await response.json();
+				console.log('POI Data:', data);
+
+				poiMarkers.forEach((marker) => marker.remove());
+				poiMarkers = [];
+
+				data.pointsOfInterest.forEach((poi) => {
+					console.log('Adding POI Marker:', poi);
+					const marker = new mapboxgl.Marker()
+						.setLngLat(poi.coordinates)
+						.setPopup(
+							new mapboxgl.Popup({ offset: 25 }).setHTML(
+								`<h3>${poi.name}</h3><p>${poi.description}</p>`
+							)
+						)
+						.addTo(map);
+
+					poiMarkers.push(marker);
+				});
+			} else {
+				console.error(`Failed to load POI data for ${countryISO}`);
+			}
+		} catch (error) {
+			console.error(`Error loading POI data for ${countryISO}:`, error);
+		}
+	}
+
+	async function loadPOIDataForZoom(countryISO: string, zoomLevel: number) {
+		console.log(`Loading POI data for: ${countryISO} at zoom level: ${zoomLevel}`);
+		try {
+			const response = await fetch(`/poi/${countryISO.toLowerCase()}_poi.json`);
+			if (response.ok) {
+				const data = await response.json();
+				console.log('POI Data:', data);
+
+				const filteredPOIs = data.pointsOfInterest.filter((poi) => poi.zoomLevel <= zoomLevel);
+				console.log('Filtered POIs:', filteredPOIs);
+
+				clearMarkers();
+				addMarkersForPOIs(filteredPOIs);
+			} else {
+				console.error(`Failed to load POI data for: ${countryISO}`);
+			}
+		} catch (error) {
+			console.error('Error fetching POI data:', error);
 		}
 	}
 
@@ -188,6 +241,38 @@
 		}
 	}
 
+	function addMarkersForPOIs(pois) {
+		pois.forEach((poi) => {
+			const markerDiv = document.createElement('div');
+			markerDiv.className = 'custom-marker';
+
+			markerDiv.innerHTML = `
+            <img src="${poi.image}" alt="${poi.name}" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid white;" />
+        `;
+
+			const marker = new mapboxgl.Marker(markerDiv)
+				.setLngLat(poi.coordinates)
+				.setPopup(
+					new mapboxgl.Popup({ offset: 25 }).setHTML(`
+                        <div style="text-align: center; max-width: 200px;">
+                            <h3>${poi.name}</h3>
+                            <img src="${poi.image}" alt="${poi.name}" style="width: 100%; border-radius: 8px;" />
+                            <p>${poi.description}</p>
+                        </div>
+                    `)
+				)
+				.addTo(map);
+
+			poiMarkers.push(marker);
+		});
+	}
+
+	function clearMarkers() {
+		poiMarkers.forEach((marker) => marker.remove());
+
+		poiMarkers = [];
+	}
+
 	// Initialize Mapbox map
 	async function initMap(container: HTMLDivElement) {
 		map = new mapboxgl.Map({
@@ -276,17 +361,15 @@
 					selectedCountryISO = null;
 
 					if (selectedFilter && selectedFilter !== 'none' && selectedMonth) {
-						console.log(`Reapplying filter: ${selectedFilter} for month: ${selectedMonth}`);
 						loadFilterData(selectedFilter, selectedMonth);
 					} else if (selectedMonth) {
-						console.log(`Reapplying recommendations for month: ${selectedMonth}`);
 						loadRecommendationData(selectedMonth);
 					} else {
-						console.log('No filter or recommendations to apply. Clearing map.');
 						resetGlobeToPlain();
 					}
 
-					map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
+					// Clear all POI markers
+					clearMarkers();
 				}
 			}
 
@@ -298,6 +381,8 @@
 
 					// Set the new selected country
 					selectedCountryISO = countryISO;
+
+					loadPOIData(countryISO);
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
@@ -311,6 +396,10 @@
 
 					map.once('moveend', () => {
 						baselineZoom = map.getZoom();
+						console.log(`Baseline Zoom Level: ${baselineZoom}`);
+
+						// Load initial POIs for the selected country
+						loadPOIDataForZoom(countryISO, baselineZoom);
 					});
 
 					map.setPaintProperty('country-fills', 'fill-color', [
@@ -330,14 +419,18 @@
 			});
 
 			map.on('zoomend', () => {
-				if (baselineZoom !== null) {
-					const currentZoom = map.getZoom();
+				const currentZoom = map.getZoom();
+				console.log('Current Zoom Level:', currentZoom);
 
-					if (currentZoom < baselineZoom) {
-						console.log('Zoomed out past baseline. Resetting...');
-						resetSelectedCountry();
-						baselineZoom = null;
-					}
+				// Load and update POIs for the current zoom level if a country is selected
+				if (selectedCountryISO) {
+					loadPOIDataForZoom(selectedCountryISO, currentZoom);
+				}
+
+				// Clear markers if zooming out past the baseline
+				if (baselineZoom !== null && currentZoom < baselineZoom) {
+					resetSelectedCountry();
+					clearMarkers();
 				}
 			});
 		});
@@ -348,6 +441,9 @@
 	});
 </script>
 
+<head>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+</head>
 <!-- Main Content -->
 <div use:initMap>
 	<!-- Control container for dropdown and radio buttons inline -->
@@ -448,5 +544,24 @@
 		display: flex;
 		align-items: center;
 		gap: 15px;
+	}
+
+	.custom-marker {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.9);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	.custom-marker img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 50%;
 	}
 </style>

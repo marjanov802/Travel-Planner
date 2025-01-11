@@ -360,16 +360,22 @@
 				if (selectedCountryISO) {
 					selectedCountryISO = null;
 
+					clearMarkers();
+
 					if (selectedFilter && selectedFilter !== 'none' && selectedMonth) {
+						console.log(`Reapplying filter: ${selectedFilter} for month: ${selectedMonth}`);
 						loadFilterData(selectedFilter, selectedMonth);
 					} else if (selectedMonth) {
+						console.log(`Reapplying recommendations for month: ${selectedMonth}`);
 						loadRecommendationData(selectedMonth);
 					} else {
+						console.log('No filter or recommendations to apply. Resetting map.');
 						resetGlobeToPlain();
 					}
 
-					// Clear all POI markers
-					clearMarkers();
+					if (map.getLayer('country-fills')) {
+						map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
+					}
 				}
 			}
 
@@ -422,15 +428,14 @@
 				const currentZoom = map.getZoom();
 				console.log('Current Zoom Level:', currentZoom);
 
-				// Load and update POIs for the current zoom level if a country is selected
 				if (selectedCountryISO) {
 					loadPOIDataForZoom(selectedCountryISO, currentZoom);
 				}
 
-				// Clear markers if zooming out past the baseline
 				if (baselineZoom !== null && currentZoom < baselineZoom) {
+					console.log('Zoomed out past baseline. Resetting...');
 					resetSelectedCountry();
-					clearMarkers();
+					baselineZoom = null;
 				}
 			});
 		});

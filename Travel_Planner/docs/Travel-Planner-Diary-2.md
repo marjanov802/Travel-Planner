@@ -52,6 +52,7 @@ What to remember - Naming conventions.
 
 10/01/2025 - Will attempt to add markers for recommended locations. If successful will progress to make the markers hierarchical based on
              the users level of zoom into the selected country.
-             
+
+11/01/2025 - Need to add markers all around and create a plan for transitioning to the itinarary builder.
 
              

@@ -55,4 +55,7 @@ What to remember - Naming conventions.
 
 11/01/2025 - Need to add markers all around and create a plan for transitioning to the itinarary builder.
 
+13/01/2025 - Decided to implement further filters that have been inspired from the airbnb website. 
+             Need to restructure json files with more information while taking into account further plans.
+
              

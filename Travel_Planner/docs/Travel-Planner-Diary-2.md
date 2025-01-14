@@ -57,5 +57,8 @@ What to remember - Naming conventions.
 
 13/01/2025 - Decided to implement further filters that have been inspired from the airbnb website. 
              Need to restructure json files with more information while taking into account further plans.
+             
+14/01/2025 - IDEA - MOVE THE FILTER AND SELECTION PAGES TO THE RIGHT IF THE USER IS LOADED FROM A EASTERN SOCIETY WHERE THEY READ FROM
+                    RIGHT TO LEFT AND KEEP IT ON THE LEFT IF IT IS A SOCIETY WHERE THEY READ FROM LEFT TO RIGHT.
 
              

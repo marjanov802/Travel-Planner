@@ -14,6 +14,7 @@
 	let selectedFilter = ''; // Store the selected filter (e.g., temp, danger, rainfall, etc.)
 	let isMonthSelected = false;
 	let poiMarkers: mapboxgl.Marker[] = [];
+	let showCountryButton = false;
 	// Load JSON file based on selected month
 	async function loadRecommendationData(month: string) {
 		try {
@@ -273,6 +274,11 @@
 		poiMarkers = [];
 	}
 
+	function handleCountryButtonClick() {
+		console.log(`Button clicked for country: ${selectedCountryISO}`);
+		// Add additional functionality here, like displaying a sidebar or fetching more data
+	}
+
 	// Initialize Mapbox map
 	async function initMap(container: HTMLDivElement) {
 		map = new mapboxgl.Map({
@@ -389,6 +395,8 @@
 					selectedCountryISO = countryISO;
 
 					loadPOIData(countryISO);
+					showCountryButton = true;
+					console.log(`Country selected: ${countryName} (${countryISO})`);
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
@@ -496,6 +504,11 @@
 				</label>
 			</div>
 		{/if}
+		{#if showCountryButton}
+			<div class="country-button-container">
+				<button on:click={handleCountryButtonClick}>Show More Information</button>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -568,5 +581,32 @@
 		height: 100%;
 		object-fit: cover;
 		border-radius: 50%;
+	}
+
+	.country-button-container {
+		position: absolute;
+		top: 50%;
+		left: 20px;
+		transform: translateY(-50%);
+		background: rgba(255, 255, 255, 0.9);
+		padding: 10px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		z-index: 1000;
+	}
+
+	.country-button-container button {
+		padding: 10px 20px;
+		font-size: 16px;
+		border: none;
+		border-radius: 5px;
+		background-color: #007bff;
+		color: #fff;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.country-button-container button:hover {
+		background-color: #0056b3;
 	}
 </style>

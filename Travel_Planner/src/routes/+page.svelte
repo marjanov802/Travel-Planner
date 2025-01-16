@@ -14,7 +14,9 @@
 	let selectedFilter = ''; // Store the selected filter (e.g., temp, danger, rainfall, etc.)
 	let isMonthSelected = false;
 	let poiMarkers: mapboxgl.Marker[] = [];
-	let showCountryButton = false;
+	let showFilters = false; // To track if filters should be displayed
+	let selectedCountryISO: string | null = null; // Track the selected country
+	let baselineZoom: number | null = null;
 	// Load JSON file based on selected month
 	async function loadRecommendationData(month: string) {
 		try {
@@ -274,9 +276,22 @@
 		poiMarkers = [];
 	}
 
-	function handleCountryButtonClick() {
-		console.log(`Button clicked for country: ${selectedCountryISO}`);
-		// Add additional functionality here, like displaying a sidebar or fetching more data
+	const filters = [
+		{ key: 'Beach', icon: 'fa-solid fa-umbrella-beach', label: 'Beach' },
+		{ key: 'icons', icon: 'path-to-icon/icons.png', label: 'Icons' },
+		{ key: 'amazing-views', icon: 'path-to-icon/amazing-views.png', label: 'Amazing views' }
+	];
+
+	// Function to apply a filter
+	function applyFilter(filter: string) {
+		console.log(`Filter applied: ${filter}`);
+		// Add your filter logic here
+	}
+
+	// Reset filters and map when zoomed out
+	function resetFilters() {
+		showFilters = false;
+		selectedCountryISO = null;
 	}
 
 	// Initialize Mapbox map
@@ -390,13 +405,12 @@
 					const country = e.features[0];
 					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
 					const countryGeometry = country.geometry;
-
+					selectedCountryISO = countryISO;
+					showFilters = true;
 					// Set the new selected country
 					selectedCountryISO = countryISO;
 
 					loadPOIData(countryISO);
-					showCountryButton = true;
-					console.log(`Country selected: ${countryName} (${countryISO})`);
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
@@ -444,6 +458,7 @@
 					console.log('Zoomed out past baseline. Resetting...');
 					resetSelectedCountry();
 					baselineZoom = null;
+					resetFilters();
 				}
 			});
 		});
@@ -456,6 +471,10 @@
 
 <head>
 	<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+	<link
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		rel="stylesheet"
+	/>
 </head>
 <!-- Main Content -->
 <div use:initMap>
@@ -504,9 +523,16 @@
 				</label>
 			</div>
 		{/if}
-		{#if showCountryButton}
-			<div class="country-button-container">
-				<button on:click={handleCountryButtonClick}>Show More Information</button>
+		<!-- Vertical Filters -->
+		{#if showFilters}
+			<div class="filter-container-vertical">
+				{#each filters as filter}
+					<div class="filter-item" on:click={() => applyFilter(filter.key)}>
+						<i class={filter.icon} />
+						<!-- Dynamically render the Font Awesome icon -->
+						<span>{filter.label}</span>
+					</div>
+				{/each}
 			</div>
 		{/if}
 	</div>
@@ -583,30 +609,44 @@
 		border-radius: 50%;
 	}
 
-	.country-button-container {
+	.filter-container-vertical {
 		position: absolute;
-		top: 50%;
+		top: 120px; /* Adjust to appear below the "Select Country" dropdown */
 		left: 20px;
-		transform: translateY(-50%);
-		background: rgba(255, 255, 255, 0.9);
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		background-color: #fff;
 		padding: 10px;
 		border-radius: 8px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		z-index: 1000;
 	}
 
-	.country-button-container button {
-		padding: 10px 20px;
-		font-size: 16px;
-		border: none;
-		border-radius: 5px;
-		background-color: #007bff;
-		color: #fff;
+	.filter-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		cursor: pointer;
-		transition: background-color 0.3s ease;
+		text-align: center;
+		color: #333;
+		font-size: 14px;
+		transition: transform 0.2s ease, color 0.2s ease;
 	}
 
-	.country-button-container button:hover {
-		background-color: #0056b3;
+	.filter-item img {
+		width: 40px;
+		height: 40px;
+		margin-bottom: 5px;
+	}
+
+	.filter-item:hover {
+		transform: scale(1.1);
+		color: #007bff;
+	}
+
+	.filter-item span {
+		margin-top: 5px;
+		font-size: 12px;
 	}
 </style>

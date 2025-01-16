@@ -55,7 +55,7 @@
 	async function loadPOIData(countryISO: string) {
 		try {
 			console.log(`Loading POI data for: ${countryISO}`);
-			const response = await fetch(`/pois/${countryISO.toLowerCase()}_pois.json`);
+			const response = await fetch(`/poi/${countryISO.toLowerCase()}_poi.json`);
 			if (response.ok) {
 				const data = await response.json();
 				console.log('POI Data:', data);
@@ -278,20 +278,59 @@
 
 	const filters = [
 		{ key: 'Beach', icon: 'fa-solid fa-umbrella-beach', label: 'Beach' },
-		{ key: 'icons', icon: 'path-to-icon/icons.png', label: 'Icons' },
-		{ key: 'amazing-views', icon: 'path-to-icon/amazing-views.png', label: 'Amazing views' }
+		{ key: 'Musems', icon: 'fa-solid fa-building-columns', label: 'Musems' },
+		{ key: 'Hiking', icon: 'fa-solid fa-person-hiking', label: 'Hiking' }
 	];
 
 	// Function to apply a filter
-	function applyFilter(filter: string) {
-		console.log(`Filter applied: ${filter}`);
-		// Add your filter logic here
+	function applyFilter(category: string) {
+		if (selectedCountryISO) {
+			console.log(`Applying filter: ${category}`);
+			console.log(`Current selectedCountryISO: ${selectedCountryISO}`);
+			loadMarkers(selectedCountryISO, category);
+		} else {
+			console.log('No country selected.');
+		}
 	}
 
 	// Reset filters and map when zoomed out
 	function resetFilters() {
 		showFilters = false;
 		selectedCountryISO = null;
+	}
+
+	async function loadMarkers(countryISO: string, category: string) {
+		try {
+			// Fetch the JSON file for the selected country
+			const response = await fetch(`/markers/${countryISO.toLowerCase()}.json`);
+			if (response.ok) {
+				const data = await response.json();
+
+				// Extract the markers for the selected category
+				const markers = data.categories[category] || [];
+
+				// Clear existing markers
+				poiMarkers.forEach((marker) => marker.remove());
+				poiMarkers = [];
+
+				// Add new markers to the map
+				markers.forEach((markerData) => {
+					const marker = new mapboxgl.Marker()
+						.setLngLat(markerData.coordinates)
+						.setPopup(
+							new mapboxgl.Popup({ offset: 25 }).setHTML(
+								`<h3>${markerData.name}</h3><p>${markerData.description}</p>`
+							)
+						)
+						.addTo(map);
+					poiMarkers.push(marker);
+				});
+			} else {
+				console.error(`Failed to load marker data for ${countryISO}`);
+			}
+		} catch (error) {
+			console.error(`Error fetching marker data: ${error}`);
+		}
 	}
 
 	// Initialize Mapbox map
@@ -367,7 +406,8 @@
 				if (hoveredCountryISO !== null) {
 					map.setPaintProperty('hover-outline', 'line-opacity', [
 						'case',
-						['==', ['get', 'ISO_A3'], hoveredCountryISO],
+						['==', ['get', 'ISO_A3'], hoveredCountryISO || ''],
+						1,
 						0
 					]);
 					hoveredCountryISO = null;
@@ -405,16 +445,21 @@
 					const country = e.features[0];
 					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
 					const countryGeometry = country.geometry;
+
+					// Update global variables
 					selectedCountryISO = countryISO;
 					showFilters = true;
-					// Set the new selected country
-					selectedCountryISO = countryISO;
 
+					// Debugging: Log the selected country ISO code
+					console.log(`Country selected: ${selectedCountryISO}`);
+
+					// Load points of interest data for the selected country
 					loadPOIData(countryISO);
 
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
 
+					// Fit the map view to the selected country's bounding box
 					map.fitBounds(bbox, {
 						padding: 20,
 						maxZoom: 7,
@@ -422,27 +467,32 @@
 						linear: true
 					});
 
+					// Once the map zoom animation ends, load POI data based on the zoom level
 					map.once('moveend', () => {
 						baselineZoom = map.getZoom();
 						console.log(`Baseline Zoom Level: ${baselineZoom}`);
 
-						// Load initial POIs for the selected country
+						// Load POIs for the selected country at the current zoom level
 						loadPOIDataForZoom(countryISO, baselineZoom);
 					});
 
+					// Highlight the selected country on the map by changing its fill color and opacity
 					map.setPaintProperty('country-fills', 'fill-color', [
 						'case',
 						['==', ['get', 'ISO_A3'], countryISO],
-						'rgba(0, 0, 0, 0)',
-						'rgba(50, 50, 50, 0.8)'
+						'rgba(0, 0, 0, 0)', // Selected country
+						'rgba(50, 50, 50, 0.8)' // Other countries
 					]);
-
+					//issue at line 407
 					map.setPaintProperty('country-fills', 'fill-opacity', [
 						'case',
 						['==', ['get', 'ISO_A3'], countryISO],
-						0,
-						1
+						0, // Selected country
+						1 // Other countries
 					]);
+				} else {
+					// Debugging: Log an error if no features were clicked
+					console.error('No features found on click.');
 				}
 			});
 
@@ -529,7 +579,6 @@
 				{#each filters as filter}
 					<div class="filter-item" on:click={() => applyFilter(filter.key)}>
 						<i class={filter.icon} />
-						<!-- Dynamically render the Font Awesome icon -->
 						<span>{filter.label}</span>
 					</div>
 				{/each}

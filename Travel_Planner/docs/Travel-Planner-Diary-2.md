@@ -64,5 +64,9 @@ What to remember - Naming conventions.
 15/01/2025 - 
 
 16/01/2025 - Developement of fast filters on the side.
+             Svelte Stores - Global Data repositories that hold values. Could potentially use for the datasets in the json.
+             
+17/01/2025 - Bugs - json file not found, file names changed.
+                    3 Properties needed for mouse click but only 2 have been found, i have added an empty string to get rid of the error.
 
              

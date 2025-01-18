@@ -285,7 +285,9 @@
 	// Function to apply a filter
 	function applyFilter(filter: string) {
 		console.log(`Filter applied: ${filter}`);
-		// Add your filter logic here
+		// LOGIC
+		// Onclick of country, countryISO needs to be taken and passed through the fucntion.
+		// First step, console.log the countryISO to check that the country is identified correctly after selection.
 	}
 
 	// Reset filters and map when zoomed out

@@ -69,4 +69,4 @@ What to remember - Naming conventions.
 17/01/2025 - Bugs - json file not found, file names changed.
                     3 Properties needed for mouse click but only 2 have been found, i have added an empty string to get rid of the error.
 
-             
+18/01/2025 - The filters do not select a country correctly, this needs to be fixed.

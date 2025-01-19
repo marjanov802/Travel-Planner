@@ -18,37 +18,28 @@
 	let selectedCountryISO: string | null = null; // Track the selected country
 	let baselineZoom: number | null = null;
 	// Load JSON file based on selected month
-	async function loadRecommendationData(month: string) {
-		try {
-			// Fetches the correct json file to be mapped onto the globe
-			const response = await fetch(`/recommendations/${month.toLowerCase()}_recommendations.json`);
-			if (response.ok) {
-				const data = await response.json();
-				countryRecommendationData = [...new Set(data)];
-				applyRecommendationDataToGlobe(countryRecommendationData);
-			} else {
-				console.error(`Failed to load recommendation data for ${month}`);
-			}
-		} catch (error) {
-			console.error('Error fetching recommendation data:', error);
-		}
-	}
+	async function loadData(type: 'recommendations' | 'filter', identifier: string, filter?: string) {
+		const filePath =
+			type === 'recommendations'
+				? `/recommendations/${identifier.toLowerCase()}_recommendations.json`
+				: `/${filter}/${identifier.toLowerCase()}_${filter}.json`;
 
-	// Function to load filter data (e.g., temperature, danger, rainfall)
-	async function loadFilterData(filter: string, month: string) {
 		try {
-			//why no work? filter month in lower case and the selected filter with an underscore. THAT IS FILE NAME
-			//inspect element, console log with throw error or data used to know if it works
-			const response = await fetch(`/${filter}/${month.toLowerCase()}_${filter}.json`);
+			const response = await fetch(filePath);
 			if (response.ok) {
 				const data = await response.json();
-				console.log('Filter Data:', data); // Check if data is loaded correctly
-				applyFilterDataToGlobe(data, filter);
+				if (type === 'recommendations') {
+					countryRecommendationData = [...new Set(data)];
+					applyRecommendationDataToGlobe(countryRecommendationData);
+				} else if (type === 'filter') {
+					console.log('Filter Data:', data);
+					applyFilterDataToGlobe(data, filter!);
+				}
 			} else {
-				console.error(`Failed to load ${filter} data for ${month}`);
+				console.error(`Failed to load ${type} data for ${identifier}`);
 			}
 		} catch (error) {
-			console.error(`Error fetching ${filter} data:`, error);
+			console.error(`Error fetching ${type} data:`, error);
 		}
 	}
 
@@ -229,7 +220,7 @@
 				}
 			});
 
-			loadRecommendationData(selectedMonth);
+			loadData('recommendations', selectedMonth);
 		}
 	}
 
@@ -238,9 +229,10 @@
 		selectedFilter = (event.target as HTMLInputElement).value;
 		if (selectedFilter === 'none') {
 			// Revert to recommendations if "None" is selected
-			loadRecommendationData(selectedMonth);
+			loadData('recommendations', selectedMonth);
 		} else if (selectedMonth && selectedFilter) {
-			loadFilterData(selectedFilter, selectedMonth); // Load filter data for the selected month
+			// Load filter data for the selected filter and month
+			loadData('filter', selectedMonth, selectedFilter);
 		}
 	}
 
@@ -285,9 +277,6 @@
 	// Function to apply a filter
 	function applyFilter(filter: string) {
 		console.log(`Filter applied: ${filter}`);
-		// LOGIC
-		// Onclick of country, countryISO needs to be taken and passed through the fucntion.
-		// First step, console.log the countryISO to check that the country is identified correctly after selection.
 	}
 
 	// Reset filters and map when zoomed out
@@ -388,13 +377,13 @@
 
 					if (selectedFilter && selectedFilter !== 'none' && selectedMonth) {
 						console.log(`Reapplying filter: ${selectedFilter} for month: ${selectedMonth}`);
-						loadFilterData(selectedFilter, selectedMonth);
+						loadData('filter', selectedMonth, selectedFilter);
 					} else if (selectedMonth) {
 						console.log(`Reapplying recommendations for month: ${selectedMonth}`);
-						loadRecommendationData(selectedMonth);
+						loadData('recommendations', selectedMonth);
 					} else {
 						console.log('No filter or recommendations to apply. Resetting map.');
-						resetGlobeToPlain();
+						resetView();
 					}
 
 					if (map.getLayer('country-fills')) {

@@ -70,3 +70,8 @@ What to remember - Naming conventions.
                     3 Properties needed for mouse click but only 2 have been found, i have added an empty string to get rid of the error.
 
 18/01/2025 - The filters do not select a country correctly, this needs to be fixed.
+
+20/01/2025 - After 4 days of attempting to see why the applyFilter function will not recognise the selectedISO it has been fixed
+             SCOPE ISSUE - selectedCountrtISO was declared both globally at the beginnging and within the countryFills, causing conflicts and not letting it update properly for the function to use.
+             I NEED TO FIX CLEAN UP MY CODE, MERGE MORE FUNCTIONS, OPTIMISE IT, MAKE IT MORE LOGICAL.
+             I NEED TO KEEP COMMENTS AND NOTES MORE PROFFESSIONAL AS WELL, it has been becoming more informal recently.

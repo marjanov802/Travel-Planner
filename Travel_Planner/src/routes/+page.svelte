@@ -111,59 +111,44 @@
 		map.setPaintProperty('country-fills', 'fill-color', matchExpression as any);
 	}
 
-	// Color function for recommendations: dark gray for values <= 5, green for values > 5
-	function getColorForRecommendation(value: number): string {
-		// Ensure value is between 1 and 100
-		const normalizedValue = Math.max(1, Math.min(value, 100));
-
-		// Interpolate lightness: 40% (green) to 60% (gray)
-		const lightness = 60 - (normalizedValue / 100) * 20;
-
-		// Interpolate saturation: 100% (green) to 0% (gray)
-		const saturation = (normalizedValue / 100) * 100;
-
-		// Return the color as HSL, with a hue of 120 (green) and interpolated saturation and lightness
-		return `hsl(120, ${saturation}%, ${lightness}%)`;
+	function calculateHSL(
+		hue: number,
+		value: number,
+		lightnessRange: [number, number],
+		saturation: number = 100
+	): string {
+		const lightness = lightnessRange[0] - (value / 100) * (lightnessRange[0] - lightnessRange[1]);
+		return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 	}
 
-	// Color function for temperature (yellow to red), danger (red), and rainfall (blue)
+	function getColorForRecommendation(value: number): string {
+		const normalizedValue = Math.max(1, Math.min(value, 100));
+		return calculateHSL(120, normalizedValue, [60, 40]);
+	}
+
 	function getColorForFilter(value: number, filter: string): string {
 		if (filter === 'temperature') {
-			// Normalize temperature: assuming -50 (coldest) to 50 (hottest)
 			const minTemp = -50;
 			const maxTemp = 50;
-			const normalizedValue = (value - minTemp) / (maxTemp - minTemp); // Normalize between 0 and 1
-
-			// Interpolate hue: from deep blue (240°) to red (0°), skipping green (no 120° hue) because colour theory i researched is for red to blue
-			// Green (120° hue) would not be intutitve for the user
-			// We transition directly from blue (240°) to yellow (60°) to red (0°)
-			// All are rgb values
+			const normalizedTemp =
+				Math.max(0, Math.min((value - minTemp) / (maxTemp - minTemp), 1)) * 100;
 			const hue =
-				normalizedValue < 0.5
-					? 240 - normalizedValue * 2 * 60 // Blue to yellow range
-					: 60 - (normalizedValue - 0.5) * 2 * 60; // Yellow to red range
+				normalizedTemp < 50
+					? 240 - (normalizedTemp / 50) * 180
+					: 60 - ((normalizedTemp - 50) / 50) * 60;
 
-			const saturation = 100; // Keep saturation at 100% for vibrant colors
-			const lightness = 50; // Constant lightness for clear visibility
-
-			// Return the color in HSL format
-			return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+			return calculateHSL(hue, 100, [50, 50]);
 		} else if (filter === 'danger') {
-			// Normalize danger value: assuming danger is between 0 and 100
-			const dangerValue = Math.min(value, 100);
-			const lightness = 90 - (dangerValue / 100) * 70; // Map danger values to lightness (from 90% to 20%)
-			return `hsl(0, 100%, ${lightness}%)`; // Red hue (0°), with varying lightness
-		} else if (filter === 'rainfall') {
-			// Normalize rainfall: assuming 0 to 50 mm as a typical range
-			const maxRainfall = 50;
-			const normalizedRainfall = Math.min(value / maxRainfall, 1);
+			const normalizedDanger = Math.max(0, Math.min(value, 100));
 
-			// Interpolate between light blue and dark blue
-			const blueLightness = 60 - normalizedRainfall * 40; // 60% light blue to 20% dark blue
-			return `hsl(240, 100%, ${blueLightness}%)`; // Blue hue (240°)
+			return calculateHSL(0, normalizedDanger, [90, 20]);
+		} else if (filter === 'rainfall') {
+			const maxRainfall = 50;
+			const normalizedRainfall = Math.max(0, Math.min(value / maxRainfall, 1)) * 100;
+
+			return calculateHSL(240, normalizedRainfall, [60, 20]);
 		}
 
-		// Default colour for no data
 		return 'rgba(0, 0, 0, 0)';
 	}
 
@@ -249,7 +234,11 @@
 
 	// Function to apply a filter
 	function applyFilter(filter: string) {
-		console.log(`Filter applied: ${filter}`);
+		if (selectedCountryISO) {
+			console.log(`Filter applied: ${filter} for country: ${selectedCountryISO}`);
+		} else {
+			console.log(`Filter applied: ${filter}, but no country is currently selected`);
+		}
 	}
 
 	// Initialize Mapbox map
@@ -334,8 +323,6 @@
 			});
 
 			let baselineZoom: number = null; // Store the baseline zoom level
-			let selectedCountryISO: string = null; // Track the currently selected country's ISO_A3
-
 			function resetSelectedCountry() {
 				if (selectedCountryISO) {
 					selectedCountryISO = null;

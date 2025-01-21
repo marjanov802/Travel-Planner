@@ -17,6 +17,7 @@
 	let showFilters = false; // To track if filters should be displayed
 	let selectedCountryISO: string | null = null; // Track the selected country
 	let baselineZoom: number | null = null;
+	let activeFilter: string | null = null;
 	// Load JSON file based on selected month
 	async function loadData(type: 'recommendations' | 'filter', identifier: string, filter?: string) {
 		const filePath =
@@ -155,6 +156,7 @@
 	function resetView() {
 		showFilters = false;
 		selectedCountryISO = null;
+		activeFilter = null; // Clear the active filter
 		if (map.getLayer('country-fills')) {
 			map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
 		}
@@ -233,11 +235,52 @@
 	];
 
 	// Function to apply a filter
-	function applyFilter(filter: string) {
-		if (selectedCountryISO) {
-			console.log(`Filter applied: ${filter} for country: ${selectedCountryISO}`);
-		} else {
+	async function applyFilter(filter: string) {
+		if (!selectedCountryISO) {
 			console.log(`Filter applied: ${filter}, but no country is currently selected`);
+			return;
+		}
+
+		activeFilter = filter;
+
+		try {
+			const response = await fetch(`/markers/${selectedCountryISO.toLowerCase()}.json`);
+			if (!response.ok) {
+				console.error(`Failed to load markers for country: ${selectedCountryISO}`);
+				return;
+			}
+
+			const data = await response.json();
+			const normalisedFilter = filter.toLowerCase().replace(/\s+/g, '');
+			const normalisedKeys = Object.keys(data.filters).map((key) =>
+				key.toLowerCase().replace(/\s+/g, '')
+			);
+
+			const matchedIndex = normalisedKeys.indexOf(normalisedFilter);
+			if (matchedIndex === -1) {
+				console.error(`No matching filter found for: ${filter}`);
+				clearMarkers();
+				activeFilter = null;
+				return;
+			}
+
+			const originalKey = Object.keys(data.filters)[matchedIndex];
+			const filterMarkers = data.filters[originalKey];
+
+			if (!filterMarkers || filterMarkers.length === 0) {
+				console.log(`No markers found for filter: ${filter} in country: ${selectedCountryISO}`);
+				clearMarkers();
+				activeFilter = null;
+				return;
+			}
+
+			console.log(`Applying filter: ${originalKey} for country: ${selectedCountryISO}`);
+			console.log('Markers:', filterMarkers);
+
+			clearMarkers();
+			addMarkersForPOIs(filterMarkers);
+		} catch (error) {
+			console.error(`Error applying filter: ${filter} for country: ${selectedCountryISO}`, error);
 		}
 	}
 
@@ -397,14 +440,20 @@
 				console.log('Current Zoom Level:', currentZoom);
 
 				if (selectedCountryISO) {
-					loadPOIData(selectedCountryISO, currentZoom);
-				}
-
-				if (baselineZoom !== null && currentZoom < baselineZoom) {
-					console.log('Zoomed out past baseline. Resetting...');
-					resetSelectedCountry();
-					baselineZoom = null;
-					resetView();
+					if (currentZoom < baselineZoom) {
+						console.log('Zoomed out past baseline. Resetting...');
+						clearMarkers();
+						resetSelectedCountry();
+						baselineZoom = null;
+						resetView();
+					} else if (activeFilter) {
+						console.log(
+							`Reapplying active filter: ${activeFilter} for country: ${selectedCountryISO}`
+						);
+						applyFilter(activeFilter);
+					} else {
+						loadPOIData(selectedCountryISO, currentZoom);
+					}
 				}
 			});
 		});

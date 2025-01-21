@@ -1,0 +1,51 @@
+{
+    "countryISO": "USA",
+    "filters": {
+        "beach": [
+            {
+                "name": "Miami Beach",
+                "description": "A popular beach destination with beautiful sands.",
+                "coordinates": [
+                    -80.1300455,
+                    25.790654
+                ],
+                "image": "/images/miami_beach.jpg",
+                "zoomLevel": 5
+            },
+            {
+                "name": "Santa Monica Beach",
+                "description": "A beach with a famous pier and amusement park.",
+                "coordinates": [
+                    -118.496475,
+                    34.01042
+                ],
+                "image": "/images/santa_monica.jpg",
+                "zoomLevel": 6
+            }
+        ],
+        "icons": [
+            {
+                "name": "Statue of Liberty",
+                "description": "An iconic statue symbolizing freedom.",
+                "coordinates": [
+                    -74.0445,
+                    40.6892
+                ],
+                "image": "/images/statue_of_liberty.jpg",
+                "zoomLevel": 8
+            }
+        ],
+        "amazingViews": [
+            {
+                "name": "Grand Canyon",
+                "description": "A breathtaking view of the canyon landscape.",
+                "coordinates": [
+                    -112.1401108,
+                    36.054445
+                ],
+                "image": "/images/grand_canyon.jpg",
+                "zoomLevel": 7
+            }
+        ]
+    }
+}

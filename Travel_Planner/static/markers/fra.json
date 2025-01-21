@@ -1,0 +1,37 @@
+{
+    "filters": {
+        "Beach": [
+            {
+                "name": "Nice Beach",
+                "coordinates": [
+                    7.265252,
+                    43.710173
+                ],
+                "description": "A beautiful beach in Nice.",
+                "image": "images/beach.jpg"
+            }
+        ],
+        "Icons": [
+            {
+                "name": "Eiffel Tower",
+                "coordinates": [
+                    2.294481,
+                    48.858370
+                ],
+                "description": "Famous landmark in Paris.",
+                "image": "images/beach.jpg"
+            }
+        ],
+        "amazing-views": [
+            {
+                "name": "Mont Blanc",
+                "coordinates": [
+                    6.8652,
+                    45.8326
+                ],
+                "description": "Stunning view of Mont Blanc.",
+                "image": "images/beach.jpg"
+            }
+        ]
+    }
+}

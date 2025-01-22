@@ -18,6 +18,11 @@
 	let selectedCountryISO: string | null = null; // Track the selected country
 	let baselineZoom: number | null = null;
 	let activeFilter: string | null = null;
+	let visibleRecommendedMarkers = [];
+	let isRecommendedActive = false;
+	let allRecommendedMarkers = [];
+	let isRemoveActive = false;
+
 	// Load JSON file based on selected month
 	async function loadData(type: 'recommendations' | 'filter', identifier: string, filter?: string) {
 		const filePath =
@@ -47,12 +52,18 @@
 	async function loadPOIData(countryISO: string, zoomLevel?: number) {
 		console.log(`Loading POI data for: ${countryISO} at zoom level: ${zoomLevel || 'N/A'}`);
 		try {
-			const response = await fetch(`/poi/${countryISO.toLowerCase()}_poi.json`);
+			const response = await fetch(`/markers/${countryISO.toLowerCase()}.json`);
 			if (response.ok) {
 				const data = await response.json();
-				console.log('POI Data:', data);
 
-				let filteredPOIs = data.pointsOfInterest;
+				if (activeFilter) {
+					console.log(`Filter active (${activeFilter}). POIs will not be overridden.`);
+					return;
+				}
+
+				const { recommended } = data.poi;
+
+				let filteredPOIs = recommended;
 				if (zoomLevel !== undefined) {
 					filteredPOIs = filteredPOIs.filter((poi) => poi.zoomLevel <= zoomLevel);
 					console.log('Filtered POIs:', filteredPOIs);
@@ -156,7 +167,11 @@
 	function resetView() {
 		showFilters = false;
 		selectedCountryISO = null;
-		activeFilter = null; // Clear the active filter
+		activeFilter = null;
+		isRecommendedActive = false;
+		isRemoveActive = false;
+		allRecommendedMarkers = [];
+		visibleRecommendedMarkers = [];
 		if (map.getLayer('country-fills')) {
 			map.setPaintProperty('country-fills', 'fill-color', 'rgba(0, 0, 0, 0)');
 		}
@@ -229,9 +244,11 @@
 	}
 
 	const filters = [
+		{ key: 'Recommended', icon: 'fa-solid fa-star', label: 'Recommended' },
 		{ key: 'Beach', icon: 'fa-solid fa-umbrella-beach', label: 'Beach' },
 		{ key: 'icons', icon: 'path-to-icon/icons.png', label: 'Icons' },
-		{ key: 'amazing-views', icon: 'path-to-icon/amazing-views.png', label: 'Amazing views' }
+		{ key: 'amazing-views', icon: 'path-to-icon/amazing-views.png', label: 'Amazing views' },
+		{ key: 'Remove', icon: 'fa-solid fa-ban', label: 'Remove' }
 	];
 
 	// Function to apply a filter
@@ -251,21 +268,7 @@
 			}
 
 			const data = await response.json();
-			const normalisedFilter = filter.toLowerCase().replace(/\s+/g, '');
-			const normalisedKeys = Object.keys(data.filters).map((key) =>
-				key.toLowerCase().replace(/\s+/g, '')
-			);
-
-			const matchedIndex = normalisedKeys.indexOf(normalisedFilter);
-			if (matchedIndex === -1) {
-				console.error(`No matching filter found for: ${filter}`);
-				clearMarkers();
-				activeFilter = null;
-				return;
-			}
-
-			const originalKey = Object.keys(data.filters)[matchedIndex];
-			const filterMarkers = data.filters[originalKey];
+			const filterMarkers = data.poi.filters[filter];
 
 			if (!filterMarkers || filterMarkers.length === 0) {
 				console.log(`No markers found for filter: ${filter} in country: ${selectedCountryISO}`);
@@ -274,14 +277,88 @@
 				return;
 			}
 
-			console.log(`Applying filter: ${originalKey} for country: ${selectedCountryISO}`);
-			console.log('Markers:', filterMarkers);
-
+			console.log(`Applying filter: ${filter} for country: ${selectedCountryISO}`);
 			clearMarkers();
 			addMarkersForPOIs(filterMarkers);
 		} catch (error) {
 			console.error(`Error applying filter: ${filter} for country: ${selectedCountryISO}`, error);
 		}
+	}
+
+	async function applyRecommended() {
+		if (!selectedCountryISO) {
+			console.log(`Recommended button clicked, but no country is currently selected`);
+			return;
+		}
+
+		activeFilter = null;
+		isRecommendedActive = true;
+
+		try {
+			const response = await fetch(`/markers/${selectedCountryISO.toLowerCase()}.json`);
+			if (!response.ok) {
+				console.error(`Failed to load markers for country: ${selectedCountryISO}`);
+				return;
+			}
+
+			const data = await response.json();
+			allRecommendedMarkers = data.poi.recommended;
+
+			if (!allRecommendedMarkers || allRecommendedMarkers.length === 0) {
+				console.log(`No recommended markers found for country: ${selectedCountryISO}`);
+				clearMarkers();
+				return;
+			}
+
+			const currentZoom = map.getZoom();
+			const filteredMarkers = allRecommendedMarkers.filter(
+				(poi) => poi.zoomLevel === undefined || poi.zoomLevel <= currentZoom
+			);
+
+			console.log(`Applying recommended markers for country: ${selectedCountryISO}`);
+			console.log('Filtered Recommended Markers:', filteredMarkers);
+
+			clearMarkers();
+			addMarkersForPOIs(filteredMarkers);
+		} catch (error) {
+			console.error(`Error applying recommended markers for country: ${selectedCountryISO}`, error);
+		}
+	}
+
+	function resetSelectedCountry() {
+		if (selectedCountryISO) {
+			console.log('Resetting selected country and clearing states.');
+			selectedCountryISO = null;
+			showFilters = false; // Ensure filters are hidden
+			isRecommendedActive = false;
+			activeFilter = null;
+			isRemoveActive = false;
+			allRecommendedMarkers = [];
+			visibleRecommendedMarkers = [];
+			clearMarkers();
+
+			if (selectedMonth) {
+				console.log(`Reapplying recommendations for month: ${selectedMonth}`);
+				loadData('recommendations', selectedMonth);
+			} else {
+				console.log('No filter or recommendations to apply. Resetting map.');
+				resetView();
+			}
+
+			if (map.getLayer('country-fills')) {
+				map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
+			}
+		}
+	}
+
+	function clearAllMarkers() {
+		console.log('Removing all markers from the map');
+		clearMarkers();
+		isRecommendedActive = false;
+		activeFilter = null;
+		visibleRecommendedMarkers = [];
+		allRecommendedMarkers = [];
+		isRemoveActive = true;
 	}
 
 	// Initialize Mapbox map
@@ -366,28 +443,6 @@
 			});
 
 			let baselineZoom: number = null; // Store the baseline zoom level
-			function resetSelectedCountry() {
-				if (selectedCountryISO) {
-					selectedCountryISO = null;
-
-					clearMarkers();
-
-					if (selectedFilter && selectedFilter !== 'none' && selectedMonth) {
-						console.log(`Reapplying filter: ${selectedFilter} for month: ${selectedMonth}`);
-						loadData('filter', selectedMonth, selectedFilter);
-					} else if (selectedMonth) {
-						console.log(`Reapplying recommendations for month: ${selectedMonth}`);
-						loadData('recommendations', selectedMonth);
-					} else {
-						console.log('No filter or recommendations to apply. Resetting map.');
-						resetView();
-					}
-
-					if (map.getLayer('country-fills')) {
-						map.setPaintProperty('country-fills', 'fill-opacity', 0.75);
-					}
-				}
-			}
 
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
@@ -400,7 +455,7 @@
 					selectedCountryISO = countryISO;
 
 					loadPOIData(countryISO);
-
+					isRemoveActive = false;
 					// Calculate the bounding box of the selected country
 					const bbox = turf.bbox(countryGeometry);
 
@@ -442,17 +497,26 @@
 				if (selectedCountryISO) {
 					if (currentZoom < baselineZoom) {
 						console.log('Zoomed out past baseline. Resetting...');
+						baselineZoom = null;
+						showFilters = false;
 						clearMarkers();
 						resetSelectedCountry();
-						baselineZoom = null;
 						resetView();
 					} else if (activeFilter) {
 						console.log(
 							`Reapplying active filter: ${activeFilter} for country: ${selectedCountryISO}`
 						);
 						applyFilter(activeFilter);
-					} else {
-						loadPOIData(selectedCountryISO, currentZoom);
+					} else if (isRecommendedActive) {
+						console.log('Reapplying recommended markers due to zoom change');
+						const zoomFilteredMarkers = allRecommendedMarkers.filter(
+							(poi) => poi.zoomLevel === undefined || poi.zoomLevel <= currentZoom
+						);
+						clearMarkers();
+						addMarkersForPOIs(zoomFilteredMarkers);
+					} else if (isRemoveActive) {
+						console.log('Remove filter is active; keeping markers cleared');
+						clearMarkers();
 					}
 				}
 			});
@@ -472,65 +536,104 @@
 	/>
 </head>
 <!-- Main Content -->
+<!-- Main Content -->
 <div use:initMap>
-	<!-- Control container for dropdown and radio buttons inline -->
-	<div class="control-container">
-		<!-- Dropdown for selecting a month -->
-		<div class="dropdown-container">
-			<select id="monthDropdown" on:change={handleMonthSelection}>
-				<option value="none" selected>Select a Month</option>
-				<option value="January">January</option>
-				<option value="February">February</option>
-				<option value="March">March</option>
-				<option value="April">April</option>
-				<option value="May">May</option>
-				<option value="June">June</option>
-				<option value="July">July</option>
-				<option value="August">August</option>
-				<option value="September">September</option>
-				<option value="October">October</option>
-				<option value="November">November</option>
-				<option value="December">December</option>
-			</select>
-		</div>
+	<!-- Only render controls if we have content to show -->
+	{#if !selectedCountryISO || showFilters}
+		<!-- Month and radio controls -->
+		{#if !selectedCountryISO}
+			<div class="control-container">
+				<!-- Dropdown for selecting a month -->
+				<div class="dropdown-container">
+					<select id="monthDropdown" on:change={handleMonthSelection}>
+						<option value="none" selected>Select a Month</option>
+						<option value="January">January</option>
+						<option value="February">February</option>
+						<option value="March">March</option>
+						<option value="April">April</option>
+						<option value="May">May</option>
+						<option value="June">June</option>
+						<option value="July">July</option>
+						<option value="August">August</option>
+						<option value="September">September</option>
+						<option value="October">October</option>
+						<option value="November">November</option>
+						<option value="December">December</option>
+					</select>
+				</div>
 
-		<!-- Conditionally show radio buttons only when a month is selected -->
-		{#if selectedMonth !== 'none' && selectedMonth !== ''}
-			<div class="radio-container">
-				<label>
-					<input
-						type="radio"
-						name="filter"
-						value="none"
-						on:change={handleFilterSelection}
-						checked
-					/> None
-				</label>
-				<label>
-					<input type="radio" name="filter" value="temperature" on:change={handleFilterSelection} />
-					Temperature
-				</label>
-				<label>
-					<input type="radio" name="filter" value="danger" on:change={handleFilterSelection} /> Danger
-				</label>
-				<label>
-					<input type="radio" name="filter" value="rainfall" on:change={handleFilterSelection} /> Rainfall
-				</label>
+				<!-- Conditionally show radio buttons only when a month is selected -->
+				{#if selectedMonth !== 'none' && selectedMonth !== ''}
+					<div class="radio-container">
+						<label>
+							<input
+								type="radio"
+								name="filter"
+								value="none"
+								on:change={handleFilterSelection}
+								checked
+							/> None
+						</label>
+						<label>
+							<input
+								type="radio"
+								name="filter"
+								value="temperature"
+								on:change={handleFilterSelection}
+							/>
+							Temperature
+						</label>
+						<label>
+							<input type="radio" name="filter" value="danger" on:change={handleFilterSelection} /> Danger
+						</label>
+						<label>
+							<input
+								type="radio"
+								name="filter"
+								value="rainfall"
+								on:change={handleFilterSelection}
+							/> Rainfall
+						</label>
+					</div>
+				{/if}
 			</div>
 		{/if}
-		<!-- Vertical Filters -->
+
+		<!-- Vertical Filters in separate container -->
 		{#if showFilters}
 			<div class="filter-container-vertical">
-				{#each filters as filter}
-					<div class="filter-item" on:click={() => applyFilter(filter.key)}>
-						<i class={filter.icon} />
-						<!-- Dynamically render the Font Awesome icon -->
-						<span>{filter.label}</span>
-					</div>
-				{/each}
+				<!-- Recommended Filter -->
+				<div class="filter-item" on:click={applyRecommended}>
+					<i class="fa-solid fa-star" />
+					<span>Recommended</span>
+				</div>
+
+				<!-- Beach Filter -->
+				<div class="filter-item" on:click={() => applyFilter('Beach')}>
+					<i class="fa-solid fa-umbrella-beach" />
+					<span>Beach</span>
+				</div>
+
+				<!-- Icons Filter -->
+				<div class="filter-item" on:click={() => applyFilter('Icons')}>
+					<i class="fa-solid fa-landmark" />
+					<span>Icons</span>
+				</div>
+
+				<!-- Amazing Views Filter -->
+				<div class="filter-item" on:click={() => applyFilter('Amazing Views')}>
+					<i class="fa-solid fa-mountain" />
+					<span>Amazing Views</span>
+				</div>
+
+				<!-- Remove Button -->
+				<div class="filter-item" on:click={clearAllMarkers}>
+					<i class="fa-solid fa-ban" />
+					<span>Remove</span>
+				</div>
 			</div>
 		{/if}
-	</div>
+	{/if}
 </div>
 
 <style>
@@ -585,6 +688,46 @@
 		gap: 15px;
 	}
 
+	.filter-container-vertical {
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		background-color: #fff;
+		padding: 15px 20px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		z-index: 1000;
+	}
+
+	.filter-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		cursor: pointer;
+		text-align: center;
+		color: #333;
+		font-size: 14px;
+		transition: transform 0.2s ease, color 0.2s ease;
+	}
+
+	.filter-item i {
+		font-size: 24px;
+		margin-bottom: 5px;
+	}
+
+	.filter-item:hover {
+		transform: scale(1.1);
+		color: #007bff;
+	}
+
+	.filter-item span {
+		margin-top: 5px;
+		font-size: 12px;
+	}
+
 	.custom-marker {
 		display: flex;
 		justify-content: center;
@@ -602,46 +745,5 @@
 		height: 100%;
 		object-fit: cover;
 		border-radius: 50%;
-	}
-
-	.filter-container-vertical {
-		position: absolute;
-		top: 120px; /* Adjust to appear below the "Select Country" dropdown */
-		left: 20px;
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		background-color: #fff;
-		padding: 10px;
-		border-radius: 8px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		z-index: 1000;
-	}
-
-	.filter-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		cursor: pointer;
-		text-align: center;
-		color: #333;
-		font-size: 14px;
-		transition: transform 0.2s ease, color 0.2s ease;
-	}
-
-	.filter-item img {
-		width: 40px;
-		height: 40px;
-		margin-bottom: 5px;
-	}
-
-	.filter-item:hover {
-		transform: scale(1.1);
-		color: #007bff;
-	}
-
-	.filter-item span {
-		margin-top: 5px;
-		font-size: 12px;
 	}
 </style>

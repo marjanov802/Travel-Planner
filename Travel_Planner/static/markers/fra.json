@@ -1,37 +1,61 @@
 {
-    "filters": {
-        "Beach": [
-            {
-                "name": "Nice Beach",
-                "coordinates": [
-                    7.265252,
-                    43.710173
-                ],
-                "description": "A beautiful beach in Nice.",
-                "image": "images/beach.jpg"
-            }
-        ],
-        "Icons": [
+    "poi": {
+        "recommended": [
             {
                 "name": "Eiffel Tower",
+                "description": "A world-famous landmark in Paris.",
                 "coordinates": [
-                    2.294481,
-                    48.858370
+                    2.2945,
+                    48.8584
                 ],
-                "description": "Famous landmark in Paris.",
-                "image": "images/beach.jpg"
+                "image": "/images/eiffel-tower.jpg",
+                "zoomLevel": 5
+            },
+            {
+                "name": "Louvre Museum",
+                "description": "A historic monument and the world's largest art museum.",
+                "coordinates": [
+                    2.3364,
+                    48.8606
+                ],
+                "image": "/images/visiting-the-louvre.jpg",
+                "zoomLevel": 7
             }
         ],
-        "amazing-views": [
-            {
-                "name": "Mont Blanc",
-                "coordinates": [
-                    6.8652,
-                    45.8326
-                ],
-                "description": "Stunning view of Mont Blanc.",
-                "image": "images/beach.jpg"
-            }
-        ]
+        "filters": {
+            "Beach": [
+                {
+                    "name": "Nice Beach",
+                    "coordinates": [
+                        7.265252,
+                        43.710173
+                    ],
+                    "description": "A beautiful beach in Nice.",
+                    "image": "images/beach.jpg"
+                }
+            ],
+            "Icons": [
+                {
+                    "name": "Eiffel Tower",
+                    "coordinates": [
+                        2.294481,
+                        48.858370
+                    ],
+                    "description": "Famous landmark in Paris.",
+                    "image": "images/beach.jpg"
+                }
+            ],
+            "Amazing Views": [
+                {
+                    "name": "Mont Blanc",
+                    "coordinates": [
+                        6.8652,
+                        45.8326
+                    ],
+                    "description": "Stunning view of Mont Blanc.",
+                    "image": "images/beach.jpg"
+                }
+            ]
+        }
     }
 }

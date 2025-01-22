@@ -75,3 +75,15 @@ What to remember - Naming conventions.
              SCOPE ISSUE - selectedCountrtISO was declared both globally at the beginnging and within the countryFills, causing conflicts and not letting it update properly for the function to use.
              I NEED TO FIX CLEAN UP MY CODE, MERGE MORE FUNCTIONS, OPTIMISE IT, MAKE IT MORE LOGICAL.
              I NEED TO KEEP COMMENTS AND NOTES MORE PROFFESSIONAL AS WELL, it has been becoming more informal recently.
+
+21/01/2025 - Need to add remove button and build itinarery button.
+             When the user clicks on a country, recommended locations are markered from the coutnry_poi.json file, this is a seperate file from the coutnry file with all of the vertical filters.
+             When i clear the markers form the filters, all are cleared, but there is no way to get the recommened poi back onto the coutnry.
+             I need to either update the function for clearing ot call the original markers from the file or add a recommended button to the filters and then merge the json files. This is more efficient to have all the country information within one file, hwoever more tedious to complete.
+             In the long run i could reuse these json files for itinarery planning.
+             color colour - what is right way
+            
+22/01/2025 - MAJOR ISSUE - new updates mean that the month selection and vertical filter are not implemented correctly, they should
+             dissapear and appear after certain actions however they do not.
+             Alot of changes and testing completed not only in this ide as i am not sure of the issue for the filters but it is fixed now.
+             The styling has been heavily manipulated.

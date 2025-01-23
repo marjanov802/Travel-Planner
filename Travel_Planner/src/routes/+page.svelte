@@ -607,31 +607,67 @@
 		<!-- Vertical Filters in separate container -->
 		{#if showFilters}
 			<div class="filter-container-vertical">
-				<!-- Recommended Filter -->
+				<!-- Recommended -->
 				<div class="filter-item" on:click={applyRecommended}>
 					<i class="fa-solid fa-star" />
 					<span>Recommended</span>
 				</div>
 
-				<!-- Beach Filter -->
+				<!-- Beach -->
 				<div class="filter-item" on:click={() => applyFilter('Beach')}>
 					<i class="fa-solid fa-umbrella-beach" />
 					<span>Beach</span>
 				</div>
 
-				<!-- Icons Filter -->
-				<div class="filter-item" on:click={() => applyFilter('Icons')}>
+				<!-- Landmarks -->
+				<div class="filter-item" on:click={() => applyFilter('Landmarks')}>
 					<i class="fa-solid fa-landmark" />
-					<span>Icons</span>
+					<span>Landmarks</span>
 				</div>
 
-				<!-- Amazing Views Filter -->
-				<div class="filter-item" on:click={() => applyFilter('Amazing Views')}>
-					<i class="fa-solid fa-mountain" />
-					<span>Amazing Views</span>
+				<!-- Museums -->
+				<div class="filter-item" on:click={() => applyFilter('Museums')}>
+					<i class="fa-solid fa-palette" />
+					<span>Museums</span>
 				</div>
 
-				<!-- Remove Button -->
+				<!-- Nature -->
+				<div class="filter-item" on:click={() => applyFilter('Nature')}>
+					<i class="fa-solid fa-tree" />
+					<span>Nature</span>
+				</div>
+
+				<!-- Adventure -->
+				<div class="filter-item" on:click={() => applyFilter('Adventure')}>
+					<i class="fa-solid fa-hiking" />
+					<span>Adventure</span>
+				</div>
+
+				<!-- Food -->
+				<div class="filter-item" on:click={() => applyFilter('Food')}>
+					<i class="fa-solid fa-utensils" />
+					<span>Food</span>
+				</div>
+
+				<!-- Shopping -->
+				<div class="filter-item" on:click={() => applyFilter('Shopping')}>
+					<i class="fa-solid fa-shopping-bag" />
+					<span>Shopping</span>
+				</div>
+
+				<!-- Nightlife -->
+				<div class="filter-item" on:click={() => applyFilter('Nightlife')}>
+					<i class="fa-solid fa-music" />
+					<span>Nightlife</span>
+				</div>
+
+				<!-- Sports -->
+				<div class="filter-item" on:click={() => applyFilter('Sports')}>
+					<i class="fa-solid fa-football-ball" />
+					<span>Sports</span>
+				</div>
+
+				<!-- Remove -->
 				<div class="filter-item" on:click={clearAllMarkers}>
 					<i class="fa-solid fa-ban" />
 					<span>Remove</span>
@@ -698,12 +734,15 @@
 		top: 20px;
 		left: 20px;
 		background-color: #fff;
-		padding: 15px 20px;
+		padding: 10px;
 		border-radius: 8px;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		display: flex;
 		flex-direction: column;
-		gap: 15px;
+		gap: 10px;
+		width: 150px;
+		max-height: 90vh;
+		overflow-y: auto;
 		z-index: 1000;
 	}
 
@@ -719,7 +758,7 @@
 	}
 
 	.filter-item i {
-		font-size: 24px;
+		font-size: 20px;
 		margin-bottom: 5px;
 	}
 
@@ -729,8 +768,8 @@
 	}
 
 	.filter-item span {
-		margin-top: 5px;
 		font-size: 12px;
+		text-align: center;
 	}
 
 	.custom-marker {

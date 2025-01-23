@@ -26,34 +26,109 @@
             "Beach": [
                 {
                     "name": "Nice Beach",
+                    "description": "A beautiful beach in Nice.",
                     "coordinates": [
                         7.265252,
                         43.710173
                     ],
-                    "description": "A beautiful beach in Nice.",
-                    "image": "images/beach.jpg"
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 10
                 }
             ],
-            "Icons": [
+            "Landmarks": [
                 {
-                    "name": "Eiffel Tower",
+                    "name": "Notre Dame Cathedral",
+                    "description": "A famous Gothic cathedral in Paris.",
                     "coordinates": [
-                        2.294481,
-                        48.858370
+                        2.349902,
+                        48.852968
                     ],
-                    "description": "Famous landmark in Paris.",
-                    "image": "images/beach.jpg"
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 8
                 }
             ],
-            "Amazing Views": [
+            "Museums": [
+                {
+                    "name": "Louvre Museum",
+                    "description": "The world's largest art museum.",
+                    "coordinates": [
+                        2.3364,
+                        48.8606
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 7
+                }
+            ],
+            "Nature": [
                 {
                     "name": "Mont Blanc",
+                    "description": "The highest mountain in the Alps.",
                     "coordinates": [
                         6.8652,
                         45.8326
                     ],
-                    "description": "Stunning view of Mont Blanc.",
-                    "image": "images/beach.jpg"
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 9
+                }
+            ],
+            "Adventure": [
+                {
+                    "name": "Chamonix",
+                    "description": "A popular spot for skiing and mountaineering.",
+                    "coordinates": [
+                        6.8694,
+                        45.9237
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 9
+                }
+            ],
+            "Food": [
+                {
+                    "name": "La Tour d'Argent",
+                    "description": "An iconic Parisian restaurant.",
+                    "coordinates": [
+                        2.3579,
+                        48.8502
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 10
+                }
+            ],
+            "Shopping": [
+                {
+                    "name": "Galeries Lafayette",
+                    "description": "A luxury department store in Paris.",
+                    "coordinates": [
+                        2.3321,
+                        48.8738
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 10
+                }
+            ],
+            "Nightlife": [
+                {
+                    "name": "Moulin Rouge",
+                    "description": "A world-famous cabaret in Paris.",
+                    "coordinates": [
+                        2.3325,
+                        48.8841
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 10
+                }
+            ],
+            "Sports": [
+                {
+                    "name": "Parc des Princes",
+                    "description": "A major football stadium in Paris.",
+                    "coordinates": [
+                        2.2528,
+                        48.8414
+                    ],
+                    "image": "/images/beach.jpg",
+                    "zoomLevel": 8
                 }
             ]
         }

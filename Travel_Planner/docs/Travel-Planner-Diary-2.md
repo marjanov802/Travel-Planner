@@ -87,3 +87,7 @@ What to remember - Naming conventions.
              dissapear and appear after certain actions however they do not.
              Alot of changes and testing completed not only in this ide as i am not sure of the issue for the filters but it is fixed now.
              The styling has been heavily manipulated.
+
+23/01/2025 - Attempting to modify the markers and their usability. 
+             Need to make the radius of the marker larger so that the users can select it easier, i am having difficulty.
+             

@@ -65,9 +65,14 @@
 
 				let filteredPOIs = recommended;
 				if (zoomLevel !== undefined) {
-					filteredPOIs = filteredPOIs.filter((poi) => poi.zoomLevel <= zoomLevel);
-					console.log('Filtered POIs:', filteredPOIs);
+					filteredPOIs = filteredPOIs.filter(
+						(poi) => poi.zoomLevel === undefined || poi.zoomLevel <= zoomLevel
+					);
 				}
+
+				isRecommendedActive = true;
+				allRecommendedMarkers = recommended;
+				visibleRecommendedMarkers = filteredPOIs;
 
 				clearMarkers();
 				addMarkersForPOIs(filteredPOIs);

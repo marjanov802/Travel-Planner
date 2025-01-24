@@ -222,21 +222,38 @@
 			markerDiv.className = 'custom-marker';
 
 			markerDiv.innerHTML = `
-            <img src="${poi.image}" alt="${poi.name}" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid white;" />
+            <img src="${poi.image}" alt="${poi.name}" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;" />
         `;
 
 			const marker = new mapboxgl.Marker(markerDiv)
 				.setLngLat(poi.coordinates)
 				.setPopup(
 					new mapboxgl.Popup({ offset: 25 }).setHTML(`
-                        <div style="text-align: center; max-width: 200px;">
-                            <h3>${poi.name}</h3>
-                            <img src="${poi.image}" alt="${poi.name}" style="width: 100%; border-radius: 8px;" />
-                            <p>${poi.description}</p>
-                        </div>
-                    `)
+                    <div style="text-align: center; max-width: 200px;">
+                        <h3>${poi.name}</h3>
+                        <img src="${poi.image}" alt="${poi.name}" style="width: 100%; border-radius: 8px;" />
+                        <p>${poi.description}</p>
+                    </div>
+                `)
 				)
 				.addTo(map);
+
+			markerDiv.addEventListener('click', () => {
+				map.flyTo({
+					center: poi.coordinates,
+					zoom: Math.max(map.getZoom() + 2, 15),
+					speed: 0.8,
+					curve: 1.5
+				});
+
+				markerDiv.style.transform = 'scale(1.5)';
+
+				poiMarkers.forEach((m) => {
+					if (m.getElement() !== markerDiv) {
+						m.getElement().style.transform = 'scale(1)';
+					}
+				});
+			});
 
 			poiMarkers.push(marker);
 		});
@@ -781,6 +798,7 @@
 		border-radius: 50%;
 		background-color: rgba(255, 255, 255, 0.9);
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		transition: transform 0.3s ease;
 	}
 
 	.custom-marker img {
@@ -789,5 +807,6 @@
 		height: 100%;
 		object-fit: cover;
 		border-radius: 50%;
+		pointer-events: none;
 	}
 </style>

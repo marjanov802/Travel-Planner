@@ -238,7 +238,9 @@
 				)
 				.addTo(map);
 
-			markerDiv.addEventListener('click', () => {
+			markerDiv.addEventListener('click', (event) => {
+				event.stopPropagation(); // Prevent click event from propagating to the map
+				console.log(`Marker clicked: ${poi.name}, Coordinates: ${poi.coordinates}`);
 				map.flyTo({
 					center: poi.coordinates,
 					zoom: Math.max(map.getZoom() + 2, 15),

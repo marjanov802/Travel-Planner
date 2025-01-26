@@ -22,6 +22,29 @@
 	let isRecommendedActive = false;
 	let allRecommendedMarkers = [];
 	let isRemoveActive = false;
+	let showSidebar = false;
+	let sidebarContent = '';
+
+	// Function to handle marker click and open sidebar
+	function handleMarkerClick(poi) {
+		showSidebar = true;
+		sidebarContent = `
+            <h3>${poi.name}</h3>
+            <img src="${poi.image}" alt="${poi.name}" style="width: 100%; border-radius: 8px;" />
+            <p>${poi.description}</p>
+        `;
+	}
+
+	// Function to close the sidebar
+	function closeSidebar() {
+		const sidebar = document.querySelector('.sidebar');
+		if (sidebar) {
+			sidebar.classList.add('hidden');
+			setTimeout(() => {
+				showSidebar = false;
+			}, 300);
+		}
+	}
 
 	// Load JSON file based on selected month
 	async function loadData(type: 'recommendations' | 'filter', identifier: string, filter?: string) {
@@ -257,6 +280,10 @@
 				});
 			});
 
+			markerDiv.addEventListener('click', () => {
+				handleMarkerClick(poi);
+			});
+
 			poiMarkers.push(marker);
 		});
 	}
@@ -383,6 +410,14 @@
 		visibleRecommendedMarkers = [];
 		allRecommendedMarkers = [];
 		isRemoveActive = true;
+	}
+
+	function planItinerary() {
+		if (!selectedCountryISO) {
+			console.log('No country selected. Please select a country to plan an itinerary.');
+			return;
+		}
+		console.log(`Planning itinerary for country: ${selectedCountryISO}`); // Debugging
 	}
 
 	// Initialize Mapbox map
@@ -523,6 +558,7 @@
 						console.log('Zoomed out past baseline. Resetting...');
 						baselineZoom = null;
 						showFilters = false;
+						showSidebar = false;
 						clearMarkers();
 						resetSelectedCountry();
 						resetView();
@@ -691,6 +727,18 @@
 					<i class="fa-solid fa-ban" />
 					<span>Remove</span>
 				</div>
+
+				<!-- Plan Itinerary Button -->
+				<div class="plan-itinerary" on:click={planItinerary}>
+					<button>Plan Itinerary</button>
+				</div>
+			</div>
+		{/if}
+		<!-- Sidebar -->
+		{#if showSidebar}
+			<div class="sidebar">
+				<button class="close-btn" on:click={closeSidebar}>×</button>
+				{@html sidebarContent}
 			</div>
 		{/if}
 	{/if}
@@ -750,7 +798,8 @@
 
 	.filter-container-vertical {
 		position: absolute;
-		top: 20px;
+		top: 10px;
+		bottom: 10px;
 		left: 20px;
 		background-color: #fff;
 		padding: 10px;
@@ -758,13 +807,11 @@
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
 		gap: 10px;
-		width: 150px;
-		max-height: 90vh;
-		overflow-y: auto;
+		width: 120px;
 		z-index: 1000;
 	}
-
 	.filter-item {
 		display: flex;
 		flex-direction: column;
@@ -777,7 +824,7 @@
 	}
 
 	.filter-item i {
-		font-size: 20px;
+		font-size: 16px;
 		margin-bottom: 5px;
 	}
 
@@ -787,7 +834,7 @@
 	}
 
 	.filter-item span {
-		font-size: 12px;
+		font-size: 10px;
 		text-align: center;
 	}
 
@@ -810,5 +857,68 @@
 		object-fit: cover;
 		border-radius: 50%;
 		pointer-events: none;
+	}
+
+	.plan-itinerary {
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.plan-itinerary button {
+		background-color: #007bff;
+		color: white;
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		font-size: 16px;
+		cursor: pointer;
+		transition: background-color 0.3s ease, transform 0.3s ease;
+	}
+
+	.plan-itinerary button:hover {
+		background-color: #0056b3;
+		transform: scale(1.05);
+	}
+
+	.sidebar {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		bottom: 10px;
+		width: 280px;
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+		z-index: 1000;
+		padding: 15px;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		transition: transform 0.3s ease, opacity 0.3s ease;
+		transform: translateX(0);
+		opacity: 1;
+	}
+
+	.sidebar.hidden {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+
+	.close-btn {
+		align-self: flex-end;
+		background: none;
+		border: none;
+		font-size: 24px;
+		cursor: pointer;
+		margin-bottom: 20px;
+		color: #333;
+		transition: colour 0.3s ease;
+	}
+
+	.close-btn:hover {
+		color: red;
 	}
 </style>

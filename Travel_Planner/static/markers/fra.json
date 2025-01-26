@@ -9,7 +9,11 @@
                     48.8584
                 ],
                 "image": "/images/eiffel-tower.jpg",
-                "zoomLevel": 5
+                "zoomLevel": 5,
+                "price": "€25 for adults, €10 for children",
+                "howToGetThere": "Take Metro Line 6 to Trocadéro Station and walk for 5 minutes.",
+                "bestTimeToVisit": "Evening to enjoy the lights.",
+                "additionalInfo": "Constructed in 1889 for the World's Fair."
             },
             {
                 "name": "Louvre Museum",

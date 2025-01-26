@@ -91,3 +91,4 @@ What to remember - Naming conventions.
 23/01/2025 - Attempting to modify the markers and their usability. 
              Need to make the radius of the marker larger so that the users can select it easier, i am having difficulty.
              
+24/01/2025 - issue was that the marker and the country can both be selected at the same time, i need to seperate the layers int his context.

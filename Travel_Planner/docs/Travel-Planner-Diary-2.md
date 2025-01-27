@@ -92,3 +92,8 @@ What to remember - Naming conventions.
              Need to make the radius of the marker larger so that the users can select it easier, i am having difficulty.
              
 24/01/2025 - issue was that the marker and the country can both be selected at the same time, i need to seperate the layers int his context.
+
+27/01/2025 - I will make a pop up side bar that will convey information about the markers that the users will need to know.
+             I will need to design a different side bar for different markers in terms of hci, as not all markers will have the same pre reuqistits or infromationt that needs to be displayed. Hiding this from the user and showing them only what is needed goes in line with good hci.
+             First i will start working on the landmarks pop up, as there is the most infromation, it is the easiest to structure.
+             Acitvities such as hiking, information could be sibjective.

@@ -24,15 +24,19 @@
 	let isRemoveActive = false;
 	let showSidebar = false;
 	let sidebarContent = '';
+	let activeTab = 'Info';
+
+	const tabs = ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
+
+	function setActiveTab(tab) {
+		activeTab = tab;
+	}
 
 	// Function to handle marker click and open sidebar
 	function handleMarkerClick(poi) {
-		showSidebar = true;
-		sidebarContent = `
-            <h3>${poi.name}</h3>
-            <img src="${poi.image}" alt="${poi.name}" style="width: 100%; border-radius: 8px;" />
-            <p>${poi.description}</p>
-        `;
+		showSidebar = true; // Show the sidebar
+		markerDetails = poi; // Optional: store marker details if needed
+		activeTab = 'Info'; // Reset to default tab
 	}
 
 	// Function to close the sidebar
@@ -742,6 +746,35 @@
 			</div>
 		{/if}
 	{/if}
+	{#if showSidebar}
+		<div class="sidebar">
+			<button class="close-btn" on:click={() => (showSidebar = false)}>×</button>
+
+			<!-- Tab Navigation -->
+			<div class="tab-navigation">
+				{#each tabs as tab}
+					<button class:active={tab === activeTab} on:click={() => setActiveTab(tab)}>
+						{tab}
+					</button>
+				{/each}
+			</div>
+
+			<!-- Tab Content -->
+			<div class="tab-content">
+				{#if activeTab === 'Info'}
+					<p>Info content goes here.</p>
+				{:else if activeTab === 'Transport'}
+					<p>Transport content goes here.</p>
+				{:else if activeTab === 'Tickets'}
+					<p>Tickets content goes here.</p>
+				{:else if activeTab === 'Nearby'}
+					<p>Nearby content goes here.</p>
+				{:else if activeTab === 'Photos'}
+					<p>Photos content goes here.</p>
+				{/if}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -920,5 +953,49 @@
 
 	.close-btn:hover {
 		color: red;
+	}
+
+	.sidebar {
+		position: fixed;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		width: 400px;
+		background: #fff;
+		border-left: 1px solid #ccc;
+		box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+		padding: 20px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.tab-navigation {
+		display: flex;
+		justify-content: space-around;
+		margin-bottom: 20px;
+	}
+
+	.tab-navigation button {
+		background: none;
+		border: none;
+		padding: 10px;
+		font-size: 16px;
+		cursor: pointer;
+		border-bottom: 2px solid transparent;
+		transition: border-color 0.2s;
+	}
+
+	.tab-navigation button.active {
+		border-bottom: 2px solid #007bff;
+		font-weight: bold;
+	}
+
+	.tab-navigation button:hover {
+		color: #007bff;
+	}
+
+	.tab-content {
+		font-size: 14px;
+		color: #333;
 	}
 </style>

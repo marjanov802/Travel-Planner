@@ -97,3 +97,7 @@ What to remember - Naming conventions.
              I will need to design a different side bar for different markers in terms of hci, as not all markers will have the same pre reuqistits or infromationt that needs to be displayed. Hiding this from the user and showing them only what is needed goes in line with good hci.
              First i will start working on the landmarks pop up, as there is the most infromation, it is the easiest to structure.
              Acitvities such as hiking, information could be sibjective.
+
+03/02/2025 - I have slowly completed the impleemntation of the side bar for the recommeneded tab.   
+             However the categrories need to differ for each filter as the users will need different infromation for different activites to ensure good HCI.
+             A user in the city centre may need to know where a cafe is, hwoever a user on top of a mountain will not.

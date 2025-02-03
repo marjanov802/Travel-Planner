@@ -25,18 +25,61 @@
 	let showSidebar = false;
 	let sidebarContent = '';
 	let activeTab = 'Info';
+	let selectedPOI = null;
 
 	const tabs = ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
+
+	// Helper function to caclulate distance (km)
+	function computeDistance(coord1: number[], coord2: number[]): string {
+		if (!coord1 || !coord2) return 'N/A';
+		const from = turf.point(coord1);
+		const to = turf.point(coord2);
+		const distance = turf.distance(from, to, { units: 'kilometers' });
+		return distance.toFixed(2);
+	}
+
+	// Map category keys to display labels
+	const categoryLabels = {
+		restaurantsAndCafes: 'Restaurants & Cafes',
+		attractions: 'Attractions',
+		publicTransport: 'Public Transport'
+	};
 
 	function setActiveTab(tab) {
 		activeTab = tab;
 	}
 
-	// Function to handle marker click and open sidebar
 	function handleMarkerClick(poi) {
 		showSidebar = true; // Show the sidebar
-		markerDetails = poi; // Optional: store marker details if needed
-		activeTab = 'Info'; // Reset to default tab
+		selectedPOI = poi; // Store selected marker details
+		activeTab = 'Info'; // Default tab when sidebar opens
+
+		// Build sidebar content dynamically
+		sidebarContent = `
+        <div style="text-align: center;">
+            <h2>${poi.name}</h2>
+            <img src="${poi.image}" alt="${
+			poi.name
+		}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" />
+            <p><strong>Description:</strong> ${poi.description}</p>
+            ${poi.price ? `<p><strong>Price:</strong> ${poi.price}</p>` : ''}
+            ${
+							poi.howToGetThere
+								? `<p><strong>How to Get There:</strong> ${poi.howToGetThere}</p>`
+								: ''
+						}
+            ${
+							poi.bestTimeToVisit
+								? `<p><strong>Best Time to Visit:</strong> ${poi.bestTimeToVisit}</p>`
+								: ''
+						}
+            ${
+							poi.additionalInfo
+								? `<p><strong>Additional Info:</strong> ${poi.additionalInfo}</p>`
+								: ''
+						}
+        </div>
+    `;
 	}
 
 	// Function to close the sidebar
@@ -46,6 +89,7 @@
 			sidebar.classList.add('hidden');
 			setTimeout(() => {
 				showSidebar = false;
+				selectedPOI = null; // Clear POI when closing sidebar
 			}, 300);
 		}
 	}
@@ -748,29 +792,153 @@
 	{/if}
 	{#if showSidebar}
 		<div class="sidebar">
-			<button class="close-btn" on:click={() => (showSidebar = false)}>×</button>
+			<!-- Header with Name and Close Button -->
+			<div class="sidebar-header">
+				<h3>{selectedPOI.name}</h3>
+				<button class="close-btn" on:click={closeSidebar}>×</button>
+			</div>
 
 			<!-- Tab Navigation -->
 			<div class="tab-navigation">
-				{#each tabs as tab}
-					<button class:active={tab === activeTab} on:click={() => setActiveTab(tab)}>
-						{tab}
-					</button>
-				{/each}
+				<button class:active={activeTab === 'Info'} on:click={() => setActiveTab('Info')}>
+					<i class="fa-solid fa-circle-info" /> Info
+				</button>
+				<button class:active={activeTab === 'Transport'} on:click={() => setActiveTab('Transport')}>
+					<i class="fa-solid fa-bus" /> Transport
+				</button>
+				<button class:active={activeTab === 'Tickets'} on:click={() => setActiveTab('Tickets')}>
+					<i class="fa-solid fa-ticket-alt" /> Tickets
+				</button>
+				<button class:active={activeTab === 'Nearby'} on:click={() => setActiveTab('Nearby')}>
+					<i class="fa-solid fa-map-marker-alt" /> Nearby
+				</button>
+				<button class:active={activeTab === 'Photos'} on:click={() => setActiveTab('Photos')}>
+					<i class="fa-solid fa-camera" /> Photos
+				</button>
 			</div>
 
 			<!-- Tab Content -->
 			<div class="tab-content">
 				{#if activeTab === 'Info'}
-					<p>Info content goes here.</p>
+					<div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+						<!-- Image -->
+						<img
+							src={selectedPOI.image}
+							alt={selectedPOI.name}
+							style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;"
+						/>
+
+						<!-- Additional Info Section -->
+						<div style="margin-top: 15px;">
+							{#if selectedPOI.location}
+								<div style="display: flex; align-items: center; margin-bottom: 10px;">
+									<i
+										class="fa-solid fa-map-marker-alt"
+										style="margin-right: 10px; color: #007bff;"
+									/>
+									<span>{selectedPOI.location}</span>
+								</div>
+							{/if}
+							{#if selectedPOI.openingHours}
+								<div style="display: flex; align-items: center; margin-bottom: 10px;">
+									<i class="fa-solid fa-clock" style="margin-right: 10px; color: #007bff;" />
+									<span>{selectedPOI.openingHours}</span>
+								</div>
+							{/if}
+							{#if selectedPOI.price}
+								<div style="display: flex; align-items: center; margin-bottom: 10px;">
+									<i class="fa-solid fa-ticket-alt" style="margin-right: 10px; color: #007bff;" />
+									<span>{selectedPOI.price}</span>
+								</div>
+							{/if}
+							{#if selectedPOI.additionalInfo}
+								<div style="margin-top: 10px;">
+									<strong>More Info:</strong>
+									{selectedPOI.additionalInfo}
+								</div>
+							{/if}
+						</div>
+					</div>
 				{:else if activeTab === 'Transport'}
-					<p>Transport content goes here.</p>
-				{:else if activeTab === 'Tickets'}
-					<p>Tickets content goes here.</p>
+					{#if selectedPOI.transport}
+						<div
+							style="font-family: Arial, sans-serif; font-size: 14px; color: #333; line-height: 1.6;"
+						>
+							<!-- Metro Stations -->
+							{#if selectedPOI.transport.metroStations && selectedPOI.transport.metroStations.length > 0}
+								<p><strong>Metro Stations:</strong></p>
+								<ul style="margin: 10px 0; padding-left: 20px;">
+									{#each selectedPOI.transport.metroStations as station}
+										<li style="margin-bottom: 5px;">{station}</li>
+									{/each}
+								</ul>
+							{/if}
+
+							<!-- Bus Lines -->
+							{#if selectedPOI.transport.busLines && selectedPOI.transport.busLines.length > 0}
+								<p style="margin-top: 10px;"><strong>Bus Lines:</strong></p>
+								<ul style="margin: 10px 0; padding-left: 20px;">
+									{#each selectedPOI.transport.busLines as line}
+										<li style="margin-bottom: 5px;">{line}</li>
+									{/each}
+								</ul>
+							{/if}
+
+							<!-- Parking -->
+							{#if selectedPOI.transport.parking}
+								<p style="margin-top: 10px;">
+									<strong>Parking:</strong>
+									{selectedPOI.transport.parking}
+								</p>
+							{/if}
+						</div>
+					{:else}
+						<p style="font-family: Arial, sans-serif; font-size: 14px; color: #777;">
+							No transport information available.
+						</p>
+					{/if}
 				{:else if activeTab === 'Nearby'}
-					<p>Nearby content goes here.</p>
+					{#if selectedPOI.nearby && typeof selectedPOI.nearby === 'object'}
+						<div
+							style="font-family: Arial, sans-serif; font-size: 14px; color: #333; line-height: 1.6;"
+						>
+							{#each Object.keys(selectedPOI.nearby) as category}
+								<h4 style="margin-bottom: 8px;">{categoryLabels[category] || category}</h4>
+								<ul style="margin: 10px 0; padding-left: 0; list-style: none;">
+									{#each selectedPOI.nearby[category] as place}
+										<li style="display: flex; align-items: center; margin-bottom: 10px;">
+											<i
+												class="fa-solid fa-map-marker-alt"
+												style="margin-right: 10px; color: #007bff;"
+											/>
+											<span>
+												<strong>{place.name}</strong> ({computeDistance(
+													selectedPOI.coordinates,
+													place.coordinates
+												)} km)
+											</span>
+										</li>
+									{/each}
+								</ul>
+							{/each}
+						</div>
+					{:else}
+						<p style="font-family: Arial, sans-serif; font-size: 14px; color: #777;">
+							No nearby places available.
+						</p>
+					{/if}
 				{:else if activeTab === 'Photos'}
-					<p>Photos content goes here.</p>
+					{#if activeTab === 'Photos'}
+						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+							{#each selectedPOI.photos as photo}
+								<img
+									src={photo}
+									alt="Photo of {selectedPOI.name}"
+									style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;"
+								/>
+							{/each}
+						</div>
+					{/if}
 				{/if}
 			</div>
 		</div>
@@ -915,26 +1083,6 @@
 		transform: scale(1.05);
 	}
 
-	.sidebar {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		bottom: 10px;
-		width: 280px;
-		background-color: white;
-		border-radius: 8px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-		z-index: 1000;
-		padding: 15px;
-		overflow-y: auto;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		transition: transform 0.3s ease, opacity 0.3s ease;
-		transform: translateX(0);
-		opacity: 1;
-	}
-
 	.sidebar.hidden {
 		transform: translateX(100%);
 		opacity: 0;
@@ -960,41 +1108,142 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		width: 400px;
+		width: 500px; /* Adjust width if necessary */
 		background: #fff;
 		border-left: 1px solid #ccc;
 		box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 		padding: 20px;
 		overflow-y: auto;
-		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.sidebar-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 15px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.sidebar-header h3 {
+		margin: 0;
+		font-size: 18px;
+		color: #333;
+	}
+
+	.close-btn {
+		background: none;
+		border: none;
+		font-size: 24px;
+		cursor: pointer;
+		color: #333;
+		transition: color 0.3s ease;
+	}
+
+	.close-btn:hover {
+		color: red;
 	}
 
 	.tab-navigation {
 		display: flex;
 		justify-content: space-around;
-		margin-bottom: 20px;
+		background-color: #f9f9f9;
+		padding: 10px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		margin-bottom: 15px; /* Space between navigation and content */
 	}
 
 	.tab-navigation button {
-		background: none;
+		flex: none;
+		min-width: 80px;
+		background-color: transparent;
 		border: none;
 		padding: 10px;
-		font-size: 16px;
+		font-size: 14px;
+		color: #666;
 		cursor: pointer;
-		border-bottom: 2px solid transparent;
-		transition: border-color 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 5px;
+		transition: background-color 0.2s, color 0.2s;
+		text-align: center;
 	}
 
-	.tab-navigation button.active {
-		border-bottom: 2px solid #007bff;
-		font-weight: bold;
+	.tab-navigation button i {
+		font-size: 16px;
+		margin-right: 5px;
 	}
 
 	.tab-navigation button:hover {
+		background-color: #eaeaea;
+		color: #000;
+	}
+
+	.tab-navigation button.active {
+		background-color: #ffffff;
+		color: #000;
+		font-weight: bold;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.fa-map-marker-alt,
+	.fa-clock,
+	.fa-ticket-alt {
+		font-size: 14px;
+	}
+
+	.transport-section {
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		color: #333;
+		line-height: 1.6;
+	}
+
+	.transport-section p {
+		margin-bottom: 10px;
+		font-weight: bold;
+		color: #000;
+	}
+
+	.transport-section ul {
+		margin: 10px 0;
+		padding-left: 20px;
+		list-style-type: disc;
+	}
+
+	.transport-section li {
+		margin-bottom: 5px;
+	}
+
+	.nearby-section {
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		color: #333;
+		line-height: 1.6;
+	}
+
+	.nearby-section ul {
+		margin: 10px 0;
+		padding-left: 0;
+		list-style: none;
+	}
+
+	.nearby-section li {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	.nearby-section i {
+		margin-right: 10px;
 		color: #007bff;
 	}
 
-	.tab-content {
+	.nearby-section span {
 		font-size: 14px;
 		color: #333;
 	}

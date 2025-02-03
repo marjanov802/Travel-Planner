@@ -10,20 +10,153 @@
                 ],
                 "image": "/images/eiffel-tower.jpg",
                 "zoomLevel": 5,
-                "price": "€25 for adults, €10 for children",
-                "howToGetThere": "Take Metro Line 6 to Trocadéro Station and walk for 5 minutes.",
-                "bestTimeToVisit": "Evening to enjoy the lights.",
-                "additionalInfo": "Constructed in 1889 for the World's Fair."
+                "location": "Champ de Mars, 5 Avenue Anatole France, Paris",
+                "openingHours": "9:30 AM - 10:45 PM (Last entry 45 mins before closing)",
+                "price": "From €28.30 for adults",
+                "additionalInfo": "Constructed in 1889 for the World's Fair.",
+                "transport": {
+                    "metroStations": [
+                        "Line 6 - Bir-Hakeim",
+                        "Line 9 - Trocadéro"
+                    ],
+                    "busLines": [
+                        "Lines 42, 69, 82, 87"
+                    ],
+                    "parking": "Paid parking is available near the Champ de Mars area."
+                },
+                "tickets": {
+                    "pricing": {
+                        "adults": "€28.30",
+                        "children": "€10.20",
+                        "seniors": "€14.10",
+                        "free": "Children under 4"
+                    },
+                    "onlineBooking": "https://www.toureiffel.paris/en",
+                    "notes": "It is recommended to book tickets online to avoid queues."
+                },
+                "nearby": {
+                    "restaurantsAndCafes": [
+                        {
+                            "name": "Le Jules Verne",
+                            "coordinates": [
+                                2.2940,
+                                48.8570
+                            ]
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "Trocadéro",
+                            "coordinates": [
+                                2.2910,
+                                48.8620
+                            ]
+                        },
+                        {
+                            "name": "Arc de Triomphe",
+                            "coordinates": [
+                                2.2950,
+                                48.8730
+                            ]
+                        }
+                    ],
+                    "publicTransport": [
+                        {
+                            "name": "RER C (Champ de Mars-Tour Eiffel)",
+                            "coordinates": [
+                                2.2942,
+                                48.8572
+                            ]
+                        }
+                    ]
+                },
+                "photos": [
+                    "/images/eiffel-tower.jpg",
+                    "/images/beach.jpg",
+                    "/images/visiting-the-louvre.jpg"
+                ]
             },
             {
                 "name": "Louvre Museum",
-                "description": "A historic monument and the world's largest art museum.",
+                "description": "The world's largest art museum and a historic monument in Paris, home to thousands of works of art including the Mona Lisa and the Venus de Milo.",
                 "coordinates": [
                     2.3364,
                     48.8606
                 ],
                 "image": "/images/visiting-the-louvre.jpg",
-                "zoomLevel": 7
+                "zoomLevel": 7,
+                "location": "Rue de Rivoli, 75001 Paris, France",
+                "openingHours": "9:00 AM - 6:00 PM (Closed on Tuesdays)",
+                "price": "From €15 for adults",
+                "additionalInfo": "Originally a royal palace, the Louvre was transformed into a public museum during the French Revolution.",
+                "transport": {
+                    "metroStations": [
+                        "Palais Royal - Musée du Louvre"
+                    ],
+                    "busLines": [
+                        "21",
+                        "27",
+                        "39"
+                    ],
+                    "parking": "Limited street parking available nearby."
+                },
+                "tickets": {
+                    "pricing": {
+                        "adults": "€15",
+                        "students": "€10",
+                        "children": "Free for under 18"
+                    },
+                    "onlineBooking": "https://www.louvre.fr/en/visites-en-ligne",
+                    "notes": "Booking online is recommended to avoid long queues."
+                },
+                "nearby": {
+                    "restaurantsAndCafes": [
+                        {
+                            "name": "Café Marly",
+                            "coordinates": [
+                                2.3360,
+                                48.8600
+                            ]
+                        },
+                        {
+                            "name": "Le Fumoir",
+                            "coordinates": [
+                                2.3380,
+                                48.8615
+                            ]
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "Tuileries Garden",
+                            "coordinates": [
+                                2.3270,
+                                48.8635
+                            ]
+                        },
+                        {
+                            "name": "Pont des Arts",
+                            "coordinates": [
+                                2.3375,
+                                48.8590
+                            ]
+                        }
+                    ],
+                    "publicTransport": [
+                        {
+                            "name": "Palais Royal - Musée du Louvre Metro",
+                            "coordinates": [
+                                2.3363,
+                                48.8610
+                            ]
+                        }
+                    ]
+                },
+                "photos": [
+                    "/images/visiting-the-louvre.jpg",
+                    "/images/louvre-interior.jpg",
+                    "/images/louvre-mona-lisa.jpg"
+                ]
             }
         ],
         "filters": {
@@ -42,25 +175,139 @@
             "Landmarks": [
                 {
                     "name": "Notre Dame Cathedral",
-                    "description": "A famous Gothic cathedral in Paris.",
+                    "description": "A masterpiece of French Gothic architecture, known for its stunning stained glass windows and rich history.",
                     "coordinates": [
                         2.349902,
                         48.852968
                     ],
                     "image": "/images/beach.jpg",
-                    "zoomLevel": 8
+                    "zoomLevel": 8,
+                    "location": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
+                    "openingHours": "8:00 AM - 6:45 PM",
+                    "price": "Free entry (donations accepted)",
+                    "additionalInfo": "Despite being under restoration following the 2019 fire, Notre Dame remains an iconic symbol of French heritage and resilience.",
+                    "transport": {
+                        "metroStations": [
+                            "Cité"
+                        ],
+                        "busLines": [
+                            "38",
+                            "47",
+                            "85"
+                        ],
+                        "parking": "Limited parking available nearby"
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "Free",
+                            "children": "Free",
+                            "seniors": "Free"
+                        },
+                        "onlineBooking": "N/A",
+                        "notes": "No tickets are required for entry."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Le Café Panis",
+                                "coordinates": [
+                                    2.3490,
+                                    48.8532
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Sainte-Chapelle",
+                                "coordinates": [
+                                    2.3460,
+                                    48.8554
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Cité Metro Station",
+                                "coordinates": [
+                                    2.3480,
+                                    48.8530
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/beach.jpg"
+                    ],
+                    "yearBuilt": "1163",
+                    "architecturalStyle": "Gothic",
+                    "historicalSignificance": "A symbol of French cultural heritage and resilience, Notre Dame has witnessed centuries of history and remains one of the most celebrated landmarks in Paris."
                 }
             ],
             "Museums": [
                 {
-                    "name": "Louvre Museum",
-                    "description": "The world's largest art museum.",
+                    "name": "Musée d'Orsay",
+                    "description": "A renowned museum housed in a former railway station, famous for its extensive collection of Impressionist masterpieces.",
                     "coordinates": [
-                        2.3364,
-                        48.8606
+                        2.3266,
+                        48.8600
                     ],
                     "image": "/images/beach.jpg",
-                    "zoomLevel": 7
+                    "zoomLevel": 7,
+                    "location": "1 Rue de la Légion d'Honneur, 75007 Paris, France",
+                    "openingHours": "9:30 AM - 6:00 PM (Closed on Mondays)",
+                    "price": "From €14 for adults",
+                    "additionalInfo": "Housed in a Beaux-Arts railway station, the museum displays artworks spanning from 1848 to 1914.",
+                    "transport": {
+                        "metroStations": [
+                            "Solférino"
+                        ],
+                        "busLines": [
+                            "63",
+                            "68"
+                        ],
+                        "parking": "No dedicated parking available; street parking may be found nearby."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€14",
+                            "children": "Free for under 18",
+                            "seniors": "€11"
+                        },
+                        "onlineBooking": "https://www.musee-orsay.fr/en/visite.html",
+                        "notes": "Online booking is recommended to avoid waiting times."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Café Campana",
+                                "coordinates": [
+                                    2.3260,
+                                    48.8590
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Pont Alexandre III",
+                                "coordinates": [
+                                    2.3134,
+                                    48.8627
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Solférino Metro Station",
+                                "coordinates": [
+                                    2.3240,
+                                    48.8585
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/beach.jpg"
+                    ]
                 }
             ],
             "Nature": [
@@ -114,25 +361,136 @@
             "Nightlife": [
                 {
                     "name": "Moulin Rouge",
-                    "description": "A world-famous cabaret in Paris.",
+                    "description": "A world-famous cabaret known for its dazzling performances, iconic red windmill, and vibrant nightlife.",
                     "coordinates": [
                         2.3325,
                         48.8841
                     ],
                     "image": "/images/beach.jpg",
-                    "zoomLevel": 10
+                    "zoomLevel": 10,
+                    "location": "82 Boulevard de Clichy, 75018 Paris, France",
+                    "openingHours": "8:00 PM - 2:00 AM (varies by show schedule)",
+                    "price": "From €87 per person for a show package",
+                    "additionalInfo": "Established in 1889, Moulin Rouge is synonymous with Parisian nightlife and the birthplace of the modern cabaret.",
+                    "transport": {
+                        "metroStations": [
+                            "Blanche",
+                            "Pigalle"
+                        ],
+                        "busLines": [
+                            "54",
+                            "68"
+                        ],
+                        "parking": "Limited parking; public transport is recommended."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€87",
+                            "children": "Not applicable",
+                            "seniors": "Not applicable"
+                        },
+                        "onlineBooking": "https://www.moulinrouge.fr/en/ticketing",
+                        "notes": "Advance booking is essential due to high demand."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Le Bouillon Chartier",
+                                "coordinates": [
+                                    2.3310,
+                                    48.8830
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Place Blanche",
+                                "coordinates": [
+                                    2.3330,
+                                    48.8845
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Blanche Metro Station",
+                                "coordinates": [
+                                    2.3320,
+                                    48.8840
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/beach.jpg"
+                    ]
                 }
             ],
             "Sports": [
                 {
-                    "name": "Parc des Princes",
-                    "description": "A major football stadium in Paris.",
+                    "name": "Stade de France",
+                    "description": "A national stadium hosting major football matches and athletic events.",
                     "coordinates": [
-                        2.2528,
-                        48.8414
+                        2.3601,
+                        48.9244
                     ],
                     "image": "/images/beach.jpg",
-                    "zoomLevel": 8
+                    "zoomLevel": 9,
+                    "location": "Saint-Denis, 93200, France",
+                    "openingHours": "Varies by event; stadium tours available on non-event days",
+                    "price": "Tour prices start from €12",
+                    "additionalInfo": "Constructed in 1998 for the FIFA World Cup, it hosts a variety of sports and music events.",
+                    "transport": {
+                        "metroStations": [
+                            "Stade de France – Saint-Denis"
+                        ],
+                        "busLines": [
+                            "RER B",
+                            "Metro 13"
+                        ],
+                        "parking": "Ample parking available on event days"
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€12",
+                            "children": "€8",
+                            "seniors": "€10"
+                        },
+                        "onlineBooking": "https://www.stadefrance.com/en/tours",
+                        "notes": "Tours are recommended on non-event days."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Le Bouche à Oreille",
+                                "coordinates": [
+                                    2.3605,
+                                    48.9240
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Basilica of Saint-Denis",
+                                "coordinates": [
+                                    2.3570,
+                                    48.9365
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Stade de France Metro Station",
+                                "coordinates": [
+                                    2.3601,
+                                    48.9244
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/beach.jpg"
+                    ]
                 }
             ]
         }

@@ -3,6 +3,7 @@
 	import { mapboxgl, key } from './mapboxgl.js';
 	import type { Map } from 'mapbox-gl';
 	import * as turf from '@turf/turf';
+	import { slide } from 'svelte/transition';
 
 	setContext(key, {
 		getMap: () => map
@@ -28,6 +29,24 @@
 	let selectedPOI = null;
 
 	const tabs = ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
+
+	// Add this after your variable declarations
+	$: sidebarTabs =
+		activeFilter === 'Beach'
+			? ['Info', 'Transport', 'Prices', 'Nearby', 'Images']
+			: activeFilter === 'Nature'
+			? ['Info', 'Trails', 'Nearby', 'Weather', 'Photos']
+			: activeFilter === 'Food'
+			? ['Info', 'Menu', 'Photos']
+			: activeFilter === 'Shopping'
+			? ['Info', 'Directory', 'Photos']
+			: activeFilter === 'Nightlife'
+			? ['Info', 'Menu/Drinks', 'Photos']
+			: activeFilter === 'Sports'
+			? ['Info', 'Tickets', 'Photos']
+			: activeFilter === 'Adventure'
+			? ['Info', 'Activities', 'Photos']
+			: ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
 
 	// Helper function to caclulate distance (km)
 	function computeDistance(coord1: number[], coord2: number[]): string {
@@ -278,6 +297,10 @@
 	// Handle filter selection (radio buttons)
 	function handleFilterSelection(event: Event) {
 		selectedFilter = (event.target as HTMLInputElement).value;
+		if (showSidebar) {
+			showSidebar = false;
+			selectedPOI = null;
+		}
 		if (selectedFilter === 'none') {
 			// Revert to recommendations if "None" is selected
 			loadData('recommendations', selectedMonth);
@@ -357,6 +380,14 @@
 			return;
 		}
 
+		// Store the current selectedPOI before potentially clearing it
+		const previousSelectedPOI = selectedPOI;
+
+		if (showSidebar) {
+			showSidebar = false;
+			selectedPOI = null;
+		}
+
 		activeFilter = filter;
 
 		try {
@@ -379,6 +410,22 @@
 			console.log(`Applying filter: ${filter} for country: ${selectedCountryISO}`);
 			clearMarkers();
 			addMarkersForPOIs(filterMarkers);
+
+			// Try to find a similar POI in the new filtered set
+			if (previousSelectedPOI) {
+				const similarPOI = filterMarkers.find(
+					(poi) =>
+						poi.name === previousSelectedPOI.name ||
+						(poi.coordinates[0] === previousSelectedPOI.coordinates[0] &&
+							poi.coordinates[1] === previousSelectedPOI.coordinates[1])
+				);
+
+				if (similarPOI) {
+					// Directly set the sidebar and POI without using handleMarkerClick
+					showSidebar = true;
+					selectedPOI = similarPOI;
+				}
+			}
 		} catch (error) {
 			console.error(`Error applying filter: ${filter} for country: ${selectedCountryISO}`, error);
 		}
@@ -607,6 +654,7 @@
 						baselineZoom = null;
 						showFilters = false;
 						showSidebar = false;
+
 						clearMarkers();
 						resetSelectedCountry();
 						resetView();
@@ -782,13 +830,6 @@
 				</div>
 			</div>
 		{/if}
-		<!-- Sidebar -->
-		{#if showSidebar}
-			<div class="sidebar">
-				<button class="close-btn" on:click={closeSidebar}>×</button>
-				{@html sidebarContent}
-			</div>
-		{/if}
 	{/if}
 	{#if showSidebar}
 		<div class="sidebar">
@@ -800,21 +841,22 @@
 
 			<!-- Tab Navigation -->
 			<div class="tab-navigation">
-				<button class:active={activeTab === 'Info'} on:click={() => setActiveTab('Info')}>
-					<i class="fa-solid fa-circle-info" /> Info
-				</button>
-				<button class:active={activeTab === 'Transport'} on:click={() => setActiveTab('Transport')}>
-					<i class="fa-solid fa-bus" /> Transport
-				</button>
-				<button class:active={activeTab === 'Tickets'} on:click={() => setActiveTab('Tickets')}>
-					<i class="fa-solid fa-ticket-alt" /> Tickets
-				</button>
-				<button class:active={activeTab === 'Nearby'} on:click={() => setActiveTab('Nearby')}>
-					<i class="fa-solid fa-map-marker-alt" /> Nearby
-				</button>
-				<button class:active={activeTab === 'Photos'} on:click={() => setActiveTab('Photos')}>
-					<i class="fa-solid fa-camera" /> Photos
-				</button>
+				{#each sidebarTabs as tab}
+					<button class:active={activeTab === tab} on:click={() => (activeTab = tab)}>
+						{#if tab === 'Info'}
+							<i class="fa-solid fa-circle-info" />
+						{:else if tab === 'Transport'}
+							<i class="fa-solid fa-bus" />
+						{:else if tab === 'Tickets' || tab === 'Prices'}
+							<i class="fa-solid fa-ticket-alt" />
+						{:else if tab === 'Nearby'}
+							<i class="fa-solid fa-map-marker-alt" />
+						{:else if tab === 'Photos' || tab === 'Images'}
+							<i class="fa-solid fa-camera" />
+						{/if}
+						{tab}
+					</button>
+				{/each}
 			</div>
 
 			<!-- Tab Content -->
@@ -827,7 +869,6 @@
 							alt={selectedPOI.name}
 							style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;"
 						/>
-
 						<!-- Additional Info Section -->
 						<div style="margin-top: 15px;">
 							{#if selectedPOI.location}
@@ -873,7 +914,6 @@
 									{/each}
 								</ul>
 							{/if}
-
 							<!-- Bus Lines -->
 							{#if selectedPOI.transport.busLines && selectedPOI.transport.busLines.length > 0}
 								<p style="margin-top: 10px;"><strong>Bus Lines:</strong></p>
@@ -883,7 +923,6 @@
 									{/each}
 								</ul>
 							{/if}
-
 							<!-- Parking -->
 							{#if selectedPOI.transport.parking}
 								<p style="margin-top: 10px;">
@@ -897,6 +936,29 @@
 							No transport information available.
 						</p>
 					{/if}
+				{:else if activeTab === 'Tickets' || activeTab === 'Prices'}
+					<div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+						{#if activeFilter === 'Beach'}
+							<p><strong>Pricing:</strong></p>
+							{#if selectedPOI.pricing}
+								<ul>
+									{#each Object.keys(selectedPOI.pricing) as key}
+										<li>
+											<strong>{key}:</strong>
+											{selectedPOI.pricing[key]}
+										</li>
+									{/each}
+								</ul>
+							{:else}
+								<p>No pricing information available.</p>
+							{/if}
+						{:else if selectedPOI.tickets}
+							<p><strong>Tickets Info:</strong></p>
+							<p>{selectedPOI.tickets.notes}</p>
+						{:else}
+							<p>No ticket information available.</p>
+						{/if}
+					</div>
 				{:else if activeTab === 'Nearby'}
 					{#if selectedPOI.nearby && typeof selectedPOI.nearby === 'object'}
 						<div
@@ -927,18 +989,16 @@
 							No nearby places available.
 						</p>
 					{/if}
-				{:else if activeTab === 'Photos'}
-					{#if activeTab === 'Photos'}
-						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-							{#each selectedPOI.photos as photo}
-								<img
-									src={photo}
-									alt="Photo of {selectedPOI.name}"
-									style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;"
-								/>
-							{/each}
-						</div>
-					{/if}
+				{:else if activeTab === 'Photos' || activeTab === 'Images'}
+					<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+						{#each selectedPOI.photos as photo}
+							<img
+								src={photo}
+								alt="Photo of {selectedPOI.name}"
+								style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;"
+							/>
+						{/each}
+					</div>
 				{/if}
 			</div>
 		</div>

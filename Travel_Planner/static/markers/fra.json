@@ -162,14 +162,62 @@
         "filters": {
             "Beach": [
                 {
-                    "name": "Nice Beach",
-                    "description": "A beautiful beach in Nice.",
+                    "name": "Plage de la Grande Jatte",
+                    "description": "A scenic beach located along the river with soft sand and crystal-clear water, ideal for sunbathing and water sports.",
                     "coordinates": [
-                        7.265252,
-                        43.710173
+                        2.2345,
+                        48.8576
                     ],
-                    "image": "/images/beach.jpg",
-                    "zoomLevel": 10
+                    "image": "/images/beach-sample.jpg",
+                    "zoomLevel": 10,
+                    "location": "Paris, France",
+                    "openingHours": "Open from dawn till dusk",
+                    "price": "Deck chairs from €15, umbrellas from €10",
+                    "additionalInfo": "Facilities include lifeguards, showers, food kiosks, and free Wi-Fi.",
+                    "transport": {
+                        "howToGetThere": "Accessible via metro line 9, bus 72, or by car. The nearest metro station is Pont de Sèvres.",
+                        "parking": "Street parking available at approximately €5 per hour.",
+                        "publicTransit": "Pont de Sèvres Metro Station is a short walk away."
+                    },
+                    "pricing": {
+                        "deckChair": "€15",
+                        "umbrella": "€10",
+                        "waterSports": "Prices vary by activity"
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Beachside Bistro",
+                                "coordinates": [
+                                    2.2350,
+                                    48.8578
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Seine River Walk",
+                                "coordinates": [
+                                    2.2340,
+                                    48.8570
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Pont de Sèvres Metro Station",
+                                "coordinates": [
+                                    2.2347,
+                                    48.8575
+                                ]
+                            }
+                        ]
+                    },
+                    "images": [
+                        "/images/beach-sample-1.jpg",
+                        "/images/beach-sample-2.jpg",
+                        "/images/beach-sample-3.jpg"
+                    ]
                 }
             ],
             "Landmarks": [

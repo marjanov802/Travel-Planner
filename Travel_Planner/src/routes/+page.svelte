@@ -27,10 +27,89 @@
 	let sidebarContent = '';
 	let activeTab = 'Info';
 	let selectedPOI = null;
+	let showModal = false;
+	let countryPOIData = null;
+	let filteredCountryPOI = [];
+	let selectedActivities = [];
+	let modalTabs = [
+		'Recommended',
+		'Beach',
+		'Landmarks',
+		'Museums',
+		'Nature',
+		'Adventure',
+		'Food',
+		'Shopping',
+		'Nightlife',
+		'Sports'
+	];
+	let modalActiveTab = modalTabs[0];
+	let countriesData = [];
+	let filteredCountries = [];
 
 	const tabs = ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
 
-	// Add this after your variable declarations
+	function toggleSelection(activity) {
+		const index = selectedActivities.findIndex((a) => a.name === activity.name);
+		if (index >= 0) {
+			selectedActivities = [
+				...selectedActivities.slice(0, index),
+				...selectedActivities.slice(index + 1)
+			];
+		} else {
+			selectedActivities = [...selectedActivities, activity];
+		}
+	}
+
+	function cancelSelection() {
+		selectedActivities = [];
+		showModal = false;
+	}
+
+	function continueSelection() {
+		console.log('Selected activities:', selectedActivities);
+		showModal = false;
+	}
+
+	async function loadCountryPOIData() {
+		try {
+			const response = await fetch(`/markers/${selectedCountryISO.toLowerCase()}.json`);
+			if (response.ok) {
+				countryPOIData = await response.json();
+				updateFilteredPOI();
+			} else {
+				console.error(`Failed to load POI data for country: ${selectedCountryISO}`);
+			}
+		} catch (err) {
+			console.error('Error loading country POI data:', err);
+		}
+	}
+
+	function updateFilteredPOI() {
+		if (!countryPOIData) {
+			filteredCountryPOI = [];
+			return;
+		}
+		if (modalActiveTab === 'Recommended') {
+			filteredCountryPOI = countryPOIData.poi.recommended || [];
+		} else {
+			filteredCountryPOI =
+				(countryPOIData.poi.filters && countryPOIData.poi.filters[modalActiveTab]) || [];
+		}
+	}
+
+	function openItineraryModal() {
+		if (!countryPOIData && selectedCountryISO) {
+			loadCountryPOIData();
+		} else {
+			updateFilteredPOI();
+		}
+	}
+
+	$: if (modalActiveTab) {
+		updateFilteredPOI();
+	}
+
 	$: sidebarTabs =
 		activeFilter === 'Beach'
 			? ['Info', 'Transport', 'Prices', 'Nearby', 'Images']
@@ -48,7 +127,39 @@
 			? ['Info', 'Activities', 'Photos']
 			: ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
 
-	// Helper function to caclulate distance (km)
+	async function loadCountriesData() {
+		try {
+			const response = await fetch(
+				'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
+			);
+			if (response.ok) {
+				const data = await response.json();
+				countriesData = data.features;
+				updateFilteredCountries();
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
+	function updateFilteredCountries() {
+		if (modalActiveTab === 'Recommended') {
+			filteredCountries = countriesData;
+		} else {
+			filteredCountries = countriesData.filter((country) =>
+				country.properties.ADMIN.startsWith(modalActiveTab.charAt(0))
+			);
+		}
+	}
+
+	$: if (showModal && countriesData.length === 0) {
+		loadCountriesData();
+	}
+
+	$: if (modalActiveTab) {
+		updateFilteredCountries();
+	}
+
 	function computeDistance(coord1: number[], coord2: number[]): string {
 		if (!coord1 || !coord2) return 'N/A';
 		const from = turf.point(coord1);
@@ -57,7 +168,6 @@
 		return distance.toFixed(2);
 	}
 
-	// Map category keys to display labels
 	const categoryLabels = {
 		restaurantsAndCafes: 'Restaurants & Cafes',
 		attractions: 'Attractions',
@@ -512,7 +622,9 @@
 			console.log('No country selected. Please select a country to plan an itinerary.');
 			return;
 		}
-		console.log(`Planning itinerary for country: ${selectedCountryISO}`); // Debugging
+		console.log(`Planning itinerary for country: ${selectedCountryISO}`);
+		showModal = true;
+		openItineraryModal();
 	}
 
 	// Initialize Mapbox map
@@ -694,6 +806,49 @@
 <!-- Main Content -->
 <!-- Main Content -->
 <div use:initMap>
+	{#if showModal}
+		<div class="modal">
+			<div class="modal-content">
+				<button class="close-modal" on:click={() => (showModal = false)}>×</button>
+				<h2>Plan Itinerary</h2>
+				<div class="modal-tabs">
+					{#each modalTabs as tab}
+						<button class:active={modalActiveTab === tab} on:click={() => (modalActiveTab = tab)}>
+							{tab}
+						</button>
+					{/each}
+				</div>
+				<div class="modal-grid">
+					{#if !countryPOIData}
+						<p>Loading POI data...</p>
+					{:else if filteredCountryPOI.length === 0}
+						<p>No POIs for this category.</p>
+					{:else}
+						{#each filteredCountryPOI as poi}
+							<div
+								class="grid-item"
+								class:selected={selectedActivities.some((a) => a.name === poi.name)}
+								on:click={() => toggleSelection(poi)}
+							>
+								<img
+									src={poi.image ||
+										`https://via.placeholder.com/150?text=${encodeURIComponent(poi.name)}`}
+									alt={poi.name}
+								/>
+								<p>{poi.name}</p>
+							</div>
+						{/each}
+					{/if}
+				</div>
+				<div class="modal-controls">
+					<span>Selected: {selectedActivities.length}</span>
+					<button on:click={cancelSelection}>Cancel</button>
+					<button on:click={continueSelection}>Continue</button>
+				</div>
+			</div>
+		</div>
+	{/if}
+
 	<!-- Only render controls if we have content to show -->
 	{#if !selectedCountryISO || showFilters}
 		<!-- Month and radio controls -->
@@ -1306,5 +1461,105 @@
 	.nearby-section span {
 		font-size: 14px;
 		color: #333;
+	}
+
+	.modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 2000;
+	}
+
+	.modal-content {
+		background: #fff;
+		padding: 20px;
+		border-radius: 8px;
+		width: 90%;
+		height: 90%;
+		overflow: auto;
+		position: relative;
+	}
+
+	.close-modal {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		background: none;
+		border: none;
+		font-size: 24px;
+		cursor: pointer;
+	}
+
+	.modal-tabs {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+
+	.modal-tabs button {
+		padding: 8px 12px;
+		background: #f0f0f0;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.modal-tabs button.active {
+		background: #007bff;
+		color: #fff;
+	}
+
+	.modal-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		gap: 10px;
+	}
+
+	.grid-item {
+		text-align: center;
+	}
+
+	.grid-item img {
+		width: 100%;
+		border-radius: 4px;
+	}
+
+	.grid-item.selected {
+		border: 2px solid #007bff;
+		background-color: rgba(0, 123, 255, 0.1);
+	}
+
+	.modal-controls {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.modal-controls span {
+		font-size: 14px;
+	}
+
+	.modal-controls button {
+		padding: 8px 12px;
+		background: #007bff;
+		border: none;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.modal-controls button:hover {
+		background: #0056b3;
 	}
 </style>

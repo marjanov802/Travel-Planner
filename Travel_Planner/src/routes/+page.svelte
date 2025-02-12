@@ -4,6 +4,9 @@
 	import type { Map } from 'mapbox-gl';
 	import * as turf from '@turf/turf';
 	import { slide } from 'svelte/transition';
+	import { Clock } from 'lucide-svelte';
+	import { Calendar, Plane, ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import { MapPin, Train, Info } from 'lucide-svelte';
 
 	setContext(key, {
 		getMap: () => map
@@ -46,6 +49,147 @@
 	let modalActiveTab = modalTabs[0];
 	let countriesData = [];
 	let filteredCountries = [];
+	let showItineraryModal = false;
+	let itineraryData = null;
+	let currentDayIndex = 0;
+
+	function continueSelection() {
+		testAI();
+		showItineraryModal = true;
+		generateItinerary();
+		currentDayIndex = 0;
+	}
+
+	function prevDay() {
+		if (currentDayIndex > 0 && itineraryData?.days) {
+			currentDayIndex--;
+		}
+	}
+
+	function nextDay() {
+		if (itineraryData?.days && currentDayIndex < itineraryData.days.length - 1) {
+			currentDayIndex++;
+		}
+	}
+
+	function generateItinerary() {
+		itineraryData = {
+			flightDetails: {
+				arrival: {
+					airport: 'Haneda Airport (HND)',
+					date: 'June 15, 2024',
+					time: '09:30',
+					transport: 'Airport Limousine Bus to hotel (45 mins)',
+					cost: '\u00a51,000 per person'
+				},
+				departure: {
+					airport: 'Haneda Airport (HND)',
+					date: 'June 20, 2024',
+					time: '11:45',
+					transport: 'Airport Limousine Bus from hotel (45 mins)',
+					checkIn: '2 hours before flight',
+					recommendedDeparture: '06:45',
+					cost: '\u00a51,000 per person'
+				}
+			},
+			days: [
+				{
+					date: 'June 15',
+					activities: [
+						{
+							time: '09:00 - 11:00',
+							category: 'Food & Culture',
+							name: 'Tsukiji Outer Market',
+							description: "Explore Japan's famous fish market and try fresh sushi",
+							duration: '2 hours',
+							location: 'Tsukiji',
+							transport: '20 min subway from hotel',
+							next: 'Next: 15 min subway to next location'
+						},
+						{
+							time: '11:30 - 13:00',
+							category: 'Nature',
+							name: 'Hamarikyu Gardens',
+							description: 'Traditional Japanese garden with tea ceremony',
+							duration: '1.5 hours',
+							location: 'Chuo City',
+							transport: '15 min walk',
+							next: 'Next: 25 min subway to next location'
+						},
+						{
+							time: '14:00 - 16:00',
+							category: 'Art',
+							name: 'Teamlab Planets',
+							description: 'Digital art museum with immersive installations',
+							duration: '2 hours',
+							location: 'Toyosu'
+						}
+					]
+				},
+				{
+					date: 'June 16',
+					activities: [
+						{
+							time: '08:30 - 10:30',
+							category: 'Culture',
+							name: 'Meiji Shrine',
+							description: 'Historic Shinto shrine in a forest setting',
+							duration: '2 hours',
+							location: 'Shibuya',
+							transport: '15 min subway from hotel',
+							next: 'Next: 10 min walk to next location'
+						},
+						{
+							time: '11:00 - 13:30',
+							category: 'Shopping',
+							name: 'Harajuku Shopping',
+							description: 'Explore Takeshita Street and trendy boutiques',
+							duration: '2.5 hours',
+							location: 'Harajuku',
+							transport: '10 min walk',
+							next: 'Next: 5 min subway to next location'
+						},
+						{
+							time: '14:00 - 16:00',
+							category: 'Landmarks',
+							name: 'Shibuya Sky',
+							description: '360-degree view of Tokyo from observation deck',
+							duration: '2 hours',
+							location: 'Shibuya',
+							transport: '5 min subway',
+							next: 'Next: 15 min subway to hotel'
+						}
+					]
+				}
+			]
+		};
+	}
+	import { HfInference } from '@huggingface/inference';
+
+	async function testAI() {
+		const token = import.meta.env.VITE_HF_TOKEN;
+		if (!token) {
+			console.error('Environment variable VITE_HF_TOKEN is not defined.');
+			return;
+		}
+		const inference = new HfInference(token);
+
+		const activityNames = selectedActivities.map((activity) => activity.name).join(', ');
+
+		let message = `Give me JSON for a holiday itinerary that includes the following activities: ${activityNames}. `;
+
+		try {
+			const out = await inference.chatCompletion({
+				model: 'Qwen/Qwen2.5-Coder-32B-Instruct',
+				messages: [{ role: 'user', content: message }],
+				max_tokens: 512
+			});
+			console.log('Itinerary JSON:', out.choices[0].message.content);
+		} catch (e) {
+			console.error('Your token: ' + token);
+			console.error('AI_TEST', 'There was an error!', e);
+		}
+	}
 
 	const tabs = ['Info', 'Transport', 'Tickets', 'Nearby', 'Photos'];
 
@@ -59,15 +203,14 @@
 		} else {
 			selectedActivities = [...selectedActivities, activity];
 		}
+		console.log(
+			'Selected activities:',
+			selectedActivities.map((a) => a.name)
+		);
 	}
 
 	function cancelSelection() {
 		selectedActivities = [];
-		showModal = false;
-	}
-
-	function continueSelection() {
-		console.log('Selected activities:', selectedActivities);
 		showModal = false;
 	}
 
@@ -847,6 +990,150 @@
 				</div>
 			</div>
 		</div>
+		{#if showItineraryModal}
+			<div class="itinerary-modal">
+				<button class="close-modal" on:click={() => (showItineraryModal = false)}>×</button>
+				<div class="itinerary-content">
+					<div class="trip-details-card">
+						<h2 class="card-title">Flight Details</h2>
+						<div class="details-grid">
+							<!-- Arrival Section -->
+							<div class="flight-section">
+								<h3 class="section-title">
+									<span class="icon-wrapper arrival">
+										<Plane size={16} />
+									</span>
+									Arrival
+								</h3>
+								<div class="details-list">
+									<p>
+										Airport: <span class="highlight"
+											>{itineraryData.flightDetails.arrival.airport}</span
+										>
+									</p>
+									<p>Date: <span>{itineraryData.flightDetails.arrival.date}</span></p>
+									<p>Time: <span>{itineraryData.flightDetails.arrival.time}</span></p>
+									<p>Transport: <span>{itineraryData.flightDetails.arrival.transport}</span></p>
+									<p>Transport Cost: <span>{itineraryData.flightDetails.arrival.cost}</span></p>
+								</div>
+							</div>
+
+							<!-- Departure Section -->
+							<div class="flight-section">
+								<h3 class="section-title">
+									<span class="icon-wrapper departure">
+										<Plane size={16} />
+									</span>
+									Departure
+								</h3>
+								<div class="details-list">
+									<p>
+										Airport: <span class="highlight"
+											>{itineraryData.flightDetails.departure.airport}</span
+										>
+									</p>
+									<p>Date: <span>{itineraryData.flightDetails.departure.date}</span></p>
+									<p>Time: <span>{itineraryData.flightDetails.departure.time}</span></p>
+									<p>Transport: <span>{itineraryData.flightDetails.departure.transport}</span></p>
+									<p>Check-in: <span>{itineraryData.flightDetails.departure.checkInTime}</span></p>
+									<p>
+										Recommended Departure: <span
+											>{itineraryData.flightDetails.departure.recommendedDepartureTime}</span
+										>
+									</p>
+									<p>Transport Cost: <span>{itineraryData.flightDetails.departure.cost}</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- [DAY NAVIGATION] -->
+					<div class="day-navigation">
+						<div class="current-day">
+							<Calendar size={20} class="calendar-icon" />
+							<h2>Day {currentDayIndex + 1}: {itineraryData.days[currentDayIndex].date}</h2>
+						</div>
+						<div class="nav-buttons">
+							<button
+								on:click={() => prevDay()}
+								disabled={currentDayIndex === 0}
+								aria-label="Previous day"
+							>
+								<ChevronLeft size={20} />
+							</button>
+							<button
+								on:click={() => nextDay()}
+								disabled={currentDayIndex === (itineraryData?.days?.length || 1) - 1}
+								aria-label="Next day"
+							>
+								<ChevronRight size={20} />
+							</button>
+						</div>
+					</div>
+
+					<!-- [TIMELINE STRIP] -->
+					<div class="timeline-wrapper">
+						<div class="timeline-container">
+							{#each itineraryData.days[currentDayIndex].activities as activity, i (i)}
+								<div class="timeline-item">
+									<div class="timeline-content">
+										<div class="dot" />
+										<div class="timeline-info">
+											<span class="time">{activity.time.split(' - ')[0]}</span>
+											<span class="activity-name">{activity.name}</span>
+										</div>
+									</div>
+									{#if i < itineraryData.days[currentDayIndex].activities.length - 1}
+										<div class="connector" />
+									{/if}
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<!-- [ACTIVITY CARDS - STACK] -->
+					<div class="activity-cards">
+						{#each itineraryData.days[currentDayIndex].activities as activity}
+							<div class="activity-card">
+								<div class="activity-image">
+									<img src={activity.image || 'images/beach.jpg'} alt={activity.name} />
+								</div>
+								<div class="activity-details">
+									<div class="header">
+										<div class="title-section">
+											<span class="category-tag">{activity.category}</span>
+											<h3 class="activity-title">{activity.name}</h3>
+										</div>
+										<span class="time">{activity.time}</span>
+									</div>
+
+									<p class="description">{activity.description}</p>
+
+									<div class="info-grid">
+										<div class="info-item">
+											<Clock size={18} />
+											<span>{activity.duration}</span>
+										</div>
+										<div class="info-item">
+											<MapPin size={18} />
+											<span>{activity.location}</span>
+										</div>
+										<div class="info-item">
+											<Train size={18} />
+											<span>{activity.transport}</span>
+										</div>
+										<div class="info-item next-transport">
+											<Info size={18} />
+											<span>Next: {activity.next}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</div>
+		{/if}
 	{/if}
 
 	<!-- Only render controls if we have content to show -->
@@ -1561,5 +1848,509 @@
 
 	.modal-controls button:hover {
 		background: #0056b3;
+	}
+
+	.itinerary-modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.7);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 3000;
+	}
+
+	.itinerary-content {
+		background: #fff;
+		padding: 30px;
+		border-radius: 8px;
+		width: 95%;
+		height: 90%;
+		overflow: auto;
+		position: relative;
+	}
+
+	.close-modal {
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		background: none;
+		border: none;
+		font-size: 30px;
+		cursor: pointer;
+		color: #333;
+	}
+
+	.day-navigation {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	.day-navigation .current-day {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-size: 18px;
+	}
+
+	.day-navigation .nav-buttons button {
+		background: #007bff;
+		color: #fff;
+		border: none;
+		padding: 8px 12px;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 16px;
+	}
+
+	.day-navigation .nav-buttons button:disabled {
+		background: #ccc;
+		cursor: not-allowed;
+	}
+
+	.timeline-container {
+		@apply relative flex justify-between items-center w-full px-4;
+	}
+
+	.timeline-item {
+		@apply flex-1 relative flex items-center;
+	}
+
+	.timeline-content {
+		@apply flex flex-col items-center relative z-10;
+	}
+
+	.timeline-dot {
+		@apply flex items-center justify-center;
+	}
+
+	.dot-outer {
+		@apply w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center;
+		animation: pulse 2s infinite;
+	}
+
+	.dot-inner {
+		@apply w-2 h-2 bg-white rounded-full;
+	}
+
+	.timeline-info {
+		@apply flex flex-col items-center mt-2 text-center;
+	}
+
+	.time-badge {
+		@apply flex items-center bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full mb-1;
+	}
+
+	.activity-name {
+		@apply text-sm font-medium text-gray-800 max-w-[120px] truncate;
+	}
+
+	.timeline-connector {
+		@apply absolute h-px bg-gray-300 w-full left-1/2 top-[7px];
+	}
+
+	@keyframes pulse {
+		0% {
+			box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+		}
+		70% {
+			box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+		}
+		100% {
+			box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+		}
+	}
+
+	:global(.lucide) {
+		display: inline-block;
+	}
+
+	.activity-cards {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.activity-card {
+		display: flex;
+		gap: 20px;
+		border: 1px solid #eee;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.activity-image {
+		flex: 1;
+	}
+
+	.activity-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.activity-details {
+		flex: 2;
+		padding: 10px;
+	}
+
+	.activity-details .category {
+		background: #007bff;
+		color: #fff;
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 12px;
+	}
+
+	.activity-details h4 {
+		margin: 10px 0 5px;
+		font-size: 18px;
+	}
+
+	.activity-details .time {
+		font-size: 14px;
+		color: #555;
+	}
+
+	.details-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+		margin-top: 10px;
+	}
+
+	.detail-item {
+		font-size: 14px;
+	}
+
+	.trip-details-card {
+		background-color: white;
+		border-radius: 12px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		padding: 20px 24px;
+		margin-bottom: 24px;
+		width: 100%;
+	}
+
+	.card-title {
+		font-size: 20px;
+		font-weight: 600;
+		margin-bottom: 20px;
+		color: #1a1a1a;
+	}
+
+	.details-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+	}
+
+	.flight-section {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.section-title {
+		font-size: 14px;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		color: #1a1a1a;
+		margin-bottom: 4px;
+	}
+
+	.icon-wrapper {
+		margin-right: 6px;
+		display: inline-flex;
+	}
+
+	.arrival {
+		transform: rotate(45deg);
+	}
+
+	.departure {
+		transform: rotate(-45deg);
+	}
+
+	.details-list {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.details-list p {
+		font-size: 14px;
+		line-height: 1.5;
+		margin: 0;
+		color: #374151;
+	}
+
+	.highlight {
+		color: rgb(37, 99, 235);
+	}
+
+	:global(.lucide) {
+		display: inline-block;
+	}
+
+	@media (max-width: 768px) {
+		.details-grid {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+	}
+
+	.day-navigation {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background-color: white;
+		border-radius: 8px;
+		padding: 12px 16px;
+		margin-bottom: 24px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+
+	.current-day {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.calendar-icon {
+		color: #4b5563;
+	}
+
+	h2 {
+		font-size: 18px;
+		font-weight: 600;
+		color: #1a1a1a;
+		margin: 0;
+	}
+
+	.nav-buttons {
+		display: flex;
+		gap: 8px;
+	}
+
+	button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+		border: none;
+		border-radius: 6px;
+		padding: 8px;
+		color: #4b5563;
+		cursor: pointer;
+		transition: background-color 0.2s, opacity 0.2s;
+	}
+
+	button:hover:not(:disabled) {
+		background-color: #f3f4f6;
+	}
+
+	button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	:global(.lucide) {
+		display: inline-block;
+	}
+
+	.timeline-wrapper {
+		background-color: white;
+		border-radius: 12px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		padding: 20px;
+		margin-bottom: 24px;
+	}
+
+	.timeline-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		position: relative;
+		padding: 0 10px;
+	}
+
+	.timeline-item {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
+	.timeline-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	.dot {
+		width: 12px;
+		height: 12px;
+		background-color: #3b82f6;
+		border-radius: 50%;
+		margin-bottom: 8px;
+	}
+
+	.timeline-info {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.time {
+		font-size: 14px;
+		font-weight: 500;
+		color: #1a1a1a;
+		margin-bottom: 2px;
+	}
+
+	.activity-name {
+		font-size: 14px;
+		color: #6b7280;
+		max-width: 120px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.connector {
+		position: absolute;
+		top: 6px;
+		left: 50%;
+		right: -50%;
+		height: 1px;
+		background-color: #e5e7eb;
+		z-index: 1;
+	}
+
+	.timeline-item:last-child .connector {
+		display: none;
+	}
+
+	.activity-cards {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+
+	.activity-card {
+		background: white;
+		border-radius: 12px;
+		overflow: hidden;
+		display: flex;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+
+	.activity-image {
+		width: 33.333%;
+		position: relative;
+	}
+
+	.activity-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.activity-details {
+		width: 66.666%;
+		padding: 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	.title-section {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.category-tag {
+		display: inline-block;
+		padding: 4px 12px;
+		background-color: #eef2ff;
+		color: #3b82f6;
+		border-radius: 9999px;
+		font-size: 14px;
+		font-weight: 500;
+	}
+
+	.activity-title {
+		font-size: 20px;
+		font-weight: 600;
+		color: #1a1a1a;
+		margin: 0;
+	}
+
+	.time {
+		font-size: 16px;
+		font-weight: 500;
+		color: #6b7280;
+	}
+
+	.description {
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.info-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+
+	.info-item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: #4b5563;
+		font-size: 14px;
+	}
+
+	.next-transport {
+		color: #3b82f6;
+	}
+
+	:global(.lucide) {
+		display: inline-block;
+		color: currentColor;
+	}
+
+	@media (max-width: 768px) {
+		.activity-card {
+			flex-direction: column;
+		}
+
+		.activity-image {
+			width: 100%;
+			height: 200px;
+		}
+
+		.activity-details {
+			width: 100%;
+		}
 	}
 </style>

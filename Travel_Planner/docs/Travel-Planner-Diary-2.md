@@ -101,3 +101,7 @@ What to remember - Naming conventions.
 03/02/2025 - I have slowly completed the impleemntation of the side bar for the recommeneded tab.   
              However the categrories need to differ for each filter as the users will need different infromation for different activites to ensure good HCI.
              A user in the city centre may need to know where a cafe is, hwoever a user on top of a mountain will not.
+
+12/02/2025 - Second modal created for itinerary. Good design, will go in depth in report.
+             AI api encorperated, but hte data takes too long to load especially while waiting for a prompt. I will need to create some sort of loading screen to mask this issue.
+             

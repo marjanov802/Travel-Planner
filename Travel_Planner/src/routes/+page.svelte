@@ -1562,27 +1562,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		text-align: center;
 	}
 
-	.custom-marker {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		background-color: rgba(255, 255, 255, 0.9);
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-		transition: transform 0.3s ease;
-	}
-
-	.custom-marker img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 50%;
-		pointer-events: none;
-	}
-
 	.plan-itinerary {
 		margin-top: 20px;
 		display: flex;
@@ -1604,11 +1583,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 	.plan-itinerary button:hover {
 		background-color: #0056b3;
 		transform: scale(1.05);
-	}
-
-	.sidebar.hidden {
-		transform: translateX(100%);
-		opacity: 0;
 	}
 
 	.close-btn {
@@ -1717,58 +1691,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 	.fa-clock,
 	.fa-ticket-alt {
 		font-size: 14px;
-	}
-
-	.transport-section {
-		font-family: Arial, sans-serif;
-		font-size: 14px;
-		color: #333;
-		line-height: 1.6;
-	}
-
-	.transport-section p {
-		margin-bottom: 10px;
-		font-weight: bold;
-		color: #000;
-	}
-
-	.transport-section ul {
-		margin: 10px 0;
-		padding-left: 20px;
-		list-style-type: disc;
-	}
-
-	.transport-section li {
-		margin-bottom: 5px;
-	}
-
-	.nearby-section {
-		font-family: Arial, sans-serif;
-		font-size: 14px;
-		color: #333;
-		line-height: 1.6;
-	}
-
-	.nearby-section ul {
-		margin: 10px 0;
-		padding-left: 0;
-		list-style: none;
-	}
-
-	.nearby-section li {
-		display: flex;
-		align-items: center;
-		margin-bottom: 10px;
-	}
-
-	.nearby-section i {
-		margin-right: 10px;
-		color: #007bff;
-	}
-
-	.nearby-section span {
-		font-size: 14px;
-		color: #333;
 	}
 
 	.modal {
@@ -1946,33 +1868,12 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		@apply flex flex-col items-center relative z-10;
 	}
 
-	.timeline-dot {
-		@apply flex items-center justify-center;
-	}
-
-	.dot-outer {
-		@apply w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center;
-		animation: pulse 2s infinite;
-	}
-
-	.dot-inner {
-		@apply w-2 h-2 bg-white rounded-full;
-	}
-
 	.timeline-info {
 		@apply flex flex-col items-center mt-2 text-center;
 	}
 
-	.time-badge {
-		@apply flex items-center bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-full mb-1;
-	}
-
 	.activity-name {
 		@apply text-sm font-medium text-gray-800 max-w-[120px] truncate;
-	}
-
-	.timeline-connector {
-		@apply absolute h-px bg-gray-300 w-full left-1/2 top-[7px];
 	}
 
 	@keyframes pulse {
@@ -1985,10 +1886,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		100% {
 			box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
 		}
-	}
-
-	:global(.lucide) {
-		display: inline-block;
 	}
 
 	.activity-cards {
@@ -2020,19 +1917,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		padding: 10px;
 	}
 
-	.activity-details .category {
-		background: #007bff;
-		color: #fff;
-		padding: 4px 8px;
-		border-radius: 4px;
-		font-size: 12px;
-	}
-
-	.activity-details h4 {
-		margin: 10px 0 5px;
-		font-size: 18px;
-	}
-
 	.activity-details .time {
 		font-size: 14px;
 		color: #555;
@@ -2043,10 +1927,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		grid-template-columns: repeat(2, 1fr);
 		gap: 10px;
 		margin-top: 10px;
-	}
-
-	.detail-item {
-		font-size: 14px;
 	}
 
 	.trip-details-card {
@@ -2116,10 +1996,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		color: rgb(37, 99, 235);
 	}
 
-	:global(.lucide) {
-		display: inline-block;
-	}
-
 	@media (max-width: 768px) {
 		.details-grid {
 			grid-template-columns: 1fr;
@@ -2142,10 +2018,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		display: flex;
 		align-items: center;
 		gap: 12px;
-	}
-
-	.calendar-icon {
-		color: #4b5563;
 	}
 
 	h2 {
@@ -2180,10 +2052,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 	button:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
-	}
-
-	:global(.lucide) {
-		display: inline-block;
 	}
 
 	.timeline-wrapper {

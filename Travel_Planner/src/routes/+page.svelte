@@ -53,13 +53,20 @@
 	let itineraryData = null;
 	let currentDayIndex = 0;
 
-	function continueSelection() {
-		testAI();
+	let isLoadingItinerary = false;
+
+	async function continueSelection() {
+		isLoadingItinerary = true;
 		showItineraryModal = true;
-		generateItinerary();
+		const aiData = await testAI();
+		if (aiData) {
+			itineraryData = aiData;
+		} else {
+			generateItinerary();
+		}
+		isLoadingItinerary = false;
 		currentDayIndex = 0;
 	}
-
 	function prevDay() {
 		if (currentDayIndex > 0 && itineraryData?.days) {
 			currentDayIndex--;
@@ -94,7 +101,6 @@
 			},
 			days: [
 				{
-					date: 'June 15',
 					activities: [
 						{
 							time: '09:00 - 11:00',
@@ -127,7 +133,6 @@
 					]
 				},
 				{
-					date: 'June 16',
 					activities: [
 						{
 							time: '08:30 - 10:30',
@@ -168,26 +173,35 @@
 
 	async function testAI() {
 		const token = import.meta.env.VITE_HF_TOKEN;
-		if (!token) {
-			console.error('Environment variable VITE_HF_TOKEN is not defined.');
-			return;
-		}
+		if (!token) return null;
+
 		const inference = new HfInference(token);
+		const activities = selectedActivities;
+		const activitiesPerDay = 2;
+		const numberOfDays = Math.ceil(activities.length / activitiesPerDay);
 
-		const activityNames = selectedActivities.map((activity) => activity.name).join(', ');
-
-		let message = `Give me JSON for a holiday itinerary that includes the following activities: ${activityNames}. `;
+		let message = `Return only a raw JSON object (no markdown, no backticks) for a travel itinerary with ${
+			activities.length
+		} activities across ${numberOfDays} days.
+Rules:
+1. Flight arrival time determines day 1: if the flight lands in the morning (e.g., 09:30), schedule activities in the afternoon or evening; if it lands in the evening, schedule only hotel check-in or minimal activities on day 1.
+2. Activities that are typically nighttime (e.g., nightclubs) must be scheduled after 18:00.
+3. All activity times must be logical based on the provided flight arrival and departure times.
+Include exactly these activities: ${JSON.stringify(activities.map((a) => a.name))}.
+Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":"","transport":"","cost":""},"departure":{"airport":"","date":"","time":"","transport":"","checkIn":"","recommendedDeparture":"","cost":""}},"days":[{"activities":[{"time":"","category":"","name":"","description":"","duration":"","location":"","transport":"","next":""}]}]}`;
 
 		try {
-			const out = await inference.chatCompletion({
+			const response = await inference.chatCompletion({
 				model: 'Qwen/Qwen2.5-Coder-32B-Instruct',
 				messages: [{ role: 'user', content: message }],
-				max_tokens: 512
+				max_tokens: 1024
 			});
-			console.log('Itinerary JSON:', out.choices[0].message.content);
+			const content = response.choices[0].message.content.trim();
+			const cleanedContent = content.replace(/^```json\n|\n```$/g, '');
+			return JSON.parse(cleanedContent);
 		} catch (e) {
-			console.error('Your token: ' + token);
-			console.error('AI_TEST', 'There was an error!', e);
+			console.error('AI_TEST Error:', e);
+			return null;
 		}
 	}
 
@@ -994,143 +1008,150 @@
 			<div class="itinerary-modal">
 				<button class="close-modal" on:click={() => (showItineraryModal = false)}>×</button>
 				<div class="itinerary-content">
-					<div class="trip-details-card">
-						<h2 class="card-title">Flight Details</h2>
-						<div class="details-grid">
-							<!-- Arrival Section -->
-							<div class="flight-section">
-								<h3 class="section-title">
-									<span class="icon-wrapper arrival">
-										<Plane size={16} />
-									</span>
-									Arrival
-								</h3>
-								<div class="details-list">
-									<p>
-										Airport: <span class="highlight"
-											>{itineraryData.flightDetails.arrival.airport}</span
-										>
-									</p>
-									<p>Date: <span>{itineraryData.flightDetails.arrival.date}</span></p>
-									<p>Time: <span>{itineraryData.flightDetails.arrival.time}</span></p>
-									<p>Transport: <span>{itineraryData.flightDetails.arrival.transport}</span></p>
-									<p>Transport Cost: <span>{itineraryData.flightDetails.arrival.cost}</span></p>
-								</div>
-							</div>
-
-							<!-- Departure Section -->
-							<div class="flight-section">
-								<h3 class="section-title">
-									<span class="icon-wrapper departure">
-										<Plane size={16} />
-									</span>
-									Departure
-								</h3>
-								<div class="details-list">
-									<p>
-										Airport: <span class="highlight"
-											>{itineraryData.flightDetails.departure.airport}</span
-										>
-									</p>
-									<p>Date: <span>{itineraryData.flightDetails.departure.date}</span></p>
-									<p>Time: <span>{itineraryData.flightDetails.departure.time}</span></p>
-									<p>Transport: <span>{itineraryData.flightDetails.departure.transport}</span></p>
-									<p>Check-in: <span>{itineraryData.flightDetails.departure.checkInTime}</span></p>
-									<p>
-										Recommended Departure: <span
-											>{itineraryData.flightDetails.departure.recommendedDepartureTime}</span
-										>
-									</p>
-									<p>Transport Cost: <span>{itineraryData.flightDetails.departure.cost}</span></p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- [DAY NAVIGATION] -->
-					<div class="day-navigation">
-						<div class="current-day">
-							<Calendar size={20} class="calendar-icon" />
-							<h2>Day {currentDayIndex + 1}: {itineraryData.days[currentDayIndex].date}</h2>
-						</div>
-						<div class="nav-buttons">
-							<button
-								on:click={() => prevDay()}
-								disabled={currentDayIndex === 0}
-								aria-label="Previous day"
-							>
-								<ChevronLeft size={20} />
-							</button>
-							<button
-								on:click={() => nextDay()}
-								disabled={currentDayIndex === (itineraryData?.days?.length || 1) - 1}
-								aria-label="Next day"
-							>
-								<ChevronRight size={20} />
-							</button>
-						</div>
-					</div>
-
-					<!-- [TIMELINE STRIP] -->
-					<div class="timeline-wrapper">
-						<div class="timeline-container">
-							{#each itineraryData.days[currentDayIndex].activities as activity, i (i)}
-								<div class="timeline-item">
-									<div class="timeline-content">
-										<div class="dot" />
-										<div class="timeline-info">
-											<span class="time">{activity.time.split(' - ')[0]}</span>
-											<span class="activity-name">{activity.name}</span>
+					{#if isLoadingItinerary}
+						<div class="loading">Generating your itinerary...</div>
+					{:else if itineraryData}
+						<div class="itinerary-modal">
+							<button class="close-modal" on:click={() => (showItineraryModal = false)}>×</button>
+							<div class="itinerary-content">
+								<div class="trip-details-card">
+									<h2 class="card-title">Flight Details</h2>
+									<div class="details-grid">
+										<!-- Arrival Section -->
+										<div class="flight-section">
+											<h3 class="section-title">
+												<span class="icon-wrapper arrival">
+													<Plane size={16} />
+												</span>
+												Arrival
+											</h3>
+											<div class="details-list">
+												<p>
+													Airport: <span class="highlight"
+														>{itineraryData.flightDetails.arrival.airport}</span
+													>
+												</p>
+												<p>
+													Transport: <span>{itineraryData.flightDetails.arrival.transport}</span>
+												</p>
+												<p>
+													Transport Cost: <span>{itineraryData.flightDetails.arrival.cost}</span>
+												</p>
+											</div>
 										</div>
-									</div>
-									{#if i < itineraryData.days[currentDayIndex].activities.length - 1}
-										<div class="connector" />
-									{/if}
-								</div>
-							{/each}
-						</div>
-					</div>
 
-					<!-- [ACTIVITY CARDS - STACK] -->
-					<div class="activity-cards">
-						{#each itineraryData.days[currentDayIndex].activities as activity}
-							<div class="activity-card">
-								<div class="activity-image">
-									<img src={activity.image || 'images/beach.jpg'} alt={activity.name} />
-								</div>
-								<div class="activity-details">
-									<div class="header">
-										<div class="title-section">
-											<span class="category-tag">{activity.category}</span>
-											<h3 class="activity-title">{activity.name}</h3>
-										</div>
-										<span class="time">{activity.time}</span>
-									</div>
-
-									<p class="description">{activity.description}</p>
-
-									<div class="info-grid">
-										<div class="info-item">
-											<Clock size={18} />
-											<span>{activity.duration}</span>
-										</div>
-										<div class="info-item">
-											<MapPin size={18} />
-											<span>{activity.location}</span>
-										</div>
-										<div class="info-item">
-											<Train size={18} />
-											<span>{activity.transport}</span>
-										</div>
-										<div class="info-item next-transport">
-											<Info size={18} />
-											<span>Next: {activity.next}</span>
+										<!-- Departure Section -->
+										<div class="flight-section">
+											<h3 class="section-title">
+												<span class="icon-wrapper departure">
+													<Plane size={16} />
+												</span>
+												Departure
+											</h3>
+											<div class="details-list">
+												<p>
+													Airport: <span class="highlight"
+														>{itineraryData.flightDetails.departure.airport}</span
+													>
+												</p>
+												<p>
+													Transport: <span>{itineraryData.flightDetails.departure.transport}</span>
+												</p>
+												<p>
+													Transport Cost: <span>{itineraryData.flightDetails.departure.cost}</span>
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
+
+								<!-- [DAY NAVIGATION] -->
+								<div class="day-navigation">
+									<div class="current-day">
+										<Calendar size={20} class="calendar-icon" />
+										<h2>Day {currentDayIndex + 1}</h2>
+									</div>
+									<div class="nav-buttons">
+										<button
+											on:click={() => prevDay()}
+											disabled={currentDayIndex === 0}
+											aria-label="Previous day"
+										>
+											<ChevronLeft size={20} />
+										</button>
+										<button
+											on:click={() => nextDay()}
+											disabled={currentDayIndex === (itineraryData?.days?.length || 1) - 1}
+											aria-label="Next day"
+										>
+											<ChevronRight size={20} />
+										</button>
+									</div>
+								</div>
+
+								<!-- [TIMELINE STRIP] -->
+								<div class="timeline-wrapper">
+									<div class="timeline-container">
+										{#each itineraryData.days[currentDayIndex].activities as activity, i (i)}
+											<div class="timeline-item">
+												<div class="timeline-content">
+													<div class="dot" />
+													<div class="timeline-info">
+														<span class="time">{activity.time.split(' - ')[0]}</span>
+														<span class="activity-name">{activity.name}</span>
+													</div>
+												</div>
+												{#if i < itineraryData.days[currentDayIndex].activities.length - 1}
+													<div class="connector" />
+												{/if}
+											</div>
+										{/each}
+									</div>
+								</div>
+
+								<!-- [ACTIVITY CARDS - STACK] -->
+								<div class="activity-cards">
+									{#each itineraryData.days[currentDayIndex].activities as activity}
+										<div class="activity-card">
+											<div class="activity-image">
+												<img src={activity.image || 'images/beach.jpg'} alt={activity.name} />
+											</div>
+											<div class="activity-details">
+												<div class="header">
+													<div class="title-section">
+														<span class="category-tag">{activity.category}</span>
+														<h3 class="activity-title">{activity.name}</h3>
+													</div>
+													<span class="time">{activity.time}</span>
+												</div>
+
+												<p class="description">{activity.description}</p>
+
+												<div class="info-grid">
+													<div class="info-item">
+														<Clock size={18} />
+														<span>{activity.duration}</span>
+													</div>
+													<div class="info-item">
+														<MapPin size={18} />
+														<span>{activity.location}</span>
+													</div>
+													<div class="info-item">
+														<Train size={18} />
+														<span>{activity.transport}</span>
+													</div>
+													<div class="info-item next-transport">
+														<Info size={18} />
+														<span>Next: {activity.next}</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									{/each}
+								</div>
 							</div>
-						{/each}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</div>
 		{/if}
@@ -2352,5 +2373,12 @@
 		.activity-details {
 			width: 100%;
 		}
+	}
+
+	.loading {
+		text-align: center;
+		padding: 2rem;
+		font-size: 1.2rem;
+		color: #666;
 	}
 </style>

@@ -1,0 +1,338 @@
+[
+    {
+        "code": "GRL",
+        "value": -5.37
+    },
+    {
+        "code": "CAN",
+        "value": 22.64
+    },
+    {
+        "code": "RUS",
+        "value": -14.92
+    },
+    {
+        "code": "MNG",
+        "value": 18.73
+    },
+    {
+        "code": "ISL",
+        "value": -9.56
+    },
+    {
+        "code": "NOR",
+        "value": 36.29
+    },
+    {
+        "code": "FIN",
+        "value": 11.45
+    },
+    {
+        "code": "SWE",
+        "value": -17.83
+    },
+    {
+        "code": "KGZ",
+        "value": 27.34
+    },
+    {
+        "code": "TJK",
+        "value": -6.71
+    },
+    {
+        "code": "EST",
+        "value": 33.86
+    },
+    {
+        "code": "FRO",
+        "value": -12.49
+    },
+    {
+        "code": "LVA",
+        "value": 20.17
+    },
+    {
+        "code": "PRK",
+        "value": -3.82
+    },
+    {
+        "code": "LTU",
+        "value": 15.64
+    },
+    {
+        "code": "BLR",
+        "value": 39.25
+    },
+    {
+        "code": "KAZ",
+        "value": -8.93
+    },
+    {
+        "code": "CHE",
+        "value": 24.56
+    },
+    {
+        "code": "CHN",
+        "value": 7.41
+    },
+    {
+        "code": "ARM",
+        "value": -16.35
+    },
+    {
+        "code": "AUT",
+        "value": 29.47
+    },
+    {
+        "code": "LIE",
+        "value": -11.26
+    },
+    {
+        "code": "CHL",
+        "value": 35.82
+    },
+    {
+        "code": "POL",
+        "value": 16.59
+    },
+    {
+        "code": "CZE",
+        "value": -7.44
+    },
+    {
+        "code": "USA",
+        "value": 40.13
+    },
+    {
+        "code": "AND",
+        "value": -5.67
+    },
+    {
+        "code": "DNK",
+        "value": 22.38
+    },
+    {
+        "code": "SVK",
+        "value": 14.76
+    },
+    {
+        "code": "GEO",
+        "value": -19.54
+    },
+    {
+        "code": "UKR",
+        "value": 32.91
+    },
+    {
+        "code": "GBR",
+        "value": -13.28
+    },
+    {
+        "code": "IRL",
+        "value": 26.47
+    },
+    {
+        "code": "BTN",
+        "value": 8.95
+    },
+    {
+        "code": "DEU",
+        "value": -16.72
+    },
+    {
+        "code": "MNE",
+        "value": 37.63
+    },
+    {
+        "code": "SVN",
+        "value": 12.39
+    },
+    {
+        "code": "ROU",
+        "value": -9.81
+    },
+    {
+        "code": "LUX",
+        "value": 30.56
+    },
+    {
+        "code": "BIH",
+        "value": 19.27
+    },
+    {
+        "code": "NZL",
+        "value": -6.45
+    },
+    {
+        "code": "MKD",
+        "value": 25.83
+    },
+    {
+        "code": "NLD",
+        "value": -14.39
+    },
+    {
+        "code": "MDA",
+        "value": 33.67
+    },
+    {
+        "code": "BEL",
+        "value": 17.24
+    },
+    {
+        "code": "TUR",
+        "value": -20.16
+    },
+    {
+        "code": "BGR",
+        "value": 38.95
+    },
+    {
+        "code": "JPN",
+        "value": 9.62
+    },
+    {
+        "code": "SRB",
+        "value": -11.37
+    },
+    {
+        "code": "HUN",
+        "value": 28.74
+    },
+    {
+        "code": "LSO",
+        "value": 6.53
+    },
+    {
+        "code": "KOR",
+        "value": -18.29
+    },
+    {
+        "code": "FRA",
+        "value": 34.61
+    },
+    {
+        "code": "HRV",
+        "value": 13.96
+    },
+    {
+        "code": "ALB",
+        "value": -7.83
+    },
+    {
+        "code": "AZE",
+        "value": 41.27
+    },
+    {
+        "code": "SMR",
+        "value": 20.45
+    },
+    {
+        "code": "ITA",
+        "value": -15.69
+    },
+    {
+        "code": "NPL",
+        "value": 31.86
+    },
+    {
+        "code": "AFG",
+        "value": -12.54
+    },
+    {
+        "code": "UZB",
+        "value": 25.73
+    },
+    {
+        "code": "GRC",
+        "value": 9.41
+    },
+    {
+        "code": "MCO",
+        "value": -19.85
+    },
+    {
+        "code": "ARG",
+        "value": 36.52
+    },
+    {
+        "code": "ESP",
+        "value": 16.38
+    },
+    {
+        "code": "LBN",
+        "value": -8.26
+    },
+    {
+        "code": "PRT",
+        "value": 39.14
+    },
+    {
+        "code": "TKM",
+        "value": 11.57
+    },
+    {
+        "code": "URY",
+        "value": -16.79
+    },
+    {
+        "code": "ZAF",
+        "value": 27.93
+    },
+    {
+        "code": "MAR",
+        "value": -5.62
+    },
+    {
+        "code": "RWA",
+        "value": 42.18
+    },
+    {
+        "code": "SYR",
+        "value": 19.37
+    },
+    {
+        "code": "IRN",
+        "value": -14.53
+    },
+    {
+        "code": "CYP",
+        "value": 35.76
+    },
+    {
+        "code": "PER",
+        "value": 10.84
+    },
+    {
+        "code": "PSE",
+        "value": -20.39
+    },
+    {
+        "code": "JOR",
+        "value": 26.95
+    },
+    {
+        "code": "ISR",
+        "value": -9.14
+    },
+    {
+        "code": "NAM",
+        "value": 38.62
+    },
+    {
+        "code": "MLT",
+        "value": 15.29
+    },
+    {
+        "code": "BDI",
+        "value": -17.86
+    },
+    {
+        "code": "BOL",
+        "value": 32.47
+    },
+    {
+        "code": "TWN",
+        "value": 7.63
+    }
+]

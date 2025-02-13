@@ -1,0 +1,689 @@
+{
+    "poi": {
+        "recommended": [
+            {
+                "name": "Colosseum",
+                "description": "Ancient Roman gladiatorial arena and iconic symbol of Imperial Rome.",
+                "coordinates": [
+                    12.4922,
+                    41.8902
+                ],
+                "image": "/images/colosseum.jpg",
+                "zoomLevel": 6,
+                "location": "Piazza del Colosseo, 1, 00184 Rome, Italy",
+                "openingHours": "8:30 AM - 7:00 PM",
+                "price": "From €16 for adults",
+                "additionalInfo": "Built in AD 80, it hosted gladiator contests and public spectacles.",
+                "transport": {
+                    "metroStations": [
+                        "Colosseo (Metro Line B)"
+                    ],
+                    "busLines": [
+                        "75",
+                        "87",
+                        "87B"
+                    ],
+                    "parking": "Limited parking in the vicinity; public transport recommended."
+                },
+                "tickets": {
+                    "pricing": {
+                        "adults": "€16",
+                        "children": "€2",
+                        "seniors": "€12"
+                    },
+                    "onlineBooking": "https://www.coopculture.it/en/colosseo-e-shop.cfm",
+                    "notes": "Tickets include access to the Roman Forum and Palatine Hill."
+                },
+                "nearby": {
+                    "restaurantsAndCafes": [
+                        {
+                            "name": "Ristorante Aroma",
+                            "coordinates": [
+                                12.4918,
+                                41.8900
+                            ]
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "Roman Forum",
+                            "coordinates": [
+                                12.4845,
+                                41.8925
+                            ]
+                        },
+                        {
+                            "name": "Palatine Hill",
+                            "coordinates": [
+                                12.4900,
+                                41.8895
+                            ]
+                        }
+                    ],
+                    "publicTransport": [
+                        {
+                            "name": "Colosseo Metro Station",
+                            "coordinates": [
+                                12.4920,
+                                41.8902
+                            ]
+                        }
+                    ]
+                },
+                "photos": [
+                    "/images/colosseum.jpg",
+                    "/images/roman-forum.jpg",
+                    "/images/palatine-hill.jpg"
+                ]
+            },
+            {
+                "name": "Vatican Museums",
+                "description": "A vast collection of art and historical artifacts housed in the Vatican City.",
+                "coordinates": [
+                    12.4534,
+                    41.9069
+                ],
+                "image": "/images/vatican-museums.jpg",
+                "zoomLevel": 7,
+                "location": "Viale Vaticano, 00165 Rome, Italy",
+                "openingHours": "9:00 AM - 6:00 PM (Closed on Sundays, except the last Sunday of the month)",
+                "price": "From €17 for adults",
+                "additionalInfo": "Home to the Sistine Chapel, Raphael Rooms, and a vast collection of classical sculptures.",
+                "transport": {
+                    "metroStations": [
+                        "Ottaviano (Metro Line A)"
+                    ],
+                    "busLines": [
+                        "40",
+                        "64"
+                    ],
+                    "parking": "Limited parking; best reached via metro or bus."
+                },
+                "tickets": {
+                    "pricing": {
+                        "adults": "€17",
+                        "students": "€8",
+                        "children": "Free for under 6"
+                    },
+                    "onlineBooking": "http://www.museivaticani.va/",
+                    "notes": "Advance booking is recommended due to long queues."
+                },
+                "nearby": {
+                    "restaurantsAndCafes": [
+                        {
+                            "name": "Ristorante dei Musei",
+                            "coordinates": [
+                                12.4530,
+                                41.9070
+                            ]
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "St. Peter's Basilica",
+                            "coordinates": [
+                                12.4539,
+                                41.9029
+                            ]
+                        }
+                    ],
+                    "publicTransport": [
+                        {
+                            "name": "Ottaviano Metro Station",
+                            "coordinates": [
+                                12.4540,
+                                41.9060
+                            ]
+                        }
+                    ]
+                },
+                "photos": [
+                    "/images/vatican-museums.jpg",
+                    "/images/sistine-chapel.jpg",
+                    "/images/raphael-rooms.jpg"
+                ]
+            },
+            {
+                "name": "Leaning Tower of Pisa",
+                "description": "Famous for its unintended tilt, this medieval tower is a must-see landmark in Pisa.",
+                "coordinates": [
+                    10.3966,
+                    43.7230
+                ],
+                "image": "/images/leaning-tower-pisa.jpg",
+                "zoomLevel": 8,
+                "location": "Piazza del Duomo, 56126 Pisa PI, Italy",
+                "openingHours": "9:00 AM - 8:00 PM",
+                "price": "From €18 for adults",
+                "additionalInfo": "An architectural marvel with a lean that has fascinated visitors for centuries.",
+                "transport": {
+                    "metroStations": [],
+                    "busLines": [
+                        "PisaMover"
+                    ],
+                    "parking": "Parking available near the site; check local regulations."
+                },
+                "tickets": {
+                    "pricing": {
+                        "adults": "€18",
+                        "children": "€8"
+                    },
+                    "onlineBooking": "https://www.opapisa.it/en/",
+                    "notes": "Tickets include a climb to the top for a panoramic view."
+                },
+                "nearby": {
+                    "restaurantsAndCafes": [
+                        {
+                            "name": "Caffè del Duomo",
+                            "coordinates": [
+                                10.3970,
+                                43.7235
+                            ]
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "Pisa Cathedral",
+                            "coordinates": [
+                                10.3975,
+                                43.7232
+                            ]
+                        }
+                    ],
+                    "publicTransport": [
+                        {
+                            "name": "Pisa Mover Station",
+                            "coordinates": [
+                                10.3960,
+                                43.7225
+                            ]
+                        }
+                    ]
+                },
+                "photos": [
+                    "/images/leaning-tower-pisa.jpg",
+                    "/images/pisa-cathedral.jpg",
+                    "/images/piazza-del-duomo.jpg"
+                ]
+            }
+        ],
+        "filters": {
+            "Beach": [
+                {
+                    "name": "Spiaggia Grande, Positano",
+                    "description": "A picturesque beach with crystal-clear waters and colorful cliffs along the Amalfi Coast.",
+                    "coordinates": [
+                        14.4842,
+                        40.6281
+                    ],
+                    "image": "/images/positano-beach.jpg",
+                    "zoomLevel": 10,
+                    "location": "Positano, SA, Italy",
+                    "openingHours": "Open from dawn till dusk",
+                    "price": "Sunbed rental from €20, umbrellas from €15",
+                    "additionalInfo": "Popular for its vibrant atmosphere and stunning views.",
+                    "transport": {
+                        "howToGetThere": "Accessible by local bus or car; parking available at a fee.",
+                        "parking": "Paid parking lots nearby.",
+                        "publicTransit": "Local Positano bus service."
+                    },
+                    "pricing": {
+                        "sunbed": "€20",
+                        "umbrella": "€15",
+                        "waterSports": "Prices vary by activity"
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "La Pergola Ristorante",
+                                "coordinates": [
+                                    14.4845,
+                                    40.6285
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Church of Santa Maria Assunta",
+                                "coordinates": [
+                                    14.4850,
+                                    40.6280
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Positano Bus Stop",
+                                "coordinates": [
+                                    14.4842,
+                                    40.6281
+                                ]
+                            }
+                        ]
+                    },
+                    "images": [
+                        "/images/positano-beach-1.jpg",
+                        "/images/positano-beach-2.jpg",
+                        "/images/positano-beach-3.jpg"
+                    ]
+                }
+            ],
+            "Landmarks": [
+                {
+                    "name": "Trevi Fountain",
+                    "description": "A magnificent Baroque fountain and one of Rome's most iconic landmarks.",
+                    "coordinates": [
+                        12.4833,
+                        41.9009
+                    ],
+                    "image": "/images/trevi-fountain.jpg",
+                    "zoomLevel": 8,
+                    "location": "Piazza di Trevi, 00187 Rome, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "Legend says that tossing a coin ensures a return to Rome.",
+                    "transport": {
+                        "metroStations": [
+                            "Barberini (Metro Line A)"
+                        ],
+                        "busLines": [
+                            "40",
+                            "62"
+                        ],
+                        "parking": "Limited parking; best accessed by foot or public transport."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "Free",
+                            "children": "Free"
+                        },
+                        "onlineBooking": "N/A",
+                        "notes": "No entry fee required."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Piccolo Gelato",
+                                "coordinates": [
+                                    12.4830,
+                                    41.9010
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Piazza di Spagna",
+                                "coordinates": [
+                                    12.4820,
+                                    41.9030
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Spagna Metro Station",
+                                "coordinates": [
+                                    12.4832,
+                                    41.9020
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/trevi-fountain.jpg"
+                    ]
+                }
+            ],
+            "Museums": [
+                {
+                    "name": "Uffizi Gallery",
+                    "description": "One of the most famous art museums in the world, housing masterpieces from the Renaissance.",
+                    "coordinates": [
+                        11.2558,
+                        43.7687
+                    ],
+                    "image": "/images/uffizi-gallery.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazzale degli Uffizi, 50122 Florence, Italy",
+                    "openingHours": "8:15 AM - 6:50 PM (Closed on Mondays)",
+                    "price": "From €20 for adults",
+                    "additionalInfo": "Features works by Leonardo da Vinci, Botticelli, and Michelangelo.",
+                    "transport": {
+                        "metroStations": [
+                            "N/A (Florence lacks a metro system)"
+                        ],
+                        "busLines": [
+                            "ATC bus lines 1, 2, 14"
+                        ],
+                        "parking": "Limited parking in central Florence."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€20",
+                            "students": "€12",
+                            "children": "Free for under 6"
+                        },
+                        "onlineBooking": "https://www.uffizi.it/en/tickets",
+                        "notes": "Booking in advance is highly recommended."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Caffè degli Uffizi",
+                                "coordinates": [
+                                    11.2560,
+                                    43.7689
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Ponte Vecchio",
+                                "coordinates": [
+                                    11.2555,
+                                    43.7670
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Santa Maria Novella Train Station",
+                                "coordinates": [
+                                    11.2570,
+                                    43.7740
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/uffizi-gallery.jpg",
+                        "/images/uffizi-interior.jpg",
+                        "/images/uffizi-art.jpg"
+                    ]
+                }
+            ],
+            "Nature": [
+                {
+                    "name": "Dolomites",
+                    "description": "A stunning mountain range offering breathtaking landscapes and outdoor adventures.",
+                    "coordinates": [
+                        11.876,
+                        46.433
+                    ],
+                    "image": "/images/dolomites.jpg",
+                    "zoomLevel": 9,
+                    "location": "Northeastern Italy",
+                    "openingHours": "Accessible year-round, with seasonal variations in activities",
+                    "price": "Varies by activity",
+                    "additionalInfo": "A UNESCO World Heritage site known for its dramatic peaks and scenic beauty.",
+                    "transport": {
+                        "howToGetThere": "Accessible by car or regional trains; guided tours available.",
+                        "parking": "Parking available at trailheads.",
+                        "publicTransit": "Regional bus services available."
+                    },
+                    "pricing": {
+                        "hiking": "Free",
+                        "cableCar": "From €15",
+                        "skiing": "Prices vary"
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Mountain Lodge Rifugio",
+                                "coordinates": [
+                                    11.877,
+                                    46.434
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Lago di Braies",
+                                "coordinates": [
+                                    11.633,
+                                    46.692
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Local Bus Stop",
+                                "coordinates": [
+                                    11.876,
+                                    46.433
+                                ]
+                            }
+                        ]
+                    },
+                    "images": [
+                        "/images/dolomites-1.jpg",
+                        "/images/dolomites-2.jpg",
+                        "/images/dolomites-3.jpg"
+                    ]
+                }
+            ],
+            "Adventure": [
+                {
+                    "name": "Mount Etna",
+                    "description": "Europe's most active volcano, offering thrilling hiking and adventure tours.",
+                    "coordinates": [
+                        15.004,
+                        37.750
+                    ],
+                    "image": "/images/mount-etna.jpg",
+                    "zoomLevel": 9,
+                    "location": "Catania, Sicily, Italy",
+                    "openingHours": "Guided tours available; timings vary by season",
+                    "price": "Tour prices start from €30",
+                    "additionalInfo": "Experience volcanic landscapes and panoramic views of Sicily.",
+                    "transport": {
+                        "metroStations": [],
+                        "busLines": [
+                            "Local bus services from Catania"
+                        ],
+                        "parking": "Ample parking at tour starting points"
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€30",
+                            "children": "€15"
+                        },
+                        "onlineBooking": "https://www.mountetna.com/tours",
+                        "notes": "Due to volcanic activity, check for safety advisories before visiting."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Etna View Ristorante",
+                                "coordinates": [
+                                    15.005,
+                                    37.751
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Gorges of Alcantara",
+                                "coordinates": [
+                                    15.020,
+                                    37.760
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Etna Bus Stop",
+                                "coordinates": [
+                                    15.004,
+                                    37.750
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/mount-etna.jpg",
+                        "/images/etna-hike.jpg",
+                        "/images/etna-view.jpg"
+                    ]
+                }
+            ],
+            "Food": [
+                {
+                    "name": "Pizzeria Da Michele",
+                    "description": "World-renowned pizzeria offering authentic Neapolitan pizza.",
+                    "coordinates": [
+                        14.2681,
+                        40.8533
+                    ],
+                    "image": "/images/pizzeria-da-michele.jpg",
+                    "zoomLevel": 10
+                }
+            ],
+            "Shopping": [
+                {
+                    "name": "Galleria Vittorio Emanuele II",
+                    "description": "Historic shopping gallery known for its upscale boutiques and architecture.",
+                    "coordinates": [
+                        9.1916,
+                        45.4654
+                    ],
+                    "image": "/images/galleria-vittorio-emanuele.jpg",
+                    "zoomLevel": 10
+                }
+            ],
+            "Nightlife": [
+                {
+                    "name": "Navigli District",
+                    "description": "Vibrant district famous for its lively nightlife, bars, and canals.",
+                    "coordinates": [
+                        9.1829,
+                        45.4386
+                    ],
+                    "image": "/images/navigli-district.jpg",
+                    "zoomLevel": 4,
+                    "location": "Milan, Italy",
+                    "openingHours": "Evenings until late night",
+                    "price": "Varies by venue",
+                    "additionalInfo": "Popular for aperitivo culture and live music.",
+                    "transport": {
+                        "metroStations": [
+                            "Romolo (Metro Line 2)"
+                        ],
+                        "busLines": [
+                            "77",
+                            "94"
+                        ],
+                        "parking": "Limited street parking; public transport is recommended."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "Varies",
+                            "children": "Not applicable",
+                            "seniors": "Not applicable"
+                        },
+                        "onlineBooking": "N/A",
+                        "notes": "No tickets required, entry to venues may vary."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Canal Cafe",
+                                "coordinates": [
+                                    9.1830,
+                                    45.4388
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "Porta Genova",
+                                "coordinates": [
+                                    9.1840,
+                                    45.4370
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "Romolo Metro Station",
+                                "coordinates": [
+                                    9.1829,
+                                    45.4386
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/navigli-district.jpg"
+                    ]
+                }
+            ],
+            "Sports": [
+                {
+                    "name": "San Siro Stadium",
+                    "description": "Iconic stadium hosting major football matches and concerts.",
+                    "coordinates": [
+                        9.1228,
+                        45.4781
+                    ],
+                    "image": "/images/san-siro.jpg",
+                    "zoomLevel": 9,
+                    "location": "Piazzale Angelo Moratti, 20151 Milan, Italy",
+                    "openingHours": "Tour timings vary; match days have restricted access",
+                    "price": "Tours start from €15",
+                    "additionalInfo": "Home to AC Milan and Inter Milan, offering an immersive sports experience.",
+                    "transport": {
+                        "metroStations": [
+                            "San Siro Stadio (Metro Line 1)"
+                        ],
+                        "busLines": [
+                            "73",
+                            "94"
+                        ],
+                        "parking": "Ample parking available on non-match days."
+                    },
+                    "tickets": {
+                        "pricing": {
+                            "adults": "€15",
+                            "children": "€10"
+                        },
+                        "onlineBooking": "https://www.sansirostadium.com/tours",
+                        "notes": "Advance booking is recommended, especially on match days."
+                    },
+                    "nearby": {
+                        "restaurantsAndCafes": [
+                            {
+                                "name": "Stadium Bistro",
+                                "coordinates": [
+                                    9.1230,
+                                    45.4785
+                                ]
+                            }
+                        ],
+                        "attractions": [
+                            {
+                                "name": "San Siro Museum",
+                                "coordinates": [
+                                    9.1220,
+                                    45.4770
+                                ]
+                            }
+                        ],
+                        "publicTransport": [
+                            {
+                                "name": "San Siro Stadio Metro Station",
+                                "coordinates": [
+                                    9.1228,
+                                    45.4781
+                                ]
+                            }
+                        ]
+                    },
+                    "photos": [
+                        "/images/san-siro.jpg"
+                    ]
+                }
+            ]
+        }
+    }
+}

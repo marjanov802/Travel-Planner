@@ -1,178 +1,313 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
 
     const artists = [
         {
             name: "Dan Bullock",
-            bio: "Exploring abstraction and realism through bold colour palettes and dynamic brushstrokes.",
-            location: "New York, USA",
             portrait: "/images/danbullock/1.jpg",
-            slug: "danbullock",
-            style: "Abstract & Realism",
-            artworks: [
-                {
-                    id: 1,
-                    title: "Abstract Dawn",
-                    price: 1200,
-                    image: "/images/danbullock/2.jpg",
-                },
-                {
-                    id: 2,
-                    title: "Realism in Motion",
-                    price: 1500,
-                    image: "/images/danbullock/3.jpg",
-                },
-            ],
+            slug: "dan-bullock",
+            quote: "Art is the silent language that connects hearts across generations.",
+            medium: "Contemporary Painting",
         },
         {
             name: "Julio Cesart",
-            bio: "Blending vibrant street culture with modern narratives using traditional techniques.",
-            location: "Barcelona, Spain",
             portrait: "/images/juliocesart/1.jpg",
-            slug: "juliocesart",
-            style: "Street Culture & Modern Narratives",
-            artworks: [
-                {
-                    id: 3,
-                    title: "Urban Symphony",
-                    price: 900,
-                    image: "/images/juliocesart/2.jpg",
-                },
-                {
-                    id: 4,
-                    title: "Street Dream",
-                    price: 1100,
-                    image: "/images/juliocesart/3.jpg",
-                },
-            ],
+            slug: "julio-cesart",
+            quote: "I shape materials to reveal what's already there, waiting to be discovered.",
+            medium: "Sculpture",
         },
         {
             name: "Maria Guimaraes",
-            bio: "Delving into human emotions through minimalist expressions and subtle colour transitions.",
-            location: "Lisbon, Portugal",
             portrait: "/images/mariaguimaraes/1.jpg",
             slug: "mariaguimaraes",
-            style: "Minimalism & Emotional Depth",
-            artworks: [
-                {
-                    id: 5,
-                    title: "Serene Lines",
-                    price: 800,
-                    image: "/images/mariaguimaraes/2.jpg",
-                },
-                {
-                    id: 6,
-                    title: "Emotional Hues",
-                    price: 950,
-                    image: "/images/mariaguimaraes/3.jpg",
-                },
-            ],
+            quote: "Between reality and imagination lies the space where my work breathes.",
+            medium: "Mixed Media",
         },
     ];
-
-    let cart = [];
-
-    function exploreArtwork(slug, artworkId) {
-        window.location.href = `/artwork?artist=${slug}&id=${artworkId}`;
-    }
 
     function exploreArtist(slug) {
         window.location.href = `/artist/${slug}`;
     }
 
-    function addToCart(artwork) {
-        const existingItem = cart.find((item) => item.id === artwork.id);
-        if (!existingItem) {
-            cart = [...cart, { ...artwork, quantity: 1 }];
-        } else {
-            cart = cart.map((item) =>
-                item.id === artwork.id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item,
-            );
-        }
-        updateCartDisplay();
+    let currentSlide = 0;
+    let isTransitioning = false;
+    const totalSlides = artists.length;
+
+    let previousSlide = -1;
+
+    let direction = 1;
+
+    $: progress = (currentSlide / (totalSlides - 1)) * 100;
+    $: formattedCurrentSlide = (currentSlide + 1).toString().padStart(2, "0");
+    $: formattedTotalSlides = totalSlides.toString().padStart(2, "0");
+
+    async function changeSlide(newIndex) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        direction = newIndex > currentSlide ? 1 : -1;
+
+        if (newIndex === 0 && currentSlide === totalSlides - 1) direction = 1;
+        if (newIndex === totalSlides - 1 && currentSlide === 0) direction = -1;
+
+        previousSlide = currentSlide;
+        currentSlide = newIndex;
+
+        await tick();
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 1000);
     }
 
-    function updateCartDisplay() {
-        const basketIcon = document.querySelector(".basket-count");
-        if (basketIcon) {
-            basketIcon.textContent = cart.reduce(
-                (total, item) => total + item.quantity,
-                0,
-            );
+    function prevSlide() {
+        const newIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        changeSlide(newIndex);
+    }
+
+    function nextSlide() {
+        const newIndex = (currentSlide + 1) % totalSlides;
+        changeSlide(newIndex);
+    }
+
+    function goToSlide(index) {
+        if (index === currentSlide) return;
+        changeSlide(index);
+    }
+
+    function handleKeydown(e) {
+        if (e.key === "ArrowLeft") {
+            prevSlide();
+        } else if (e.key === "ArrowRight") {
+            nextSlide();
         }
     }
 
-    function viewCart() {
-        let cartDetails = "Cart Contents:\n";
-        cart.forEach((item) => {
-            cartDetails += `${item.title} - Quantity: ${item.quantity} - Total: $${item.quantity * item.price}\n`;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleTouchStart(e) {
+        touchStartX = e.touches[0].clientX;
+    }
+
+    function handleTouchMove(e) {
+        touchEndX = e.touches[0].clientX;
+    }
+
+    function handleTouchEnd() {
+        const threshold = 75;
+        if (touchStartX - touchEndX > threshold) {
+            nextSlide();
+        } else if (touchEndX - touchStartX > threshold) {
+            prevSlide();
+        }
+    }
+
+    let autoplayInterval;
+    let isPaused = false;
+
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayInterval = setInterval(() => {
+            if (!isPaused) nextSlide();
+        }, 6000);
+    }
+
+    function stopAutoplay() {
+        if (autoplayInterval) clearInterval(autoplayInterval);
+    }
+
+    function pauseAutoplay() {
+        isPaused = true;
+    }
+
+    function resumeAutoplay() {
+        isPaused = false;
+    }
+
+    onMount(() => {
+        document
+            .querySelector(".artist-slide:first-child")
+            .classList.add("force-visible");
+
+        setTimeout(() => {
+            startAutoplay();
+        }, 1000);
+
+        artists.forEach((artist) => {
+            const img = new Image();
+            img.src = artist.portrait;
         });
-        cartDetails += `\nTotal Amount: $${cart.reduce((total, item) => total + item.quantity * item.price, 0)}`;
-        alert(cartDetails);
-    }
+
+        return () => {
+            stopAutoplay();
+        };
+    });
+
+    $: slideAnnouncement = `Viewing artist ${artists[currentSlide].name}, slide ${currentSlide + 1} of ${totalSlides}`;
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
+<div aria-live="polite" class="sr-only">{slideAnnouncement}</div>
+
 <nav class="navbar">
-    <div class="left">
+    <div class="nav-left">
         <h1>Marjanov</h1>
     </div>
-    <div class="center">
+    <div class="nav-center">
         <ul>
             <li><a href="/" class="nav-link">Discover</a></li>
-            <li><a href="/artists" class="nav-link active">Artists</a></li>
+            <li><a href="/artist" class="nav-link active">Artists</a></li>
         </ul>
     </div>
-    <div class="right" on:click={viewCart}>
-        <div class="basket" title="Cart">
-            🛒 <span class="basket-count"
-                >{cart.reduce((total, item) => total + item.quantity, 0)}</span
-            >
+    <div class="nav-right">
+        <div class="basket">
+            <span class="basket-icon">🛒</span>
         </div>
     </div>
 </nav>
 
-<section class="artist-showcase">
-    {#each artists as artist}
-        <div class="artist-section">
+<section
+    class="artist-showcase"
+    on:mouseenter={pauseAutoplay}
+    on:mouseleave={resumeAutoplay}
+    on:touchstart={handleTouchStart}
+    on:touchmove={handleTouchMove}
+    on:touchend={handleTouchEnd}
+>
+    <div
+        class="artist-slider"
+        aria-roledescription="carousel"
+        aria-label="Featured artists"
+    >
+        {#each artists as artist, i}
             <div
-                class="artist-image"
-                style="background-image: url({artist.portrait});"
-            ></div>
-            <div class="artist-description">
-                <h2>{artist.name}</h2>
-                <h3>{artist.style}</h3>
-                <p class="location">{artist.location}</p>
-                <p>{artist.bio}</p>
-                <button
-                    class="explore-btn"
-                    on:click={() => exploreArtist(artist.slug)}
-                >
-                    Explore {artist.name}'s Gallery
-                </button>
-                <div class="artworks">
-                    {#each artist.artworks as artwork}
-                        <a
-                            href={`/artwork?artist=${artist.slug}&id=${artwork.id}`}
-                            class="artwork-card"
+                class="artist-slide"
+                class:active={i === currentSlide ||
+                    (i === 0 && currentSlide === 0)}
+                class:previous={i === previousSlide}
+                class:slide-from-right={direction === 1 &&
+                    i === currentSlide &&
+                    previousSlide !== -1}
+                class:slide-from-left={direction === -1 &&
+                    i === currentSlide &&
+                    previousSlide !== -1}
+                class:slide-to-left={direction === 1 && i === previousSlide}
+                class:slide-to-right={direction === -1 && i === previousSlide}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of ${artists.length}: ${artist.name}`}
+                aria-hidden={i !== currentSlide}
+            >
+                <div
+                    class="slide-background"
+                    style="background-image: url({artist.portrait});"
+                ></div>
+                <div class="slide-content">
+                    <div class="artist-info">
+                        <div class="artist-medium">{artist.medium}</div>
+                        <h2 class="artist-name">{artist.name}</h2>
+                        <div class="artist-quote">"{artist.quote}"</div>
+                        <button
+                            class="explore-button"
+                            on:click={() => exploreArtist(artist.slug)}
+                            aria-label={`Explore ${artist.name}'s work`}
                         >
-                            <img src={artwork.image} alt={artwork.title} />
-                            <h4>{artwork.title}</h4>
-                            <p>Price: ${artwork.price}</p>
-                            <button
-                                on:click|stopPropagation={() =>
-                                    addToCart(artwork)}>Add to Cart</button
-                            >
-                        </a>
-                    {/each}
+                            Explore Artist
+                            <span class="arrow">→</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+        {/each}
+    </div>
+
+    <div class="slider-nav">
+        <div class="slider-controls">
+            <button
+                class="nav-btn nav-prev"
+                on:click={prevSlide}
+                aria-label="Previous artist"
+                title="Previous artist"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    ><line x1="19" y1="12" x2="5" y2="12"></line><polyline
+                        points="12 19 5 12 12 5"
+                    ></polyline></svg
+                >
+            </button>
+            <button
+                class="nav-btn nav-next"
+                on:click={nextSlide}
+                aria-label="Next artist"
+                title="Next artist"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    ><line x1="5" y1="12" x2="19" y2="12"></line><polyline
+                        points="12 5 19 12 12 19"
+                    ></polyline></svg
+                >
+            </button>
         </div>
-    {/each}
+
+        <div class="pagination-dots">
+            {#each artists as _, i}
+                <button
+                    class="pagination-dot"
+                    class:active={i === currentSlide}
+                    on:click={() => goToSlide(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    aria-current={i === currentSlide ? "true" : "false"}
+                ></button>
+            {/each}
+        </div>
+
+        <div class="slider-pagination">
+            <div class="pagination-numbers">
+                <span class="pagination-count">{formattedCurrentSlide}</span>
+                <span class="pagination-separator">/</span>
+                <span class="pagination-total">{formattedTotalSlides}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: {progress}%"></div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <style>
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
     :global(body) {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -184,128 +319,437 @@
         padding: 1rem 2rem;
         border-bottom: 1px solid #ccc;
     }
-    .left {
+
+    .nav-left {
         flex: 1;
     }
-    .left h1 {
+
+    .nav-left h1 {
         margin: 0;
         font-size: 2rem;
-        font-weight: bold;
+        font-weight: 700;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
         color: #333;
     }
-    .center {
+
+    .nav-center {
         flex: 1;
         display: flex;
         justify-content: center;
     }
-    .center ul {
+
+    .nav-center ul {
         list-style: none;
         display: flex;
         gap: 2rem;
         margin: 0;
         padding: 0;
     }
+
     .nav-link {
         text-decoration: none;
         color: inherit;
         transition: color 0.2s;
     }
-    .nav-link:hover,
+
+    .nav-link:hover {
+        color: #000;
+    }
+
     .nav-link.active {
         color: #000;
-        border-bottom: 2px solid #000;
+        font-weight: bold;
     }
-    .right {
+
+    .nav-right {
         flex: 1;
         display: flex;
         justify-content: flex-end;
-        cursor: pointer;
     }
+
     .basket {
-        font-size: 1.5rem;
-        position: relative;
-    }
-    .basket-count {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 2px 6px;
-        font-size: 0.8rem;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
     }
 
     .artist-showcase {
-        max-width: 1200px;
-        margin: 3rem auto;
-        padding: 0 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
+        position: relative;
+        height: calc(100vh - 73px);
+        background-color: #000;
+        overflow: hidden;
     }
 
-    .artist-section {
-        display: flex;
-        gap: 2rem;
-        background-color: #f4f4f4;
-        border-radius: 12px;
-        padding: 1rem;
+    .artist-showcase:before {
+        content: "";
+        display: none;
     }
 
-    .artist-image {
-        flex: 1;
-        height: 350px;
+    .artist-slider {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .artist-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 1s ease,
+            visibility 1s ease,
+            transform 1s ease;
+    }
+
+    .artist-slide.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        z-index: 2;
+    }
+
+    .slide-from-right {
+        transform: translateX(50px);
+    }
+
+    .slide-from-left {
+        transform: translateX(-50px);
+    }
+
+    .slide-to-left {
+        transform: translateX(-50px);
+    }
+
+    .slide-to-right {
+        transform: translateX(50px);
+    }
+
+    .artist-slide.force-visible {
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 10 !important;
+        transform: translateX(0) !important;
+    }
+
+    .artist-slide.force-visible .slide-background {
+        transform: scale(1) !important;
+    }
+
+    .artist-slide.force-visible .artist-info {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .artist-slide.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        z-index: 2;
+    }
+
+    .artist-slide.previous {
+        opacity: 0;
+        z-index: 1;
+    }
+
+    .slide-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background-size: cover;
         background-position: center;
+        filter: brightness(0.6);
+        transform: scale(1.1);
+        transition:
+            transform 8s ease,
+            filter 1s ease;
     }
 
-    .artist-description {
-        flex: 2;
+    .artist-slide.active .slide-background {
+        transform: scale(1);
+    }
+
+    .artist-slide.active .slide-background {
+        transform: scale(1);
+    }
+
+    .slide-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 5rem;
+        z-index: 2;
+    }
+
+    .artist-info {
+        max-width: 500px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+            opacity 0.8s ease 0.5s,
+            transform 0.8s ease 0.5s;
+    }
+
+    .artist-slide.active .artist-info {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .artist-slide.active .artist-info {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .artist-medium {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 4px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+        color: #fff;
+    }
+
+    .artist-name {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .artist-quote {
+        font-size: 1.2rem;
+        font-style: italic;
+        margin-bottom: 2.5rem;
+        opacity: 0.9;
+        max-width: 400px;
+        line-height: 1.6;
+        color: #fff;
+    }
+
+    .explore-button {
+        display: inline-flex;
+        align-items: center;
+        background-color: #fff;
+        color: #000;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .explore-button:hover {
+        transform: translateY(-3px);
+        background-color: #f2f2f2;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .explore-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .arrow {
+        margin-left: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+
+    .explore-button:hover .arrow {
+        transform: translateX(5px);
+    }
+
+    .slider-nav {
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+        width: 100%;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .slider-controls {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.2);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .nav-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .nav-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .pagination-dots {
+        display: flex;
+        gap: 0.5rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .pagination-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        border: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .pagination-dot:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .pagination-dot.active {
+        background-color: #fff;
+        transform: scale(1.2);
+    }
+
+    .slider-pagination {
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
+        gap: 0.8rem;
     }
 
-    .artworks {
-        display: flex;
-        gap: 1.5rem;
-        margin-top: 1rem;
-        flex-wrap: wrap;
+    .pagination-numbers {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #fff;
     }
 
-    .artwork-card {
-        width: 180px;
-        background-color: #fff;
-        border-radius: 8px;
+    .progress-bar {
+        width: 100px;
+        height: 2px;
+        background-color: rgba(255, 255, 255, 0.2);
+        position: relative;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        text-decoration: none;
-        color: inherit;
-        text-align: center;
-        padding: 1rem;
-        cursor: pointer;
+        border-radius: 2px;
     }
 
-    .artwork-card img {
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 4px;
+    .progress-bar-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #fff;
+        transition: width 0.5s ease;
     }
 
-    .artwork-card button {
-        margin-top: 0.5rem;
-        width: 100%;
-        padding: 0.5rem;
-        background-color: #000;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+    @media (max-width: 992px) {
+        .artist-name {
+            font-size: 3.5rem;
+        }
     }
 
-    .artwork-card button:hover {
-        background-color: #333;
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 1rem;
+        }
+
+        .nav-left h1 {
+            font-size: 1.5rem;
+        }
+
+        .nav-center ul {
+            gap: 1rem;
+        }
+
+        .artist-name {
+            font-size: 2.5rem;
+        }
+
+        .artist-quote {
+            font-size: 1rem;
+        }
+
+        .slide-content {
+            padding: 0 2rem;
+            align-items: flex-end;
+            padding-bottom: 6rem;
+        }
+
+        .slider-nav {
+            bottom: 1.5rem;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+        }
+
+        .pagination-dots {
+            display: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .artist-name {
+            font-size: 2rem;
+        }
+
+        .artist-info {
+            max-width: 100%;
+        }
+
+        .explore-button {
+            padding: 0.8rem 1.5rem;
+        }
+
+        .slider-controls {
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            width: 36px;
+            height: 36px;
+        }
+
+        .progress-bar {
+            width: 60px;
+        }
     }
 </style>

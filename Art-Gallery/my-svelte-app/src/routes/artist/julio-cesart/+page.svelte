@@ -20,9 +20,9 @@
     let initialLoadDone = false;
     let showArtistBio = false;
 
+    // Simplified cart state
     let cartItems = [];
     let showCart = false;
-    let checkoutStep = 0;
 
     const artist = {
         name: "Julio Cesar T",
@@ -58,7 +58,7 @@
             imageUrl: "/images/juliocesart/1.jpg",
             color: "#1a1a1a",
             textColor: "#ffffff",
-            accentColor: "#808080",
+            accentColor: "#c0c0c0", // Brightened for better contrast
         },
         {
             id: 2,
@@ -71,7 +71,7 @@
             imageUrl: "/images/juliocesart/2.jpg",
             color: "#a01573",
             textColor: "#ffffff",
-            accentColor: "#ff80c0",
+            accentColor: "#ffa0e0", // Brightened for better contrast
         },
         {
             id: 3,
@@ -84,7 +84,7 @@
             imageUrl: "/images/juliocesart/3.jpg",
             color: "#0d1f12",
             textColor: "#ffffff",
-            accentColor: "#4dff4d",
+            accentColor: "#7fff7f", // Brightened for better contrast
         },
         {
             id: 4,
@@ -97,7 +97,7 @@
             imageUrl: "/images/juliocesart/4.jpg",
             color: "#8c0000",
             textColor: "#ffffff",
-            accentColor: "#ff6666",
+            accentColor: "#ff9999", // Brightened for better contrast
         },
         {
             id: 5,
@@ -110,7 +110,7 @@
             imageUrl: "/images/juliocesart/5.jpg",
             color: "#000033",
             textColor: "#ffffff",
-            accentColor: "#b3d9ff",
+            accentColor: "#d6e6ff", // Brightened for better contrast
         },
         {
             id: 6,
@@ -123,7 +123,7 @@
             imageUrl: "/images/juliocesart/6.jpg",
             color: "#661400",
             textColor: "#ffffff",
-            accentColor: "#ff9966",
+            accentColor: "#ffbd99", // Brightened for better contrast
         },
         {
             id: 7,
@@ -136,7 +136,7 @@
             imageUrl: "/images/juliocesart/7.jpg",
             color: "#0d1f12",
             textColor: "#ffffff",
-            accentColor: "#85ff85",
+            accentColor: "#a5ffa5", // Brightened for better contrast
         },
     ];
 
@@ -174,7 +174,7 @@
     }
 
     function handleWheel(event) {
-        if (isAnimating || artworkDetails || showArtistBio) return;
+        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
 
         clearTimeout(wheelDebounceTimer);
         wheelDebounceTimer = setTimeout(() => {
@@ -184,7 +184,7 @@
     }
 
     function handleKeydown(event) {
-        if (isAnimating || artworkDetails || showArtistBio) return;
+        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
 
         if (event.key === "ArrowDown" || event.key === "PageDown") {
             scrollToSection(currentSection + 1);
@@ -195,6 +195,8 @@
                 closeArtworkDetails();
             } else if (showArtistBio) {
                 closeArtistBio();
+            } else if (showCart) {
+                toggleCart();
             }
         }
     }
@@ -204,7 +206,7 @@
     }
 
     function handleTouchMove(event) {
-        if (isAnimating || artworkDetails || showArtistBio) return;
+        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
 
         const touchY = event.touches[0].clientY;
         const diff = touchStartY - touchY;
@@ -228,7 +230,7 @@
     }
 
     function handleMouseMove(event) {
-        if (artworkDetails || showArtistBio) return;
+        if (artworkDetails || showArtistBio || showCart) return;
 
         const { clientX, clientY } = event;
         mousePosition = {
@@ -264,7 +266,6 @@
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
-            checkoutStep = 0;
         }
     }
 
@@ -276,7 +277,7 @@
 
         if (existingItemIndex >= 0) {
             cartItems[existingItemIndex].quantity += 1;
-            cartItems = [...cartItems];
+            cartItems = [...cartItems]; // Trigger reactivity
         } else {
             const price = getArtworkPrice(artwork, editionType);
             cartItems = [
@@ -294,7 +295,20 @@
             ];
         }
 
-        showCart = true;
+        // Show notification
+        const notification = document.createElement("div");
+        notification.className = "cart-notification";
+        notification.textContent = `"${artwork.title}" added to cart`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add("show");
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove("show");
+            setTimeout(() => notification.remove(), 500);
+        }, 3000);
     }
 
     function removeFromCart(index) {
@@ -305,7 +319,7 @@
         if (newQuantity < 1) return;
 
         cartItems[index].quantity = newQuantity;
-        cartItems = [...cartItems];
+        cartItems = [...cartItems]; // Trigger reactivity
     }
 
     function getArtworkPrice(artwork, editionType) {
@@ -328,26 +342,6 @@
         return cartItems.reduce((total, item) => {
             return total + item.price * item.quantity;
         }, 0);
-    }
-
-    function proceedCheckout() {
-        if (checkoutStep < 3) {
-            checkoutStep += 1;
-        }
-    }
-
-    function backCheckout() {
-        if (checkoutStep > 0) {
-            checkoutStep -= 1;
-        }
-    }
-
-    function completeOrder() {
-        checkoutStep = 3;
-        setTimeout(() => {
-            cartItems = [];
-            toggleCart();
-        }, 5000);
     }
 
     function getParallaxStyle(index) {
@@ -416,7 +410,10 @@
 
 <div
     class="scroll-indicator"
-    class:visible={initialLoadDone && !artworkDetails && !showArtistBio}
+    class:visible={initialLoadDone &&
+        !artworkDetails &&
+        !showArtistBio &&
+        !showCart}
 >
     <div class="indicator-dot" class:active={currentSection === 0}></div>
     <div class="indicator-dot" class:active={currentSection === 1}></div>
@@ -434,7 +431,7 @@
     on:wheel={handleWheel}
     on:touchstart={handleTouchStart}
     on:touchmove={handleTouchMove}
-    class:no-scroll={isAnimating || artworkDetails || showArtistBio}
+    class:no-scroll={isAnimating || artworkDetails || showArtistBio || showCart}
 >
     <div
         class="sections-container"
@@ -492,7 +489,7 @@
 
                     <button
                         class="artist-bio-button"
-                        style="border-color: {artist.accentColor}; color: {artist.accentColor};"
+                        style="border-color: {artist.accentColor}; color: {artist.accentColor}; background-color: rgba(0,0,0,0.3);"
                         on:click={openArtistBio}
                     >
                         Full Artist Biography
@@ -547,13 +544,23 @@
                         <p class="artwork-year">{artwork.year}</p>
                         <div class="info-divider"></div>
                         <p class="artwork-medium">{artwork.medium}</p>
-                        <button
-                            class="view-details-btn"
-                            style="border-color: {artwork.accentColor}; color: {artwork.accentColor};"
-                            on:click={() => openArtworkDetails(artwork)}
-                        >
-                            View Details
-                        </button>
+                        <div class="artwork-action-buttons">
+                            <button
+                                class="view-details-btn"
+                                style="border-color: {artwork.accentColor}; color: {artwork.accentColor}; background-color: rgba(0,0,0,0.3);"
+                                on:click={() => openArtworkDetails(artwork)}
+                            >
+                                View Details
+                            </button>
+                            <button
+                                class="add-to-cart-btn"
+                                style="background-color: {artwork.accentColor}; color: {artwork.color};"
+                                on:click={() =>
+                                    addToCart(artwork, "Limited Edition Print")}
+                            >
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -675,97 +682,39 @@
                     </div>
 
                     <div class="artwork-acquisition">
-                        <h3>Acquisition</h3>
-                        <div class="artwork-editions">
-                            <div class="edition-item">
-                                <div class="edition-info">
-                                    <span class="edition-type">Original</span>
-                                    <span class="edition-price"
-                                        >${getArtworkPrice(
-                                            selectedArtwork,
-                                            "Original",
-                                        ).toLocaleString()}</span
-                                    >
-                                </div>
-                                <button
-                                    class="add-to-cart-btn"
-                                    style="background-color: {selectedArtwork.accentColor}; color: {selectedArtwork.color}"
-                                    on:click={() => {
-                                        addToCart(selectedArtwork, "Original");
-                                        closeArtworkDetails();
-                                    }}
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
-
-                            <div class="edition-item">
-                                <div class="edition-info">
-                                    <span class="edition-type"
-                                        >Limited Edition Print</span
-                                    >
-                                    <span class="edition-details"
-                                        >Edition of 25, signed and numbered</span
-                                    >
-                                    <span class="edition-price"
-                                        >${getArtworkPrice(
-                                            selectedArtwork,
-                                            "Limited Edition Print",
-                                        ).toLocaleString()}</span
-                                    >
-                                </div>
-                                <button
-                                    class="add-to-cart-btn"
-                                    style="background-color: {selectedArtwork.accentColor}; color: {selectedArtwork.color}"
-                                    on:click={() => {
-                                        addToCart(
-                                            selectedArtwork,
-                                            "Limited Edition Print",
-                                        );
-                                        closeArtworkDetails();
-                                    }}
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
-
-                            <div class="edition-item">
-                                <div class="edition-info">
-                                    <span class="edition-type"
-                                        >Open Edition Print</span
-                                    >
-                                    <span class="edition-details"
-                                        >Museum quality, archival print</span
-                                    >
-                                    <span class="edition-price"
-                                        >${getArtworkPrice(
-                                            selectedArtwork,
-                                            "Open Edition Print",
-                                        ).toLocaleString()}</span
-                                    >
-                                </div>
-                                <button
-                                    class="add-to-cart-btn"
-                                    style="background-color: {selectedArtwork.accentColor}; color: {selectedArtwork.color}"
-                                    on:click={() => {
-                                        addToCart(
-                                            selectedArtwork,
-                                            "Open Edition Print",
-                                        );
-                                        closeArtworkDetails();
-                                    }}
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
+                        <h3>Acquisition Options</h3>
+                        <div class="price-display">
+                            Limited Edition Print: <span class="price-value"
+                                >${getArtworkPrice(
+                                    selectedArtwork,
+                                    "Limited Edition Print",
+                                ).toLocaleString()}</span
+                            >
                         </div>
 
+                        <button
+                            class="add-to-cart-btn-large"
+                            style="background-color: {selectedArtwork.accentColor}; color: {selectedArtwork.color};"
+                            on:click={() => {
+                                addToCart(
+                                    selectedArtwork,
+                                    "Limited Edition Print",
+                                );
+                                closeArtworkDetails();
+                            }}
+                        >
+                            Add to Cart
+                        </button>
+
                         <div class="acquisition-contact">
-                            <p>For custom framing or special requests:</p>
+                            <p>
+                                For custom framing, original artwork or special
+                                requests:
+                            </p>
                             <a
                                 href="mailto:info@marjanov.com?subject=Inquiry about {selectedArtwork.title}"
-                                class="inquiry-button outlined"
-                                style="border-color: {selectedArtwork.accentColor}; color: {selectedArtwork.accentColor}"
+                                class="inquiry-button"
+                                style="border-color: {selectedArtwork.accentColor}; color: {selectedArtwork.accentColor}; background-color: rgba(0,0,0,0.3);"
                             >
                                 Contact Gallery
                             </a>
@@ -841,11 +790,122 @@
                         <a
                             href="mailto:info@marjanov.com?subject=Inquiry about {artist.name}"
                             class="bio-action-btn outlined"
-                            style="border-color: {artist.accentColor}; color: {artist.accentColor};"
+                            style="border-color: {artist.accentColor}; color: {artist.accentColor}; background-color: rgba(0,0,0,0.3);"
                         >
                             Contact Gallery
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    {/if}
+
+    {#if showCart}
+        <div class="cart-modal">
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h2>Your Cart</h2>
+                    <button class="close-cart-btn" on:click={toggleCart}
+                        >×</button
+                    >
+                </div>
+
+                <div class="cart-content">
+                    {#if cartItems.length === 0}
+                        <div class="empty-cart">
+                            <svg
+                                width="80"
+                                height="80"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path
+                                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                                ></path>
+                            </svg>
+                            <p>Your cart is empty</p>
+                            <button
+                                class="continue-shopping-btn"
+                                on:click={toggleCart}>Continue Shopping</button
+                            >
+                        </div>
+                    {:else}
+                        <div class="cart-items">
+                            {#each cartItems as item, index}
+                                <div class="cart-item">
+                                    <div class="cart-item-image">
+                                        <img
+                                            src={item.imageUrl}
+                                            alt={item.title}
+                                        />
+                                    </div>
+                                    <div class="cart-item-details">
+                                        <h3>{item.title}</h3>
+                                        <p>{item.artist}, {item.year}</p>
+                                        <p class="item-edition">
+                                            {item.editionType}
+                                        </p>
+                                        <div class="item-price">
+                                            ${item.price.toLocaleString()}
+                                        </div>
+                                    </div>
+                                    <div class="cart-item-actions">
+                                        <div class="quantity-selector">
+                                            <button
+                                                on:click={() =>
+                                                    updateQuantity(
+                                                        index,
+                                                        item.quantity - 1,
+                                                    )}>-</button
+                                            >
+                                            <span>{item.quantity}</span>
+                                            <button
+                                                on:click={() =>
+                                                    updateQuantity(
+                                                        index,
+                                                        item.quantity + 1,
+                                                    )}>+</button
+                                            >
+                                        </div>
+                                        <button
+                                            class="remove-item-btn"
+                                            on:click={() =>
+                                                removeFromCart(index)}
+                                            >Remove</button
+                                        >
+                                    </div>
+                                </div>
+                            {/each}
+                        </div>
+
+                        <div class="cart-summary">
+                            <div class="cart-total">
+                                <span>Total</span>
+                                <span>${getCartTotal().toLocaleString()}</span>
+                            </div>
+                            <a
+                                href="mailto:info@marjanov.com?subject=Cart Inquiry&body=I'm interested in purchasing the following items from my cart: {cartItems
+                                    .map(
+                                        (item) =>
+                                            `${item.quantity}x ${item.title} (${item.editionType})`,
+                                    )
+                                    .join(', ')}"
+                                class="checkout-btn"
+                            >
+                                Contact Gallery to Purchase
+                            </a>
+                            <button
+                                class="continue-shopping-btn"
+                                on:click={toggleCart}>Continue Shopping</button
+                            >
+                        </div>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -877,316 +937,6 @@
         </div>
         <div class="instruction-text">Scroll to explore</div>
     </div>
-
-    {#if showCart}
-        <div class="cart-modal" transition:fade={{ duration: 300 }}>
-            <div class="cart-container">
-                <div class="cart-header">
-                    <h2>Your Cart</h2>
-                    <button class="close-cart-btn" on:click={toggleCart}
-                        >×</button
-                    >
-                </div>
-
-                <div class="cart-content">
-                    {#if checkoutStep === 0}
-                        {#if cartItems.length === 0}
-                            <div class="empty-cart">
-                                <svg
-                                    width="80"
-                                    height="80"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <circle cx="9" cy="21" r="1"></circle>
-                                    <circle cx="20" cy="21" r="1"></circle>
-                                    <path
-                                        d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
-                                    ></path>
-                                </svg>
-                                <p>Your cart is empty</p>
-                                <button
-                                    class="continue-shopping-btn"
-                                    on:click={toggleCart}
-                                    >Continue Shopping</button
-                                >
-                            </div>
-                        {:else}
-                            <div class="cart-items">
-                                {#each cartItems as item, index}
-                                    <div class="cart-item">
-                                        <div class="cart-item-image">
-                                            <img
-                                                src={item.imageUrl}
-                                                alt={item.title}
-                                            />
-                                        </div>
-                                        <div class="cart-item-details">
-                                            <h3>{item.title}</h3>
-                                            <p>{item.artist}, {item.year}</p>
-                                            <p class="item-edition">
-                                                {item.editionType}
-                                            </p>
-                                            <div class="item-price">
-                                                ${item.price.toLocaleString()}
-                                            </div>
-                                        </div>
-                                        <div class="cart-item-actions">
-                                            <div class="quantity-selector">
-                                                <button
-                                                    on:click={() =>
-                                                        updateQuantity(
-                                                            index,
-                                                            item.quantity - 1,
-                                                        )}>-</button
-                                                >
-                                                <span>{item.quantity}</span>
-                                                <button
-                                                    on:click={() =>
-                                                        updateQuantity(
-                                                            index,
-                                                            item.quantity + 1,
-                                                        )}>+</button
-                                                >
-                                            </div>
-                                            <button
-                                                class="remove-item-btn"
-                                                on:click={() =>
-                                                    removeFromCart(index)}
-                                                >Remove</button
-                                            >
-                                        </div>
-                                    </div>
-                                {/each}
-                            </div>
-
-                            <div class="cart-summary">
-                                <div class="cart-subtotal">
-                                    <span>Subtotal</span>
-                                    <span
-                                        >${getCartTotal().toLocaleString()}</span
-                                    >
-                                </div>
-                                <div class="cart-shipping">
-                                    <span>Shipping</span>
-                                    <span>Calculated at checkout</span>
-                                </div>
-                                <div class="cart-total">
-                                    <span>Estimated Total</span>
-                                    <span
-                                        >${getCartTotal().toLocaleString()}</span
-                                    >
-                                </div>
-                                <button
-                                    class="checkout-btn"
-                                    on:click={proceedCheckout}
-                                    >Proceed to Checkout</button
-                                >
-                                <button
-                                    class="continue-shopping-btn"
-                                    on:click={toggleCart}
-                                    >Continue Shopping</button
-                                >
-                            </div>
-                        {/if}
-                    {:else if checkoutStep === 1}
-                        <div class="checkout-step shipping-step">
-                            <h3>Shipping Information</h3>
-                            <form class="shipping-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="firstName">First Name</label
-                                        >
-                                        <input
-                                            type="text"
-                                            id="firstName"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lastName">Last Name</label>
-                                        <input
-                                            type="text"
-                                            id="lastName"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" id="address" required />
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" id="city" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="zipCode">Zip Code</label>
-                                        <input
-                                            type="text"
-                                            id="zipCode"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="country">Country</label>
-                                    <select id="country" required>
-                                        <option value="">Select Country</option>
-                                        <option value="US">United States</option
-                                        >
-                                        <option value="UK"
-                                            >United Kingdom</option
-                                        >
-                                        <option value="CA">Canada</option>
-                                        <option value="AU">Australia</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="ES">Spain</option>
-                                    </select>
-                                </div>
-                            </form>
-
-                            <div class="checkout-actions">
-                                <button class="back-btn" on:click={backCheckout}
-                                    >Back to Cart</button
-                                >
-                                <button
-                                    class="next-btn"
-                                    on:click={proceedCheckout}
-                                    >Continue to Payment</button
-                                >
-                            </div>
-                        </div>
-                    {:else if checkoutStep === 2}
-                        <div class="checkout-step payment-step">
-                            <h3>Payment Information</h3>
-                            <form class="payment-form">
-                                <div class="form-group">
-                                    <label for="cardName">Name on Card</label>
-                                    <input type="text" id="cardName" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="cardNumber">Card Number</label>
-                                    <input
-                                        type="text"
-                                        id="cardNumber"
-                                        placeholder="XXXX XXXX XXXX XXXX"
-                                        required
-                                    />
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="expiryDate"
-                                            >Expiry Date</label
-                                        >
-                                        <input
-                                            type="text"
-                                            id="expiryDate"
-                                            placeholder="MM/YY"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cvv">CVV</label>
-                                        <input
-                                            type="text"
-                                            id="cvv"
-                                            placeholder="XXX"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="order-summary">
-                                <h4>Order Summary</h4>
-                                <div class="summary-items">
-                                    {#each cartItems as item}
-                                        <div class="summary-item">
-                                            <span
-                                                >{item.quantity}x {item.title} ({item.editionType})</span
-                                            >
-                                            <span
-                                                >${(
-                                                    item.price * item.quantity
-                                                ).toLocaleString()}</span
-                                            >
-                                        </div>
-                                    {/each}
-                                </div>
-                                <div class="summary-total">
-                                    <span>Total</span>
-                                    <span
-                                        >${getCartTotal().toLocaleString()}</span
-                                    >
-                                </div>
-                            </div>
-
-                            <div class="checkout-actions">
-                                <button class="back-btn" on:click={backCheckout}
-                                    >Back to Shipping</button
-                                >
-                                <button
-                                    class="complete-btn"
-                                    on:click={completeOrder}
-                                    >Complete Purchase</button
-                                >
-                            </div>
-                        </div>
-                    {:else if checkoutStep === 3}
-                        <div class="checkout-step confirmation-step">
-                            <div class="confirmation-icon">
-                                <svg
-                                    width="80"
-                                    height="80"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                                    ></path>
-                                    <polyline points="22 4 12 14.01 9 11.01"
-                                    ></polyline>
-                                </svg>
-                            </div>
-                            <h3>Order Confirmed!</h3>
-                            <p>
-                                Thank you for your purchase. Your order has been
-                                received and is being processed.
-                            </p>
-                            <p>
-                                A confirmation email with your order details has
-                                been sent to your email address.
-                            </p>
-                            <p class="delivery-note">
-                                For original artworks and limited editions, our
-                                gallery will contact you within 24 hours to
-                                arrange delivery and provide tracking
-                                information.
-                            </p>
-                            <button
-                                class="continue-shopping-btn"
-                                on:click={toggleCart}>Return to Gallery</button
-                            >
-                        </div>
-                    {/if}
-                </div>
-            </div>
-        </div>
-    {/if}
 </main>
 
 <style>
@@ -1204,6 +954,7 @@
         box-sizing: border-box;
     }
 
+    /* Navigation Bar */
     .navbar {
         position: fixed;
         top: 0;
@@ -1213,7 +964,7 @@
         display: flex;
         align-items: center;
         padding: 0 2rem;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(10px);
         z-index: 100;
     }
@@ -1264,6 +1015,7 @@
         width: 100%;
     }
 
+    /* Loading Screen */
     .loading-screen {
         position: fixed;
         top: 0;
@@ -1308,6 +1060,7 @@
         opacity: 0.7;
     }
 
+    /* Main Content */
     .content-wrapper {
         width: 100%;
         height: 100vh;
@@ -1334,6 +1087,7 @@
         align-items: center;
     }
 
+    /* Artist Intro Section */
     .artist-intro-section {
         overflow: hidden;
     }
@@ -1411,7 +1165,7 @@
     .artist-exhibition-highlight {
         display: inline-block;
         padding: 0.6rem 1rem;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.2);
         border-radius: 4px;
         margin-bottom: 2rem;
     }
@@ -1427,14 +1181,13 @@
     .artist-bio-button {
         align-self: flex-start;
         background: none;
-        border: 1px solid;
+        border: 2px solid;
         padding: 0.8rem 1.5rem;
         font-size: 1rem;
         font-family: inherit;
         cursor: pointer;
-        transition:
-            background-color 0.3s,
-            color 0.3s;
+        transition: all 0.3s;
+        font-weight: 500;
     }
 
     .artist-bio-button:hover {
@@ -1442,6 +1195,7 @@
         color: #000 !important;
     }
 
+    /* Artwork Layers */
     .artwork-layer {
         position: absolute;
         top: 0;
@@ -1495,6 +1249,9 @@
         padding: 2rem;
         max-width: 350px;
         margin-right: 5vw;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
     }
 
     .artwork-title {
@@ -1524,16 +1281,21 @@
         opacity: 0.7;
     }
 
+    .artwork-action-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
     .view-details-btn {
         background: none;
-        border: 1px solid;
+        border: 2px solid;
         padding: 0.8rem 1.5rem;
         font-size: 0.9rem;
         font-family: inherit;
         cursor: pointer;
-        transition:
-            background-color 0.3s,
-            color 0.3s;
+        transition: all 0.3s;
+        font-weight: 500;
     }
 
     .view-details-btn:hover {
@@ -1541,6 +1303,39 @@
         color: #000 !important;
     }
 
+    .add-to-cart-btn {
+        background-color: currentColor;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        font-family: inherit;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        font-weight: 500;
+    }
+
+    .add-to-cart-btn:hover {
+        opacity: 0.9;
+    }
+
+    .add-to-cart-btn-large {
+        width: 100%;
+        background-color: currentColor;
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+
+    .add-to-cart-btn-large:hover {
+        opacity: 0.9;
+    }
+
+    /* Section Navigation */
     .section-counter {
         position: absolute;
         bottom: 2rem;
@@ -1548,6 +1343,7 @@
         font-size: 1rem;
         opacity: 0.7;
         z-index: 4;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
     .nav-cue {
@@ -1559,6 +1355,7 @@
         opacity: 0.7;
         transition: opacity 0.3s;
         z-index: 4;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
     .nav-cue:hover {
@@ -1587,6 +1384,7 @@
         letter-spacing: 0.05em;
     }
 
+    /* Overlays */
     .entry-overlay {
         position: fixed;
         top: 0;
@@ -1597,6 +1395,7 @@
         transition: opacity 1.5s ease-out;
     }
 
+    /* Scroll Indicator */
     .scroll-indicator {
         position: fixed;
         top: 50%;
@@ -1629,6 +1428,7 @@
         transform: scale(1.3);
     }
 
+    /* Scroll Instructions */
     .scroll-instructions {
         position: fixed;
         bottom: 2rem;
@@ -1670,6 +1470,7 @@
         letter-spacing: 0.1em;
     }
 
+    /* Modals */
     .artwork-details-modal,
     .artist-bio-modal {
         position: fixed;
@@ -1701,7 +1502,7 @@
         max-height: 90vh;
         border: 1px solid;
         border-radius: 4px;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.7);
         position: relative;
         overflow: hidden;
     }
@@ -1807,6 +1608,7 @@
         margin: 1.5rem 0;
     }
 
+    /* Artwork Metadata */
     .artwork-metadata {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1860,19 +1662,32 @@
         margin-bottom: 1.5rem;
     }
 
+    .price-display {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .price-value {
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+
     .inquiry-button {
         display: inline-block;
+        background: none;
+        border: 2px solid;
         padding: 0.8rem 1.5rem;
         text-decoration: none;
         font-size: 0.9rem;
         font-family: inherit;
-        border: none;
         cursor: pointer;
-        transition: opacity 0.3s;
+        transition: all 0.3s;
+        font-weight: 500;
     }
 
     .inquiry-button:hover {
-        opacity: 0.9;
+        background-color: currentColor;
+        color: #000 !important;
     }
 
     .bio-section {
@@ -1900,15 +1715,26 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        font-weight: 500;
     }
 
     .bio-action-btn.outlined {
         background: none;
-        border: 1px solid;
+        border: 2px solid;
     }
 
+    .right {
+        text-align: right;
+    }
     .basket {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
         position: relative;
+    }
+    .basket-icon {
+        font-size: 1.5rem;
+        line-height: 1;
     }
 
     .cart-badge {
@@ -1927,6 +1753,7 @@
         font-weight: bold;
     }
 
+    /* Simplified Cart Modal */
     .cart-modal {
         position: fixed;
         top: 0;
@@ -1939,6 +1766,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
     .cart-container {
@@ -1991,6 +1828,7 @@
         padding: 1.5rem;
     }
 
+    /* Empty Cart */
     .empty-cart {
         display: flex;
         flex-direction: column;
@@ -2005,6 +1843,7 @@
         font-size: 1.2rem;
     }
 
+    /* Cart Items */
     .cart-items {
         display: flex;
         flex-direction: column;
@@ -2075,7 +1914,7 @@
     .quantity-selector button {
         width: 30px;
         height: 30px;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.2);
         border: none;
         border-radius: 4px;
         color: white;
@@ -2088,13 +1927,13 @@
     }
 
     .quantity-selector button:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.3);
     }
 
     .remove-item-btn {
         background: none;
         border: none;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.7);
         font-size: 0.9rem;
         cursor: pointer;
         padding: 0.5rem;
@@ -2106,44 +1945,41 @@
         text-decoration: underline;
     }
 
+    /* Cart Summary */
     .cart-summary {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 1.5rem;
     }
 
-    .cart-subtotal,
-    .cart-shipping,
     .cart-total {
+        font-size: 1.3rem;
+        font-weight: 500;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 1rem;
-    }
-
-    .cart-total {
-        font-size: 1.2rem;
-        font-weight: 500;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     .checkout-btn,
     .continue-shopping-btn {
         width: 100%;
         padding: 1rem;
-        border: none;
         border-radius: 4px;
         font-family: inherit;
         font-size: 1rem;
         cursor: pointer;
         transition: opacity 0.3s;
         margin-top: 1rem;
+        text-align: center;
+        display: block;
+        text-decoration: none;
+        font-weight: 500;
     }
 
     .checkout-btn {
         background: #3a86ff;
         color: white;
+        border: none;
     }
 
     .continue-shopping-btn {
@@ -2157,212 +1993,38 @@
         opacity: 0.9;
     }
 
-    .checkout-step {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .checkout-step h3 {
-        margin: 0 0 2rem;
-        font-size: 1.5rem;
-        font-weight: 400;
-        text-align: center;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-        opacity: 0.7;
-    }
-
-    .form-group input,
-    .form-group select {
-        width: 100%;
-        padding: 0.8rem 1rem;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 4px;
+    /* Cart Notification */
+    .cart-notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #111111;
         color: white;
-        font-family: inherit;
-        font-size: 1rem;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-        outline: none;
-        border-color: #3a86ff;
-    }
-
-    .checkout-actions {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 2rem;
-    }
-
-    .back-btn,
-    .next-btn,
-    .complete-btn {
-        padding: 0.8rem 1.5rem;
+        padding: 1rem 1.5rem;
         border-radius: 4px;
-        font-family: inherit;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: opacity 0.3s;
+        z-index: 1001;
+        border-left: 4px solid #3a86ff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+            transform 0.3s,
+            opacity 0.3s;
     }
 
-    .back-btn {
-        background: none;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
+    .cart-notification.show {
+        transform: translateY(0);
+        opacity: 1;
     }
 
-    .next-btn,
-    .complete-btn {
-        background: #3a86ff;
-        color: white;
-        border: none;
-    }
-
-    .order-summary {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-    }
-
-    .order-summary h4 {
-        margin: 0 0 1rem;
-        font-size: 1.2rem;
-        font-weight: 400;
-    }
-
-    .summary-items {
-        margin-bottom: 1.5rem;
-    }
-
-    .summary-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    .summary-total {
-        display: flex;
-        justify-content: space-between;
-        font-weight: 500;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .confirmation-step {
-        text-align: center;
-        padding: 2rem 0;
-    }
-
-    .confirmation-icon {
-        margin-bottom: 2rem;
-        color: #4bb543;
-    }
-
-    .confirmation-step p {
-        margin-bottom: 1.5rem;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .delivery-note {
-        font-style: italic;
-        opacity: 0.7;
-        border-left: 2px solid #3a86ff;
-        padding-left: 1rem;
-        text-align: left;
-        margin: 2rem auto;
-    }
-
-    .artwork-editions {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .edition-item {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        padding: 1.2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .edition-info {
-        display: flex;
-        flex-direction: column;
-        gap: 0.3rem;
-    }
-
-    .edition-type {
-        font-weight: 500;
-        font-size: 1.1rem;
-    }
-
-    .edition-details {
-        font-size: 0.9rem;
-        opacity: 0.7;
-    }
-
-    .edition-price {
-        font-weight: 500;
-        font-size: 1.2rem;
-        margin-top: 0.5rem;
-    }
-
-    .add-to-cart-btn {
-        padding: 0.7rem 1.2rem;
-        border: none;
-        border-radius: 4px;
-        font-family: inherit;
-        font-size: 0.9rem;
-        cursor: pointer;
-        white-space: nowrap;
-    }
-
+    /* Acquisition Contact */
     .acquisition-contact {
         margin-top: 2rem;
         padding-top: 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .inquiry-button.outlined {
-        background: none;
-        border: 1px solid;
-        padding: 0.8rem 1.5rem;
-        display: inline-block;
-        text-decoration: none;
-        transition:
-            background-color 0.3s,
-            color 0.3s;
-        margin-top: 1rem;
-    }
-
-    .inquiry-button.outlined:hover {
-        background-color: currentColor;
-        color: #000 !important;
-    }
-
+    /* Responsive Styles */
     @media (max-width: 1200px) {
         .artist-intro-content {
             grid-template-columns: 1fr;
@@ -2399,16 +2061,6 @@
         .bio-right {
             max-height: 45vh;
         }
-
-        .edition-item {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-        }
     }
 
     @media (max-width: 900px) {
@@ -2441,6 +2093,10 @@
 
         .artist-tagline {
             font-size: 1.2rem;
+        }
+
+        .artwork-action-buttons {
+            justify-content: center;
         }
 
         .cart-item {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
+import 'signup_color_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -16,6 +17,17 @@ class WelcomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const SignUpScreen()),
+    );
+  }
+
+  void _continueAsGuest(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignUpColorScreen(
+          isGuest: true,
+        ),
+      ),
     );
   }
 
@@ -42,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () => _navigateToLogin(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white, // Button color
+                  backgroundColor: Colors.white,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -68,6 +80,22 @@ class WelcomeScreen extends StatelessWidget {
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => _continueAsGuest(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: const Text(
+                  'Continue as Guest',
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
                 ),
               ),
             ],

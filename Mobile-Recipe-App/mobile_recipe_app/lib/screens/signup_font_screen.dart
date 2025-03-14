@@ -3,17 +3,21 @@ import 'main_home_page.dart';
 
 class SignUpFontScreen extends StatefulWidget {
   final List<Color> selectedPalette;
+  final bool isGuest;
 
-  const SignUpFontScreen({super.key, required this.selectedPalette});
+  const SignUpFontScreen({
+    super.key,
+    required this.selectedPalette,
+    this.isGuest = false,
+  });
 
   @override
   _SignUpFontScreenState createState() => _SignUpFontScreenState();
 }
 
 class _SignUpFontScreenState extends State<SignUpFontScreen> {
-  double _selectedFontSize = 16.0;
+  double _selectedFontSize = 24.0;
   final List<double> predefinedFontSizes = [
-    10.0,
     14.0,
     18.0,
     24.0,
@@ -45,13 +49,16 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
     final Color textColor = widget.selectedPalette[2];
     final Color accentColor = widget.selectedPalette[3];
 
+    String title = widget.isGuest ? 'Text Size' : 'Select Font Size';
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Font Size'),
+        title: Text(title),
         backgroundColor: primaryColor,
         iconTheme: IconThemeData(color: textColor),
         titleTextStyle:
             TextStyle(color: textColor, fontSize: _selectedFontSize),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         color: backgroundColor,
@@ -60,12 +67,25 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                widget.isGuest
+                    ? 'Choose a comfortable text size for reading'
+                    : 'Select your preferred font size',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 20.0),
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: accentColor, width: 1),
                 ),
                 child: Center(
                   child: Text(
@@ -79,6 +99,7 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 8.0,
@@ -111,9 +132,9 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
               const SizedBox(height: 24),
               Slider(
                 value: _selectedFontSize,
-                min: 10.0,
+                min: 14.0,
                 max: 48.0,
-                divisions: 38,
+                divisions: 34,
                 label: _selectedFontSize.round().toString(),
                 onChanged: (double value) {
                   setState(() {
@@ -123,22 +144,23 @@ class _SignUpFontScreenState extends State<SignUpFontScreen> {
                 activeColor: accentColor,
                 inactiveColor: accentColor.withOpacity(0.4),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _finishSetup,
                 style: ElevatedButton.styleFrom(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 60, vertical: 16),
                   backgroundColor: accentColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 child: Text(
-                  'Finish',
+                  widget.isGuest ? 'Start Cooking' : 'Finish',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
               ),

@@ -138,6 +138,8 @@ Use sounds to signal errors, successful actions, or guidance prompts.
 https://www.android.com/accessibility/vision/
 
 
+17/03/2025 - Start of Report and gathering informaiton in an unstructured way. I will strucutre it after the first draft and all the information is collected.
+
 
 
 

@@ -8,6 +8,14 @@
         "value": 50
     },
     {
+        "code": "COD",
+        "value": 43
+    },
+    {
+        "code": "SSD",
+        "value": 47
+    },
+    {
         "code": "RUS",
         "value": -50
     },

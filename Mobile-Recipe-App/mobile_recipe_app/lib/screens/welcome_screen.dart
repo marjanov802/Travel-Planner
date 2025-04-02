@@ -33,69 +33,182 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Accessibility-focused color scheme
+    const Color backgroundColor = Color(0xFF1A3E82);
+    const Color buttonTextColor = Color(0xFF1A3E82);
+    const Color lightTextColor = Colors.white;
+    const Color primaryButtonColor = Colors.white;
+    const Color secondaryButtonColor =
+        Color(0xFF3262B5); // Darkened for WCAG AAA compliance
+    const Color accentButtonColor = Color(0xFFFFD700);
+
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
-      body: Center(
+      backgroundColor: backgroundColor,
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Logo and title in a row to save vertical space
+              Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: lightTextColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: lightTextColor, width: 2),
+                    ),
+                    child: const Icon(
+                      Icons.food_bank,
+                      size: 45,
+                      color: backgroundColor,
+                      semanticLabel: 'Recipe app icon',
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Welcome',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: lightTextColor,
+                          ),
+                        ),
+                        Text(
+                          'Cooking Recipes',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: lightTextColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              // Description text
               const Text(
-                'Welcome',
+                'Find delicious recipes with easy-to-follow instructions',
                 style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  fontSize: 22,
+                  color: lightTextColor,
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
+
+              // Buttons
+              ElevatedButton.icon(
                 onPressed: () => _navigateToLogin(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                icon: const Icon(
+                  Icons.login,
+                  size: 28,
+                  color: buttonTextColor,
                 ),
-                child: const Text(
+                label: const Text(
                   'Log In',
-                  style: TextStyle(fontSize: 18, color: Colors.blueAccent),
-                ),
-              ),
-              const SizedBox(height: 10),
-              OutlinedButton(
-                onPressed: () => _navigateToSignUp(context),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.white),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: buttonTextColor,
                   ),
                 ),
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => _continueAsGuest(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                  backgroundColor: primaryButtonColor,
+                  foregroundColor: buttonTextColor,
+                  minimumSize: const Size(double.infinity, 60),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
+              ),
+
+              ElevatedButton.icon(
+                onPressed: () => _navigateToSignUp(context),
+                icon: const Icon(
+                  Icons.person_add,
+                  size: 28,
+                  color: lightTextColor,
+                ),
+                label: const Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: lightTextColor,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: secondaryButtonColor,
+                  foregroundColor: lightTextColor,
+                  minimumSize: const Size(double.infinity, 60),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+
+              ElevatedButton.icon(
+                onPressed: () => _continueAsGuest(context),
+                icon: const Icon(
+                  Icons.visibility,
+                  size: 28,
+                  color: Colors.black87,
+                ),
+                label: const Text(
                   'Continue as Guest',
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: accentButtonColor,
+                  foregroundColor: Colors.black87,
+                  minimumSize: const Size(double.infinity, 60),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+
+              // Accessibility hint - compact version
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: secondaryButtonColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: lightTextColor, width: 1),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.accessibility_new,
+                      color: lightTextColor,
+                      size: 24,
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Accessibility features included',
+                        style: TextStyle(
+                          color: lightTextColor,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

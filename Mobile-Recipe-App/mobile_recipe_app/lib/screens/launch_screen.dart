@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart'; // Importing the welcome screen
+import 'welcome_screen.dart';
 
 class LaunchScreen extends StatefulWidget {
   const LaunchScreen({super.key});
@@ -33,7 +33,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.food_bank, // Example icon for the app
+              Icons.food_bank,
               size: 80,
               color: Colors.white,
             ),

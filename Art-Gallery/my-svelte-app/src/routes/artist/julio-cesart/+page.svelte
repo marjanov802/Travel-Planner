@@ -20,9 +20,11 @@
     let initialLoadDone = false;
     let showArtistBio = false;
 
-    // Simplified cart state
     let cartItems = [];
-    let showCart = false;
+    let isCartOpen = false;
+    let showAddedNotification = false;
+    let lastAddedItem = null;
+    let cartCount = 0;
 
     const artist = {
         name: "Julio Cesar T",
@@ -58,7 +60,7 @@
             imageUrl: "/images/juliocesart/1.jpg",
             color: "#1a1a1a",
             textColor: "#ffffff",
-            accentColor: "#c0c0c0", // Brightened for better contrast
+            accentColor: "#c0c0c0",
         },
         {
             id: 2,
@@ -71,7 +73,7 @@
             imageUrl: "/images/juliocesart/2.jpg",
             color: "#a01573",
             textColor: "#ffffff",
-            accentColor: "#ffa0e0", // Brightened for better contrast
+            accentColor: "#ffa0e0",
         },
         {
             id: 3,
@@ -84,7 +86,7 @@
             imageUrl: "/images/juliocesart/3.jpg",
             color: "#0d1f12",
             textColor: "#ffffff",
-            accentColor: "#7fff7f", // Brightened for better contrast
+            accentColor: "#7fff7f",
         },
         {
             id: 4,
@@ -97,7 +99,7 @@
             imageUrl: "/images/juliocesart/4.jpg",
             color: "#8c0000",
             textColor: "#ffffff",
-            accentColor: "#ff9999", // Brightened for better contrast
+            accentColor: "#ff9999",
         },
         {
             id: 5,
@@ -110,7 +112,7 @@
             imageUrl: "/images/juliocesart/5.jpg",
             color: "#000033",
             textColor: "#ffffff",
-            accentColor: "#d6e6ff", // Brightened for better contrast
+            accentColor: "#d6e6ff",
         },
         {
             id: 6,
@@ -123,7 +125,7 @@
             imageUrl: "/images/juliocesart/6.jpg",
             color: "#661400",
             textColor: "#ffffff",
-            accentColor: "#ffbd99", // Brightened for better contrast
+            accentColor: "#ffbd99",
         },
         {
             id: 7,
@@ -136,7 +138,7 @@
             imageUrl: "/images/juliocesart/7.jpg",
             color: "#0d1f12",
             textColor: "#ffffff",
-            accentColor: "#a5ffa5", // Brightened for better contrast
+            accentColor: "#a5ffa5",
         },
     ];
 
@@ -174,7 +176,8 @@
     }
 
     function handleWheel(event) {
-        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
+        if (isAnimating || artworkDetails || showArtistBio || isCartOpen)
+            return;
 
         clearTimeout(wheelDebounceTimer);
         wheelDebounceTimer = setTimeout(() => {
@@ -184,7 +187,8 @@
     }
 
     function handleKeydown(event) {
-        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
+        if (isAnimating || artworkDetails || showArtistBio || isCartOpen)
+            return;
 
         if (event.key === "ArrowDown" || event.key === "PageDown") {
             scrollToSection(currentSection + 1);
@@ -195,7 +199,7 @@
                 closeArtworkDetails();
             } else if (showArtistBio) {
                 closeArtistBio();
-            } else if (showCart) {
+            } else if (isCartOpen) {
                 toggleCart();
             }
         }
@@ -206,7 +210,8 @@
     }
 
     function handleTouchMove(event) {
-        if (isAnimating || artworkDetails || showArtistBio || showCart) return;
+        if (isAnimating || artworkDetails || showArtistBio || isCartOpen)
+            return;
 
         const touchY = event.touches[0].clientY;
         const diff = touchStartY - touchY;
@@ -230,7 +235,7 @@
     }
 
     function handleMouseMove(event) {
-        if (artworkDetails || showArtistBio || showCart) return;
+        if (artworkDetails || showArtistBio || isCartOpen) return;
 
         const { clientX, clientY } = event;
         mousePosition = {
@@ -261,8 +266,8 @@
     }
 
     function toggleCart() {
-        showCart = !showCart;
-        if (showCart) {
+        isCartOpen = !isCartOpen;
+        if (isCartOpen) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
@@ -270,56 +275,41 @@
     }
 
     function addToCart(artwork, editionType = "Limited Edition Print") {
-        const existingItemIndex = cartItems.findIndex(
-            (item) =>
-                item.id === artwork.id && item.editionType === editionType,
-        );
+        const price = getArtworkPrice(artwork, editionType);
+        const newItem = {
+            id: Date.now(),
+            title: artwork.title,
+            artist: artist.name,
+            year: artwork.year,
+            imageUrl: artwork.imageUrl,
+            editionType: editionType,
+            price: price,
+            quantity: 1,
+            src: artwork.imageUrl,
+        };
 
-        if (existingItemIndex >= 0) {
-            cartItems[existingItemIndex].quantity += 1;
-            cartItems = [...cartItems]; // Trigger reactivity
-        } else {
-            const price = getArtworkPrice(artwork, editionType);
-            cartItems = [
-                ...cartItems,
-                {
-                    id: artwork.id,
-                    title: artwork.title,
-                    artist: artist.name,
-                    year: artwork.year,
-                    imageUrl: artwork.imageUrl,
-                    editionType: editionType,
-                    price: price,
-                    quantity: 1,
-                },
-            ];
-        }
+        cartItems = [...cartItems, newItem];
+        cartCount = cartItems.length;
+        localStorage.setItem("artworkCart", JSON.stringify(cartItems));
 
-        // Show notification
-        const notification = document.createElement("div");
-        notification.className = "cart-notification";
-        notification.textContent = `"${artwork.title}" added to cart`;
-        document.body.appendChild(notification);
+        lastAddedItem = newItem;
+        showAddedNotification = true;
 
         setTimeout(() => {
-            notification.classList.add("show");
-        }, 10);
-
-        setTimeout(() => {
-            notification.classList.remove("show");
-            setTimeout(() => notification.remove(), 500);
+            showAddedNotification = false;
         }, 3000);
     }
 
-    function removeFromCart(index) {
-        cartItems = cartItems.filter((_, i) => i !== index);
+    function removeFromCart(id) {
+        cartItems = cartItems.filter((item) => item.id !== id);
+        cartCount = cartItems.length;
+        localStorage.setItem("artworkCart", JSON.stringify(cartItems));
     }
 
-    function updateQuantity(index, newQuantity) {
-        if (newQuantity < 1) return;
-
-        cartItems[index].quantity = newQuantity;
-        cartItems = [...cartItems]; // Trigger reactivity
+    function calculateTotal() {
+        return cartItems.reduce((total, item) => {
+            return total + item.price * item.quantity;
+        }, 0);
     }
 
     function getArtworkPrice(artwork, editionType) {
@@ -336,12 +326,6 @@
         return (
             Math.round((priceRange.min + priceSpread * uniqueFactor) / 10) * 10
         );
-    }
-
-    function getCartTotal() {
-        return cartItems.reduce((total, item) => {
-            return total + item.price * item.quantity;
-        }, 0);
     }
 
     function getParallaxStyle(index) {
@@ -362,6 +346,12 @@
         window.addEventListener("keydown", handleKeydown);
         window.addEventListener("mousemove", handleMouseMove);
 
+        const savedCart = localStorage.getItem("artworkCart");
+        if (savedCart) {
+            cartItems = JSON.parse(savedCart);
+            cartCount = cartItems.length;
+        }
+
         return () => {
             window.removeEventListener("keydown", handleKeydown);
             window.removeEventListener("mousemove", handleMouseMove);
@@ -371,7 +361,9 @@
 
 <nav class="navbar">
     <div class="left">
-        <h1>Marjanov</h1>
+        <a href="/" class="logo-link">
+            <h1>Marjanov</h1>
+        </a>
     </div>
     <div class="center">
         <ul>
@@ -381,18 +373,149 @@
     </div>
     <div class="right">
         <div class="basket" on:click={toggleCart}>
-            <span class="basket-icon">🛒</span>
+            <svg
+                class="basket-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+            </svg>
             {#if cartItems.length > 0}
-                <span class="cart-badge"
-                    >{cartItems.reduce(
-                        (total, item) => total + item.quantity,
-                        0,
-                    )}</span
-                >
+                <span class="cart-count">{cartCount}</span>
             {/if}
         </div>
     </div>
 </nav>
+
+{#if showAddedNotification && lastAddedItem}
+    <div class="added-notification">
+        <div class="notification-content">
+            <div class="notification-image">
+                <img src={lastAddedItem.imageUrl} alt="Added artwork" />
+            </div>
+            <div class="notification-info">
+                <h4>Added to Cart</h4>
+                <p>{lastAddedItem.title}</p>
+                <p class="notification-artist">by {lastAddedItem.artist}</p>
+                <p class="notification-price">
+                    £{lastAddedItem.price.toLocaleString()}
+                </p>
+            </div>
+            <button
+                class="close-notification"
+                on:click={() => (showAddedNotification = false)}>×</button
+            >
+        </div>
+        <div class="notification-actions">
+            <button
+                class="continue-shopping"
+                on:click={() => (showAddedNotification = false)}
+            >
+                Continue Shopping
+            </button>
+            <button
+                class="view-cart"
+                on:click={() => {
+                    showAddedNotification = false;
+                    isCartOpen = true;
+                }}
+            >
+                View Cart ({cartCount})
+            </button>
+        </div>
+    </div>
+{/if}
+
+{#if isCartOpen}
+    <div class="cart-overlay" on:click={() => (isCartOpen = false)}></div>
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart ({cartCount})</h3>
+            <button class="close-cart" on:click={() => (isCartOpen = false)}
+                >×</button
+            >
+        </div>
+
+        <div class="cart-items">
+            {#if cartItems.length === 0}
+                <div class="empty-cart">
+                    <svg
+                        class="empty-cart-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path
+                            d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                        ></path>
+                    </svg>
+                    <p>Your cart is empty</p>
+                </div>
+            {:else}
+                {#each cartItems as item (item.id)}
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <img src={item.imageUrl} alt="Cart item" />
+                        </div>
+                        <div class="cart-item-details">
+                            <h4>{item.title}</h4>
+                            <p class="item-artist">by {item.artist}</p>
+                            <p class="item-edition">{item.editionType}</p>
+                            <p class="item-price">
+                                £{item.price.toLocaleString()}
+                            </p>
+                        </div>
+                        <button
+                            class="remove-item"
+                            on:click={() => removeFromCart(item.id)}
+                        >
+                            ×
+                        </button>
+                    </div>
+                {/each}
+            {/if}
+        </div>
+
+        {#if cartItems.length > 0}
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total</span>
+                    <span>£{calculateTotal().toLocaleString()}</span>
+                </div>
+                <a
+                    href="mailto:info@marjanov.com?subject=Cart Inquiry&body=I'm interested in purchasing the following items from my cart: {cartItems
+                        .map(
+                            (item) =>
+                                `${item.quantity}x ${item.title} (${item.editionType})`,
+                        )
+                        .join(', ')}"
+                    class="checkout-button"
+                >
+                    Contact Gallery to Purchase
+                </a>
+            </div>
+        {/if}
+    </div>
+{/if}
 
 {#if isLoading}
     <div class="loading-screen" style="background-color: {artist.color};">
@@ -413,7 +536,7 @@
     class:visible={initialLoadDone &&
         !artworkDetails &&
         !showArtistBio &&
-        !showCart}
+        !isCartOpen}
 >
     <div class="indicator-dot" class:active={currentSection === 0}></div>
     <div class="indicator-dot" class:active={currentSection === 1}></div>
@@ -431,7 +554,10 @@
     on:wheel={handleWheel}
     on:touchstart={handleTouchStart}
     on:touchmove={handleTouchMove}
-    class:no-scroll={isAnimating || artworkDetails || showArtistBio || showCart}
+    class:no-scroll={isAnimating ||
+        artworkDetails ||
+        showArtistBio ||
+        isCartOpen}
 >
     <div
         class="sections-container"
@@ -685,7 +811,7 @@
                         <h3>Acquisition Options</h3>
                         <div class="price-display">
                             Limited Edition Print: <span class="price-value"
-                                >${getArtworkPrice(
+                                >£{getArtworkPrice(
                                     selectedArtwork,
                                     "Limited Edition Print",
                                 ).toLocaleString()}</span
@@ -800,123 +926,12 @@
         </div>
     {/if}
 
-    {#if showCart}
-        <div class="cart-modal">
-            <div class="cart-container">
-                <div class="cart-header">
-                    <h2>Your Cart</h2>
-                    <button class="close-cart-btn" on:click={toggleCart}
-                        >×</button
-                    >
-                </div>
-
-                <div class="cart-content">
-                    {#if cartItems.length === 0}
-                        <div class="empty-cart">
-                            <svg
-                                width="80"
-                                height="80"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path
-                                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
-                                ></path>
-                            </svg>
-                            <p>Your cart is empty</p>
-                            <button
-                                class="continue-shopping-btn"
-                                on:click={toggleCart}>Continue Shopping</button
-                            >
-                        </div>
-                    {:else}
-                        <div class="cart-items">
-                            {#each cartItems as item, index}
-                                <div class="cart-item">
-                                    <div class="cart-item-image">
-                                        <img
-                                            src={item.imageUrl}
-                                            alt={item.title}
-                                        />
-                                    </div>
-                                    <div class="cart-item-details">
-                                        <h3>{item.title}</h3>
-                                        <p>{item.artist}, {item.year}</p>
-                                        <p class="item-edition">
-                                            {item.editionType}
-                                        </p>
-                                        <div class="item-price">
-                                            ${item.price.toLocaleString()}
-                                        </div>
-                                    </div>
-                                    <div class="cart-item-actions">
-                                        <div class="quantity-selector">
-                                            <button
-                                                on:click={() =>
-                                                    updateQuantity(
-                                                        index,
-                                                        item.quantity - 1,
-                                                    )}>-</button
-                                            >
-                                            <span>{item.quantity}</span>
-                                            <button
-                                                on:click={() =>
-                                                    updateQuantity(
-                                                        index,
-                                                        item.quantity + 1,
-                                                    )}>+</button
-                                            >
-                                        </div>
-                                        <button
-                                            class="remove-item-btn"
-                                            on:click={() =>
-                                                removeFromCart(index)}
-                                            >Remove</button
-                                        >
-                                    </div>
-                                </div>
-                            {/each}
-                        </div>
-
-                        <div class="cart-summary">
-                            <div class="cart-total">
-                                <span>Total</span>
-                                <span>${getCartTotal().toLocaleString()}</span>
-                            </div>
-                            <a
-                                href="mailto:info@marjanov.com?subject=Cart Inquiry&body=I'm interested in purchasing the following items from my cart: {cartItems
-                                    .map(
-                                        (item) =>
-                                            `${item.quantity}x ${item.title} (${item.editionType})`,
-                                    )
-                                    .join(', ')}"
-                                class="checkout-btn"
-                            >
-                                Contact Gallery to Purchase
-                            </a>
-                            <button
-                                class="continue-shopping-btn"
-                                on:click={toggleCart}>Continue Shopping</button
-                            >
-                        </div>
-                    {/if}
-                </div>
-            </div>
-        </div>
-    {/if}
-
     <div
         class="scroll-instructions"
         class:visible={initialLoadDone &&
             !artworkDetails &&
             !showArtistBio &&
-            !showCart}
+            !isCartOpen}
     >
         <div class="instruction-icon">
             <svg
@@ -954,7 +969,6 @@
         box-sizing: border-box;
     }
 
-    /* Navigation Bar */
     .navbar {
         position: fixed;
         top: 0;
@@ -1015,7 +1029,328 @@
         width: 100%;
     }
 
-    /* Loading Screen */
+    .right {
+        text-align: right;
+    }
+    .basket {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        position: relative;
+    }
+    .basket-icon {
+        width: 24px;
+        height: 24px;
+        color: #fff;
+        display: block;
+    }
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #e53e3e;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+
+    .added-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 320px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1100;
+        overflow: hidden;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .notification-content {
+        padding: 15px;
+        display: flex;
+        position: relative;
+    }
+
+    .notification-image {
+        width: 70px;
+        height: 70px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .notification-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .notification-info {
+        flex: 1;
+    }
+
+    .notification-info h4 {
+        margin: 0 0 5px;
+        color: #333;
+    }
+
+    .notification-info p {
+        margin: 0 0 3px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .notification-artist {
+        font-size: 0.8rem !important;
+        font-style: italic;
+    }
+
+    .notification-price {
+        font-weight: bold;
+        color: #000 !important;
+    }
+
+    .close-notification {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: #999;
+        cursor: pointer;
+    }
+
+    .notification-actions {
+        display: flex;
+        border-top: 1px solid #eee;
+    }
+
+    .continue-shopping,
+    .view-cart {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background-color 0.2s;
+    }
+
+    .continue-shopping {
+        border-right: 1px solid #eee;
+        color: #666;
+    }
+
+    .continue-shopping:hover {
+        background-color: #f9f9f9;
+    }
+
+    .view-cart {
+        background-color: #f8f8f8;
+        color: #000;
+        font-weight: 500;
+    }
+
+    .view-cart:hover {
+        background-color: #f0f0f0;
+    }
+
+    .cart-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+    }
+
+    .cart-sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 350px;
+        height: 100%;
+        background: #111111;
+        z-index: 1002;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        animation: slideInCart 0.3s ease-out;
+    }
+
+    @keyframes slideInCart {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .cart-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cart-header h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+
+    .close-cart {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .empty-cart {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+    }
+
+    .empty-cart-icon {
+        margin-bottom: 16px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .cart-item {
+        display: flex;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .cart-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .cart-item-details {
+        flex: 1;
+    }
+
+    .cart-item-details h4 {
+        margin: 0 0 5px;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .item-artist {
+        margin: 0 0 5px;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .item-edition {
+        font-style: italic;
+        margin: 0 0 5px;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .item-price {
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin: 5px 0 0;
+    }
+
+    .remove-item {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }
+
+    .remove-item:hover {
+        color: #e53e3e;
+    }
+
+    .cart-footer {
+        padding: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+
+    .checkout-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: #3a86ff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .checkout-button:hover {
+        background: #2a76ef;
+    }
+
     .loading-screen {
         position: fixed;
         top: 0;
@@ -1060,7 +1395,6 @@
         opacity: 0.7;
     }
 
-    /* Main Content */
     .content-wrapper {
         width: 100%;
         height: 100vh;
@@ -1087,7 +1421,6 @@
         align-items: center;
     }
 
-    /* Artist Intro Section */
     .artist-intro-section {
         overflow: hidden;
     }
@@ -1195,7 +1528,6 @@
         color: #000 !important;
     }
 
-    /* Artwork Layers */
     .artwork-layer {
         position: absolute;
         top: 0;
@@ -1335,7 +1667,6 @@
         opacity: 0.9;
     }
 
-    /* Section Navigation */
     .section-counter {
         position: absolute;
         bottom: 2rem;
@@ -1384,7 +1715,6 @@
         letter-spacing: 0.05em;
     }
 
-    /* Overlays */
     .entry-overlay {
         position: fixed;
         top: 0;
@@ -1395,7 +1725,6 @@
         transition: opacity 1.5s ease-out;
     }
 
-    /* Scroll Indicator */
     .scroll-indicator {
         position: fixed;
         top: 50%;
@@ -1428,7 +1757,6 @@
         transform: scale(1.3);
     }
 
-    /* Scroll Instructions */
     .scroll-instructions {
         position: fixed;
         bottom: 2rem;
@@ -1470,7 +1798,6 @@
         letter-spacing: 0.1em;
     }
 
-    /* Modals */
     .artwork-details-modal,
     .artist-bio-modal {
         position: fixed;
@@ -1608,7 +1935,6 @@
         margin: 1.5rem 0;
     }
 
-    /* Artwork Metadata */
     .artwork-metadata {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1723,308 +2049,12 @@
         border: 2px solid;
     }
 
-    .right {
-        text-align: right;
-    }
-    .basket {
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        position: relative;
-    }
-    .basket-icon {
-        font-size: 1.5rem;
-        line-height: 1;
-    }
-
-    .cart-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background-color: #ff4444;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-        font-weight: bold;
-    }
-
-    /* Simplified Cart Modal */
-    .cart-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(5px);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.3s;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    .cart-container {
-        width: 90%;
-        max-width: 900px;
-        max-height: 90vh;
-        background-color: #111111;
-        border-radius: 8px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cart-header {
-        padding: 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .cart-header h2 {
-        margin: 0;
-        font-size: 1.8rem;
-        font-weight: 400;
-    }
-
-    .close-cart-btn {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        opacity: 0.7;
-        transition: opacity 0.3s;
-    }
-
-    .close-cart-btn:hover {
-        opacity: 1;
-    }
-
-    .cart-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1.5rem;
-    }
-
-    /* Empty Cart */
-    .empty-cart {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 3rem 0;
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .empty-cart p {
-        margin: 1rem 0 2rem;
-        font-size: 1.2rem;
-    }
-
-    /* Cart Items */
-    .cart-items {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .cart-item {
-        display: grid;
-        grid-template-columns: 100px 1fr auto;
-        gap: 1.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .cart-item-image {
-        width: 100px;
-        height: 100px;
-        overflow: hidden;
-        border-radius: 4px;
-    }
-
-    .cart-item-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .cart-item-details {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cart-item-details h3 {
-        margin: 0 0 0.5rem;
-        font-size: 1.2rem;
-        font-weight: 400;
-    }
-
-    .cart-item-details p {
-        margin: 0 0 0.5rem;
-        opacity: 0.7;
-        font-size: 0.9rem;
-    }
-
-    .item-edition {
-        font-style: italic;
-    }
-
-    .item-price {
-        font-weight: 500;
-        margin-top: auto;
-    }
-
-    .cart-item-actions {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
-
-    .quantity-selector {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .quantity-selector button {
-        width: 30px;
-        height: 30px;
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 4px;
-        color: white;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .quantity-selector button:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .remove-item-btn {
-        background: none;
-        border: none;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        transition: color 0.3s;
-    }
-
-    .remove-item-btn:hover {
-        color: white;
-        text-decoration: underline;
-    }
-
-    /* Cart Summary */
-    .cart-summary {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 1.5rem;
-    }
-
-    .cart-total {
-        font-size: 1.3rem;
-        font-weight: 500;
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1.5rem;
-    }
-
-    .checkout-btn,
-    .continue-shopping-btn {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 4px;
-        font-family: inherit;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: opacity 0.3s;
-        margin-top: 1rem;
-        text-align: center;
-        display: block;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .checkout-btn {
-        background: #3a86ff;
-        color: white;
-        border: none;
-    }
-
-    .continue-shopping-btn {
-        background: none;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-    }
-
-    .checkout-btn:hover,
-    .continue-shopping-btn:hover {
-        opacity: 0.9;
-    }
-
-    /* Cart Notification */
-    .cart-notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #111111;
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 4px;
-        z-index: 1001;
-        border-left: 4px solid #3a86ff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        transform: translateY(100px);
-        opacity: 0;
-        transition:
-            transform 0.3s,
-            opacity 0.3s;
-    }
-
-    .cart-notification.show {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    /* Acquisition Contact */
     .acquisition-contact {
         margin-top: 2rem;
         padding-top: 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Responsive Styles */
     @media (max-width: 1200px) {
         .artist-intro-content {
             grid-template-columns: 1fr;
@@ -2099,17 +2129,14 @@
             justify-content: center;
         }
 
-        .cart-item {
-            grid-template-columns: 80px 1fr;
-            grid-template-rows: auto auto;
-            gap: 1rem;
+        .cart-sidebar {
+            width: 100%;
         }
 
-        .cart-item-actions {
-            grid-column: 1 / span 2;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
+        .added-notification {
+            width: calc(100% - 40px);
+            right: 20px;
+            left: 20px;
         }
     }
 
@@ -2138,5 +2165,9 @@
         .bio-actions {
             flex-direction: column;
         }
+    }
+    .logo-link {
+        text-decoration: none;
+        color: inherit;
     }
 </style>

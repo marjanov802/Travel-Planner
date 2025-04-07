@@ -2,7 +2,6 @@
     import { page } from "$app/stores";
     import { onMount } from "svelte";
 
-    // Array of image paths by artist
     let danbullockImages = Array.from(
         { length: 15 },
         (_, i) => `/images/danbullock/${i + 1}.jpg`,
@@ -16,20 +15,17 @@
         (_, i) => `/images/mariaguimaraes/${i + 1}.jpg`,
     );
 
-    // Artwork and artist data
     let artworkSrc = "";
     let artistName = "";
     let similarWorks = [];
     let artistWorks = [];
 
-    // Cart functionality
     let cartItems = [];
     let cartCount = 0;
     let isCartOpen = false;
     let showAddedNotification = false;
     let lastAddedItem = null;
 
-    // Load cart from localStorage on component mount
     onMount(() => {
         const savedCart = localStorage.getItem("artworkCart");
         if (savedCart) {
@@ -38,7 +34,6 @@
         }
     });
 
-    // Update artist and artwork data based on URL
     $: {
         const urlParams = new URLSearchParams($page.url.search);
         artworkSrc = decodeURIComponent(urlParams.get("src") || "");
@@ -73,9 +68,7 @@
         }
     }
 
-    // Add item to cart
     function addToCart() {
-        // Create artwork object
         const artwork = {
             id: Date.now(),
             src: artworkSrc,
@@ -87,53 +80,45 @@
             price: 1200,
         };
 
-        // Add to cart array
         cartItems = [...cartItems, artwork];
 
-        // Update cart count and save to localStorage
         cartCount = cartItems.length;
         localStorage.setItem("artworkCart", JSON.stringify(cartItems));
 
-        // Set the last added item for the notification
         lastAddedItem = artwork;
 
-        // Show notification
         showAddedNotification = true;
 
-        // Auto-hide notification after 3 seconds
         setTimeout(() => {
             showAddedNotification = false;
         }, 3000);
     }
 
-    // Toggle cart visibility
     function toggleCart() {
         isCartOpen = !isCartOpen;
     }
 
-    // Calculate total price
     function calculateTotal() {
         return cartItems.reduce((total, item) => total + item.price, 0);
     }
 
-    // Remove item from cart
     function removeFromCart(id) {
         cartItems = cartItems.filter((item) => item.id !== id);
         cartCount = cartItems.length;
         localStorage.setItem("artworkCart", JSON.stringify(cartItems));
     }
 
-    // Navigate to artist page
     function exploreArtist() {
         const slug = artistName.toLowerCase().replace(/\s+/g, "-");
         window.location.href = `/artist/${slug}`;
     }
 </script>
 
-<!-- Navigation Bar -->
 <nav class="navbar">
     <div class="left">
-        <h1>Marjanov</h1>
+        <a href="/" class="logo-link">
+            <h1>Marjanov</h1>
+        </a>
     </div>
     <div class="center">
         <ul>
@@ -143,7 +128,24 @@
     </div>
     <div class="right">
         <div class="basket" on:click={toggleCart}>
-            <span class="basket-icon">🛒</span>
+            <svg
+                class="basket-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+            </svg>
             {#if cartCount > 0}
                 <span class="cart-count">{cartCount}</span>
             {/if}
@@ -151,7 +153,6 @@
     </div>
 </nav>
 
-<!-- Added to Cart Notification -->
 {#if showAddedNotification && lastAddedItem}
     <div class="added-notification">
         <div class="notification-content">
@@ -163,7 +164,7 @@
                 <p>{lastAddedItem.title}</p>
                 <p class="notification-artist">by {lastAddedItem.artist}</p>
                 <p class="notification-price">
-                    ${lastAddedItem.price.toLocaleString()}
+                    £{lastAddedItem.price.toLocaleString()}
                 </p>
             </div>
             <button
@@ -191,7 +192,6 @@
     </div>
 {/if}
 
-<!-- Cart Sidebar -->
 {#if isCartOpen}
     <div class="cart-overlay" on:click={() => (isCartOpen = false)}></div>
     <div class="cart-sidebar">
@@ -205,6 +205,24 @@
         <div class="cart-items">
             {#if cartItems.length === 0}
                 <div class="empty-cart">
+                    <svg
+                        class="empty-cart-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path
+                            d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                        ></path>
+                    </svg>
                     <p>Your cart is empty</p>
                 </div>
             {:else}
@@ -218,7 +236,7 @@
                             <p class="item-artist">by {item.artist}</p>
                             <p class="item-size">{item.size}</p>
                             <p class="item-price">
-                                ${item.price.toLocaleString()}
+                                £{item.price.toLocaleString()}
                             </p>
                         </div>
                         <button
@@ -236,7 +254,7 @@
             <div class="cart-footer">
                 <div class="cart-total">
                     <span>Total</span>
-                    <span>${calculateTotal().toLocaleString()}</span>
+                    <span>£{calculateTotal().toLocaleString()}</span>
                 </div>
                 <button class="checkout-button"> Proceed to Checkout </button>
             </div>
@@ -259,7 +277,7 @@
                 <p><strong>Size:</strong> 24" x 36"</p>
                 <p><strong>Medium:</strong> Oil on Canvas</p>
                 <p><strong>Year:</strong> 2024</p>
-                <p><strong>Price:</strong> $1,200</p>
+                <p><strong>Price:</strong> £1,200</p>
             </div>
             <button class="add-to-cart" on:click={addToCart}>
                 Add to Cart
@@ -365,8 +383,9 @@
         position: relative;
     }
     .basket-icon {
-        font-size: 1.5rem;
-        line-height: 1;
+        width: 24px;
+        height: 24px;
+        color: #333;
         display: block;
     }
     .cart-count {
@@ -385,7 +404,6 @@
         font-weight: bold;
     }
 
-    /* Added to Cart Notification */
     .added-notification {
         position: fixed;
         top: 20px;
@@ -501,7 +519,6 @@
         background-color: #f0f0f0;
     }
 
-    /* Cart Sidebar */
     .cart-overlay {
         position: fixed;
         top: 0;
@@ -564,10 +581,17 @@
 
     .empty-cart {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 200px;
         color: #888;
+        text-align: center;
+    }
+
+    .empty-cart-icon {
+        margin-bottom: 16px;
+        color: #aaa;
     }
 
     .cart-item {
@@ -777,7 +801,6 @@
         background: rgba(0, 0, 0, 0.1);
     }
 
-    /* Responsive Design */
     @media (max-width: 900px) {
         .artwork-content {
             flex-direction: column;
@@ -817,5 +840,15 @@
         .cart-sidebar {
             width: 100%;
         }
+    }
+
+    .logo-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: inherit;
     }
 </style>

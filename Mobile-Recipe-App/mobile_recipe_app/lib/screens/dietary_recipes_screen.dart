@@ -50,7 +50,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
         return [
           {
             'title': 'Vegetable Stir Fry',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable stir fry.jpg',
             'chef': 'Healthy Cook',
             'time': '20 min',
             'rating': 4.7,
@@ -71,7 +71,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Mushroom Risotto',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/mushroom risotto.jpg',
             'chef': 'Chef Maria',
             'time': '35 min',
             'rating': 4.8,
@@ -93,7 +93,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Vegetable Lasagna',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/lasanga.jpg',
             'chef': 'Chef John',
             'time': '50 min',
             'rating': 4.9,
@@ -116,7 +116,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Caprese Salad',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/greek salad.jpg',
             'chef': 'Chef Maria',
             'time': '10 min',
             'rating': 4.7,
@@ -139,7 +139,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Spinach and Feta Pie',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/spinach and feta pie.jpg',
             'chef': 'Chef Anna',
             'time': '45 min',
             'rating': 4.6,
@@ -163,7 +163,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Eggplant Parmesan',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/eggplant parmesan.jpg',
             'chef': 'Chef Mario',
             'time': '60 min',
             'rating': 4.8,
@@ -188,7 +188,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Stuffed Bell Peppers',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/download.jpg',
             'chef': 'Chef Thomas',
             'time': '40 min',
             'rating': 4.5,
@@ -212,7 +212,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Vegetable Pot Pie',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable pot pie.jpg',
             'chef': 'Chef Sarah',
             'time': '55 min',
             'rating': 4.7,
@@ -240,7 +240,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
         return [
           {
             'title': 'Vegan Buddha Bowl',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/greek salad.jpg',
             'chef': 'Healthy Cook',
             'time': '25 min',
             'rating': 4.8,
@@ -261,7 +261,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Chickpea Curry',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable curry.jpg',
             'chef': 'Chef John',
             'time': '30 min',
             'rating': 4.7,
@@ -283,7 +283,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Vegan Chocolate Cake',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/chocolate cake.jpg',
             'chef': 'Chef Maria',
             'time': '45 min',
             'rating': 4.9,
@@ -306,7 +306,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Lentil Shepherd\'s Pie',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/shepards pie.jpg',
             'chef': 'Chef Michael',
             'time': '50 min',
             'rating': 4.6,
@@ -331,7 +331,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Vegan Stir-fried Noodles',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable stir fry.jpg',
             'chef': 'Chef Lin',
             'time': '20 min',
             'rating': 4.7,
@@ -356,7 +356,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Stuffed Baked Sweet Potatoes',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/baked potatoes.jpg',
             'chef': 'Chef Emma',
             'time': '40 min',
             'rating': 4.5,
@@ -381,7 +381,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Mushroom Risotto (Vegan)',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/mushroom risotto.jpg',
             'chef': 'Chef Sophia',
             'time': '35 min',
             'rating': 4.8,
@@ -430,7 +430,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Quinoa Salad',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/quinoa salad.jpg',
             'chef': 'Chef Maria',
             'time': '25 min',
             'rating': 4.7,
@@ -452,7 +452,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Baked Salmon with Rice',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/baked salmon with rice.jpg',
             'chef': 'Chef Gordon',
             'time': '30 min',
             'rating': 4.9,
@@ -475,7 +475,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Gluten-Free Pasta Primavera',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/pasta.jpg',
             'chef': 'Chef Isabella',
             'time': '25 min',
             'rating': 4.6,
@@ -498,7 +498,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Flourless Chocolate Cake',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/chocolate cake.jpg',
             'chef': 'Chef David',
             'time': '50 min',
             'rating': 4.9,
@@ -522,7 +522,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Sweet Potato Hash',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/sweet potato hash.jpg',
             'chef': 'Chef Olivia',
             'time': '25 min',
             'rating': 4.5,
@@ -549,7 +549,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
         return [
           {
             'title': 'Cauliflower Rice Bowl',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/cauliflower rice.jpg',
             'chef': 'Healthy Cook',
             'time': '25 min',
             'rating': 4.7,
@@ -570,7 +570,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Zucchini Noodles',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/noodles.jpg',
             'chef': 'Chef John',
             'time': '20 min',
             'rating': 4.6,
@@ -592,7 +592,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Bacon and Egg Cups',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/bacon and eggs.jpg',
             'chef': 'Chef Robert',
             'time': '25 min',
             'rating': 4.8,
@@ -614,7 +614,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Steak with Garlic Butter',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/steak with garlic butter.jpg',
             'chef': 'Chef James',
             'time': '20 min',
             'rating': 4.9,
@@ -638,7 +638,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Keto Chicken Parmesan',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/keto chicken parmesan.jpg',
             'chef': 'Chef Maria',
             'time': '35 min',
             'rating': 4.7,
@@ -663,7 +663,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Stuffed Bell Peppers (Low-Carb)',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/download.jpg',
             'chef': 'Chef Daniel',
             'time': '40 min',
             'rating': 4.6,
@@ -688,7 +688,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Salmon Avocado Salad',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/salmon avocado salad.jpg',
             'chef': 'Chef Lisa',
             'time': '15 min',
             'rating': 4.7,
@@ -715,7 +715,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
         return [
           {
             'title': 'Diabetic-Friendly Oatmeal',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/oats.jpg',
             'chef': 'Healthy Cook',
             'time': '15 min',
             'rating': 4.5,
@@ -736,7 +736,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Grilled Chicken Salad',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/grilled chicken salad.jpg',
             'chef': 'Chef Maria',
             'time': '25 min',
             'rating': 4.7,
@@ -758,7 +758,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Turkey and Vegetable Stir-Fry',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable stir fry.jpg',
             'chef': 'Chef Alex',
             'time': '20 min',
             'rating': 4.6,
@@ -783,7 +783,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Baked Fish with Roasted Vegetables',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/baked fish roasted potatoes.jpg',
             'chef': 'Chef Martin',
             'time': '30 min',
             'rating': 4.8,
@@ -808,7 +808,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Lentil Soup',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/lentil soup.jpg',
             'chef': 'Chef Sophia',
             'time': '40 min',
             'rating': 4.6,
@@ -834,7 +834,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
           },
           {
             'title': 'Greek Yogurt Parfait',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/fruit parfait.jpg',
             'chef': 'Chef Emily',
             'time': '10 min',
             'rating': 4.5,
@@ -859,7 +859,7 @@ class _DietaryRecipesScreenState extends State<DietaryRecipesScreen> {
         return [
           {
             'title': 'Healthy Recipe',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/fruit parfuit.jpg',
             'chef': 'Chef Cook',
             'time': '20 min',
             'rating': 4.5,

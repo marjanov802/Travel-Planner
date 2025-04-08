@@ -86,7 +86,7 @@ class _MainHomePageState extends State<MainHomePage> {
       title: 'Quick Pasta',
       duration: '20 min',
       authorName: 'Chef John',
-      imagePath: 'assets/pancakes.jpg',
+      imagePath: 'assets/pasta.jpg',
       difficulty: 'Medium',
       category: 'Main Course',
       ingredients: [
@@ -107,7 +107,7 @@ class _MainHomePageState extends State<MainHomePage> {
       title: 'Fruit Smoothie',
       duration: '5 min',
       authorName: 'Healthy Cook',
-      imagePath: 'assets/pancakes.jpg',
+      imagePath: 'assets/fruit-smoothie.jpg',
       difficulty: 'Easy',
       category: 'Beverages',
       ingredients: [
@@ -793,7 +793,7 @@ class _MainHomePageState extends State<MainHomePage> {
       },
       {
         'title': 'Quick Breakfast',
-        'image': 'assets/pancakes.jpg',
+        'image': 'assets/omelete vegan.jpg',
         'chef': 'Healthy Cook',
         'time': '10 min',
         'rating': 4.7,
@@ -801,7 +801,7 @@ class _MainHomePageState extends State<MainHomePage> {
       },
       {
         'title': 'Vegetable Curry',
-        'image': 'assets/pancakes.jpg',
+        'image': 'assets/vegetable curry.jpg',
         'chef': 'Chef John',
         'time': '30 min',
         'rating': 4.9,
@@ -1150,7 +1150,7 @@ class _MainHomePageState extends State<MainHomePage> {
                           'image': recipe.imagePath,
                           'chef': recipe.authorName,
                           'time': recipe.duration,
-                          'rating': 4.8, // Placeholder
+                          'rating': 4.8,
                           'difficulty': recipe.difficulty ?? 'Medium',
                         }))
                     .toList(),

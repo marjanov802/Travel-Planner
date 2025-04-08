@@ -69,7 +69,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Avocado Toast',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/avacado toast.jpg',
             'chef': 'Healthy Cook',
             'time': '10 min',
             'rating': 4.5,
@@ -91,7 +91,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Veggie Omelette',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/omelete vegan.jpg',
             'chef': 'Chef John',
             'time': '12 min',
             'rating': 4.7,
@@ -115,7 +115,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Overnight Oats',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/oats.jpg',
             'chef': 'Healthy Cook',
             'time': '5 min + overnight',
             'rating': 4.6,
@@ -140,7 +140,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         return [
           {
             'title': 'Quick Pasta',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/pasta1.jpg',
             'chef': 'Chef John',
             'time': '20 min',
             'rating': 4.6,
@@ -161,7 +161,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Chicken Sandwich',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/chicken sandwich.jpg',
             'chef': 'Chef Maria',
             'time': '15 min',
             'rating': 4.5,
@@ -183,7 +183,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Greek Salad',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/greek salad.jpg',
             'chef': 'Healthy Cook',
             'time': '15 min',
             'rating': 4.7,
@@ -206,7 +206,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Vegetable Wrap',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable wrap.jpg',
             'chef': 'Chef Maria',
             'time': '10 min',
             'rating': 4.5,
@@ -231,7 +231,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         return [
           {
             'title': 'Vegetable Curry',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/vegetable curry.jpg',
             'chef': 'Chef John',
             'time': '30 min',
             'rating': 4.9,
@@ -252,7 +252,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Mushroom Risotto',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/mushroom risotto.jpg',
             'chef': 'Chef Maria',
             'time': '35 min',
             'rating': 4.8,
@@ -276,7 +276,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Baked Salmon',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/baked salmon.jpg',
             'chef': 'Chef John',
             'time': '25 min',
             'rating': 4.9,
@@ -303,7 +303,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         return [
           {
             'title': 'Fruit Parfait',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/fruit parfait.jpg',
             'chef': 'Healthy Cook',
             'time': '10 min',
             'rating': 4.6,
@@ -324,7 +324,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Hummus & Veggies',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/hummus and veggies.jpg',
             'chef': 'Healthy Cook',
             'time': '10 min',
             'rating': 4.5,
@@ -344,7 +344,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Apple & Peanut Butter',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/apple and peanut butter.jpg',
             'chef': 'Chef Maria',
             'time': '5 min',
             'rating': 4.7,
@@ -366,7 +366,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
         return [
           {
             'title': 'Chocolate Cookies',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/chocolate cookies.jpg',
             'chef': 'Chef Maria',
             'time': '30 min',
             'rating': 4.9,
@@ -388,7 +388,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Berry Parfait',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/fruit parfuit.jpg',
             'chef': 'Chef John',
             'time': '15 min',
             'rating': 4.8,
@@ -410,7 +410,7 @@ class _CategoryRecipesScreenState extends State<CategoryRecipesScreen> {
           },
           {
             'title': 'Easy Brownies',
-            'image': 'assets/pancakes.jpg',
+            'image': 'assets/brownies.jpg',
             'chef': 'Chef Maria',
             'time': '40 min',
             'rating': 4.9,

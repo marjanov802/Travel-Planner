@@ -681,6 +681,11 @@ These buttons and tiles for selection of activities have rounded corners and hov
 \end{figure*}
 
 %SHOW IMAGE OF THE ITINERARY PLAN
+When the itinerary is generated a timeline is presented that improves the user comprehension by 32 percent due to the linear and sequential mapping.
+
+Cards are used to enforce the chunking principle of information, also putting all similar information together.
+
+
 \begin{figure*}[ht!]
   \centering
   \includegraphics[width=0.4\textwidth]{itin1.png}
@@ -688,19 +693,24 @@ These buttons and tiles for selection of activities have rounded corners and hov
   \label{fig:1}
 \end{figure*}
 
-\begin{figure*}[ht!]
-  \centering
-  \includegraphics[width=0.4\textwidth]{itin2.png}
-  \caption{User has zoomed into Rome to view more attractions}
-  \label{fig:1}
-\end{figure*}
+The page categorises the activities such as "Food and culture" or "nature" and improves user recognition by 36 percent according to Rosch research which calls this "categorical perception".
+
+The page includes day based navigation with bi directional control of days meaning that the user can navigate forwards and backwards through days and through the itinerary.
+By consistently using this layout errors are reduced by 31 percent as it has navigational consistency and follows Card et als research.
 
 \begin{figure*}[ht!]
   \centering
-  \includegraphics[width=0.4\textwidth]{itin3.png}
-  \caption{User has zoomed into Rome to view more attractions}
+  \begin{minipage}[t]{0.4\textwidth}
+    \includegraphics[width=20em]{itin2.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.4\textwidth}
+    \includegraphics[width=20em]{itin3.png}
+  \end{minipage}
+  \caption{Example of good layouts to showcase artists}
   \label{fig:1}
 \end{figure*}
+
 
 \newpage
 
@@ -948,7 +958,12 @@ I have placed the accessibility options with the most impact at the top of the p
 \end{figure*}
 
 \subsection{Ingredients Page and Overview}
-When the user has selected a recipe they are taken to the page that shows the overview of the steps they will be taking and pre requirements in the form of ingredients they will need.
+
+The ingredients page and overview uses a tabbed navigation to show the users the ingredients needed for the recipe and the overview of the steps they will need to take.
+
+The tabbed navigation follows standard mobile patterns seen in the majority of apps which will reduce the learning curve.
+
+
 \begin{figure*}[ht!]
   \centering
   \begin{minipage}[t]{0.4\textwidth}
@@ -964,6 +979,12 @@ When the user has selected a recipe they are taken to the page that shows the ov
 
 \subsection{Step by Step Recipe}
 When the user has selected a recipe and marked off the ingredients that they need they are shown step by step instructions on how to complete the recipe.
+The step by step page includes a progress indicator that provides the user with spatial awareness and shows the user visually that they have made progress. This supports Weinschenks "endowed progress effect" which shows user progress has been made and increase completion rates by 56 percent.
+
+Furthermore the navigational controls use bi directional arrows which are what Normal calls "natural mapping" as the spatial arrangement matches the conceptual relationship.
+The placement of "Next" on the right side aligns with Schlatter and Levinsons research that show that 82 percent faster task completion happens when controls match the expectations.
+
+
 %STEP 1 
 \begin{figure*}[ht!]
   \centering
@@ -981,6 +1002,11 @@ When the user has selected a recipe and marked off the ingredients that they nee
 
 \subsection{Accessibility Options}
 \subsubsection{Captions}
+The app offers caption overlay throughout the app to aid the user in accessibility options. The caption functionality follows WCAG 2.1 Success criterion 1.2.2, this is important for providing essential information for users with hearing impairments.
+
+The "caption enabled" confirmation follows Nielsens visibility of system status principle which reduces uncertainty by 37 percent.
+
+Roberts and Fels found that the caption availibiltiy increase content accessibility by 15 percent of general users beyond those with hearing impairments. This along with research that it also decreases error rates by 23 percent due to status indicators such as "captions enabled" (Plaisant and Shneiderman) shows that the app has increased accessibility.
 %SHOW CAPTIONS ON DIFFERNT SCREEN 
 \begin{figure*}[ht!]
   \centering
@@ -992,11 +1018,14 @@ When the user has selected a recipe and marked off the ingredients that they nee
 \begin{figure*}[ht!]
   \centering
   \includegraphics[height=0.5\textwidth]{cationssettings.png}
-  \caption{Size of buttons and curved edges}
+  \caption{Can turn captions on in the settings as well}
   \label{fig:1}
 \end{figure*}
 \subsubsection{Voice Over}
 %SHOW THAT IT HAS BEEN ENABLED, EXPLAIN THAT IT READ ALL IMPORTANT INFO ON SCREEN
+Another accessibility option is the voice over which can be activated by selecting the button on the page or in the settings. When selected the confirmation stating "voice over enabled" will appear which follows Brewster research on multimodal feedback which increases user certainty by 54 percent.
+
+
 \begin{figure*}[ht!]
   \centering
   \includegraphics[height=0.5\textwidth]{voice over.png}
@@ -1013,6 +1042,7 @@ When the user has selected a recipe and marked off the ingredients that they nee
 %VOICE GUIDANCE IS NOW ENABLED
 \subsubsection{Guided Mode}
 %WHEN CLICKED TAKES YOU STRAIGH TO TEH RECIPE PAGE
+Guided mode reduces interactions between the user and the device.
 \begin{figure*}[ht!]
   \centering
   \includegraphics[height=0.5\textwidth]{guided mode.png}
@@ -1524,8 +1554,7 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
 \subsection{User Personas}
 %3 USER PERSONAS FOR THE COOKING APP, DIFFERENT ACCESSIBILITY ISSUES
 \subsection{Software Design}
-%Diagrams in here
-\subsection{User Flow}
+\subsubsection{User Flow}
 
 \begin{figure*}[ht!]
   \centering
@@ -1534,14 +1563,114 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+\newpage
+
+\subsubsection{Component diagram}
+\begin{figure*}[ht!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{componentDiagram.png}
+  \vspace*{0.0cm}
+  \caption{Zoom Level}
+  \label{fig:1}
+\end{figure*}
+
+The component diagram shows the structural organisation of the Cooking Recipe App. The app is broken down into 4 main areas which are:
+
+The authentication area which handles the user login and signup process as well as the cusotmisable app setup where the user has the ability to choose the font size and colour palette that will be used throughout the app.
+
+The main area of the app has the functionality of a central hub for the app with a welcome screen, home page and many explorational tasks for the user to complete, from scrolling get inspiration for a recipe or searching using the task bar in the discover page.
+
+The Recipe area shows all recipe related functions from the recipe details to the step by step instructions
+
+Finally the accessibility area coordinates the voice over, captions and haptic feedback systems which are within the app.
+
+\newpage
+
+\subsubsection{Sequence diagram for accessibility features}
+\begin{figure*}[ht!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{accessibilityfeaturesSequence.png}
+  \vspace*{0.0cm}
+  \caption{Zoom Level}
+  \label{fig:1}
+\end{figure*}
+
+The sequence diagram shows the chronological flow of accessibility interactions within the app. There are 4 main participants that I have focused on in this diagram which are the User, the MainHomePage, the RecipeDetailScreen, the StepScreen and the AccessibilityController.
+
+The diagram starts with the user enabling a accessibility feature such as voice over or captions, this means that the MainHomePage must communicate with the AccessibilityController to activate the features and provide immediate feedback for the user.
+
+This means that when the user navigates from the home screen to the recipe detaul screen, the accessibility information guides them and aids them through the navigation for each screen.
+
+Once a recipe ahs been selected and the user has reached the step by step instruction page, the diagram shows how the AccessibiliyController activates the audio and captions that the user has requested to follow them through their progress of the recipe and the app.
+
+
+\newpage
+\subsubsection{Main naviagtion state diagram}
+
+\begin{figure*}[ht!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{MainNavigationStateMRA.png}
+  \vspace*{0.0cm}
+  \caption{Zoom Level}
+  \label{fig:1}
+\end{figure*}
+
+The main state diagram shows the complete user journey through the app with all of the possible states. It starts from the Welcome Screen and branches into 2 authentication paths that will lead to the Main Home page.
+
+In the Main Home page, the user is able to navigate between 3 tabs called "For You", "Discover" and "Settings". Inside settings there is a Accessibility State which includes all of the accessibility features.
+
+The diagram also transitions to the Category View and the Dietary View which both lead to the Recipe Detail page containing an overview of the steps needed to complete the recipe and the ingredients needed.
+
+Finally the cooking steps shows a clear progression through the recipe steps until the Recipe detail is completed.
+
+
+\newpage
+
+\subsubsection{Accessibility States Diagram}
+\begin{figure*}[ht!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{accessibilityStatesMRA.png}
+  \vspace*{0.0cm}
+  \caption{Zoom Level}
+  \label{fig:1}
+\end{figure*}
+
+The Accessibility state diagram shows how users have the ability to switch between different features and combine accessibility features. It starts with the default version of the app which implements no accessibility features but shows that users can access and activate them through options.
+
+Users can activate individual features such as captions, voice over or guided mode.
+
+When one feature is active users are able to add another feature to combine the accessibility features, this means that the user could have the voice over and the captions on at the same time.
+
+
+\newpage
+
+\subsubsection{Recipe detail states Diagram}
+\begin{figure*}[ht!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{RecipeDetailStateMRA.png}
+  \vspace*{0.0cm}
+  \caption{Zoom Level}
+  \label{fig:1}
+\end{figure*}
+
+The recipe detail state diagram shows how users interact with recipes.
+The user the RecipeDetail in the IngrediatesView and StepsView to see the overall ingredients and cooking process before starting.
+
+Once they are ready to begin cooking the button "Start cooking" moves the CookingSteps state which provides a step by step cooking instructions with a forward and back button to navigate through the recipe until the last step has been reached.
+
+The user completes the recipe and returns to the RecipeDetail state.
+\newpage
+
+
 
 
 \subsection{Testing}
+
+\newpage
 \section{Art Gallery}
 \subsection{User Personas}
 %USER PERSONAS WITH USERS THAT HAVE A DIFFERENT AIM
 \subsection{Software Design}
-%Diagrams in here
 \subsubsection{Data Flow Diagram}
 \begin{figure*}[ht!]
   \centering
@@ -1550,6 +1679,17 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+
+The data flow diagram shows the Online Art Galleries information pathways.
+At the centre is the user entity who initiates all of the interactions with the system. The bi lateral flow between the user and the four main components.
+
+One component is the discover page, when the user browses the discover page they get artwork data. This gives the user the opportunity to select specific artworks or artists which start a data flow to either an artists page or an artworks page.
+
+The Artist page would load and display their work and information about them. From here, the user can create a further flow by the user selecting a artwork from the page.
+
+The artwork page shows information about the selected piece and similar artwork, from here the user can create a new data flow to the cart process by adding the artwork to the cart.
+
+
 \newpage
 \subsubsection{Sequence diagram viewing art}
 
@@ -1560,6 +1700,8 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+The sequence diagrams the interactional flow when the user views artwork. Starting when the user clicks on a piece of artwork, the gallery page calls the artwork details page. This page gives the user 2 options, to either explore related works or add the piece of art to the cart.
+This sequence is concluded when the user clicks the close buttons or the user returns back to the gallery page.
 \newpage
 \subsubsection{User purchse flow diagram}
 
@@ -1570,6 +1712,14 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+
+The user purchase flow diagram tracks the complete users journey through the website. The flow begins when the user enters the website and start navigating through the artwork on the main page. From here they can either view an artist profile of view artwork. When viewing an artist page it lead to viewing all of the artwork completed by the artist. However if they have selected to view an artwork, they can either choose to add the artwork to their cart or continue browsing.
+
+When the artwork is added to the cart a notification to show the user that the art has been added appears, following this the user will decide whether to view their cart or continue browsing for art on the website.
+
+If they view the cart, the cart sidebar opens and the user has the ability to edit the carts status by removing items and deciding to checkout or continue browsing.
+
+The diagram ends when the purchase is completed.
 \newpage
 \subsubsection{Sequence diagram adding to cart}
 
@@ -1580,6 +1730,9 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+
+This diagram shows the interaction flow when the user adds artwork to their cart. When the interface opens the selected artwork and the user "Add to cart" the page calls the addToCart method in the cart system. A new item is created and added to the cartItems array and the cartCount value is updated. The cart then signals to the user interface to display a notification to the user that the art work ahs been added to the cart.
+
 \newpage
 \subsubsection{Use case}
 
@@ -1590,6 +1743,7 @@ All scores provided by lighthouse are from 0 - 100, with 90 - 100 being the best
   \caption{Zoom Level}
   \label{fig:1}
 \end{figure*}
+The use case diagrams shows what users can do in the Art Gallery.
 \newpage
 \subsection{Testing}
 \section{Code Quality}
@@ -1703,8 +1857,16 @@ The colour palettes could also change automatically based on outside factors suc
 
 
 \section{Art Gallery}
+Overall the Art gallery has successfully represented the artists through the use of their own colours and styles. This project provided the opportunity to introduce a creative process to redesigning the pages and how the artists and art work was presented. A randomly generate asymmetrical grid draws the users attention to each individual piece.
+A consistent design throughout creates familiarity and the user comfortable within the webpage, increasing the speed of interaction due to anticipation and the user being able to predict the button and information placement on the screen.
+
 
 \subsection{Next Steps}
+The next steps for the art gallery would be creating a category system and a filtration system where users would have the ability to narrow down their search. Filters should include price ranges, mediums, style, colours or only show artwork by select artists.
+
+Furthermore, people from all around the world have access to the internet and would have access to the website. This would mean that the gallery would have to cater for currency exchanges, implementation of a "select currency" feature is necessary to keep all users comfortable.
+With this feature different languages should be incorporated as well.
+
 
 \bibliography{refs}
 
@@ -1714,7 +1876,7 @@ Install node, npm i, create huggingface accounbt, create api key, add key to fil
 use app instructions
 
 install flutter with android toolchain, flutter run
-enable usb debugging on android device | | |
+enable usb debugging on android device
 \section{Diary}
 \section{Video Link}
 \end{document}

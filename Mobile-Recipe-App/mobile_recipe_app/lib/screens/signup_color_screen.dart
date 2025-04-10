@@ -2,175 +2,325 @@ import 'package:flutter/material.dart';
 import 'signup_font_screen.dart';
 
 class SignUpColorScreen extends StatefulWidget {
-  const SignUpColorScreen({super.key});
+  final bool isGuest;
+
+  const SignUpColorScreen({
+    super.key,
+    this.isGuest = false,
+  });
 
   @override
   _SignUpColorScreenState createState() => _SignUpColorScreenState();
 }
 
 class _SignUpColorScreenState extends State<SignUpColorScreen> {
-  final List<Map<String, Color>> colorPalettes = [
-    // Palette 1: Calm Blue (For Visually Impaired - High Contrast)
+  final List<Map<String, dynamic>> colorPalettes = [
     {
-      'primary': const Color(0xFF004A99), // Dark blue
-      'background': const Color(0xFFEFF6FF), // Very light blue/white
-      'text': const Color(0xFF000000), // Black
-      'accent': const Color(0xFFFFC107), // Bright yellow
+      'name': 'High Contrast',
+      'forUsers': 'Low vision & elderly',
+      'colors': {
+        'primary': const Color(0xFF0D47A1),
+        'background': const Color(0xFFFFFFFF),
+        'text': const Color(0xFF000000),
+        'accent': const Color(0xFFFFD600),
+      },
     },
-    // Palette 2: Soft Warm (For Older Adults - Warm Tones)
     {
-      'primary': const Color(0xFF6D4C41), // Dark brown
-      'background': const Color(0xFFF9F4EF), // Cream
-      'text': const Color(0xFF2C2C2C), // Dark gray
-      'accent': const Color(0xFFFF7043), // Warm orange
+      'name': 'Colorblind Safe',
+      'forUsers': 'Color vision deficiency',
+      'colors': {
+        'primary': const Color(0xFF0072B2),
+        'background': const Color(0xFFFFFFFF),
+        'text': const Color(0xFF000000),
+        'accent': const Color(0xFFE69F00),
+      },
     },
-    // Palette 3: High Contrast (For Color Blindness)
     {
-      'primary': const Color(0xFF000000), // Black
-      'background': const Color(0xFFFFFFFF), // White
-      'text': const Color(0xFF000000), // Black
-      'accent': const Color(0xFF00897B), // Teal
+      'name': 'Dark Mode',
+      'forUsers': 'Photosensitivity',
+      'colors': {
+        'primary': const Color(0xFF56CCF2),
+        'background': const Color(0xFF121212),
+        'text': const Color(0xFFE0E0E0),
+        'accent': const Color(0xFFBB86FC),
+      },
     },
-    // Palette 4: Cool Neutral (For General Use - Low Eye Strain)
     {
-      'primary': const Color(0xFF37474F), // Dark grayish blue
-      'background': const Color(0xFFECEFF1), // Light gray
-      'text': const Color(0xFF102027), // Very dark gray/blue
-      'accent': const Color(0xFF29B6F6), // Bright blue
-    },
-    // Palette 5: Soft Green (For Color Blind Friendly and Calmness)
-    {
-      'primary': const Color(0xFF2E7D32), // Dark green
-      'background': const Color(0xFFE8F5E9), // Pale green
-      'text': const Color(0xFF1B5E20), // Deep green
-      'accent': const Color(0xFF81C784), // Soft green
+      'name': 'Low Visual Strain',
+      'forUsers': 'Migraine & visual stress',
+      'colors': {
+        'primary': const Color(0xFF1E88E5),
+        'background': const Color(0xFFF8F9FA),
+        'text': const Color(0xFF3C4043),
+        'accent': const Color(0xFFFF9800),
+      },
     },
   ];
 
-  Map<String, Color> _selectedPalette = {
-    'primary': const Color(0xFF005EB8),
-    'background': const Color(0xFFFFFFFF),
-    'text': const Color(0xFF000000),
-    'accent': const Color(0xFFFF5722),
-  };
+  late Map<String, dynamic> _selectedPalette = colorPalettes[0];
 
-  void _selectPalette(Map<String, Color> palette) {
+  void _selectPalette(Map<String, dynamic> palette) {
     setState(() {
       _selectedPalette = palette;
     });
   }
 
   void _navigateToFontScreen() {
+    final colors = _selectedPalette['colors'] as Map<String, Color>;
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SignUpFontScreen(
           selectedPalette: [
-            _selectedPalette['primary']!,
-            _selectedPalette['background']!,
-            _selectedPalette['text']!,
-            _selectedPalette['accent']!,
+            colors['primary']!,
+            colors['background']!,
+            colors['text']!,
+            colors['accent']!,
+          ],
+          isGuest: widget.isGuest,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaletteCard(Map<String, dynamic> palette) {
+    final colors = palette['colors'] as Map<String, Color>;
+    bool isSelected = _selectedPalette == palette;
+
+    return GestureDetector(
+      onTap: () => _selectPalette(palette),
+      child: Container(
+        height: 120,
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? colors['accent']! : Colors.grey.shade300,
+            width: isSelected ? 4 : 2,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            // Large color swatches
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: double.infinity,
+                      color: colors['primary'],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: double.infinity,
+                      color: colors['background'],
+                      child: Center(
+                        child: Text(
+                          'Aa',
+                          style: TextStyle(
+                            color: colors['text'],
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: double.infinity,
+                      color: colors['accent'],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      palette['name'],
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'For ${palette['forUsers']}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    if (isSelected)
+                      Row(
+                        children: [
+                          Icon(Icons.check_circle, color: colors['primary']),
+                          const SizedBox(width: 4),
+                          const Text('Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSamplePreview() {
+    final colors = _selectedPalette['colors'] as Map<String, Color>;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colors['background'],
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colors['primary']!, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colors['primary'],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              'Preview',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Sample text with selected theme',
+            style: TextStyle(
+              color: colors['text'],
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colors['accent'],
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () {},
+            child: Text(
+              'Button Example',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final colors = _selectedPalette['colors'] as Map<String, Color>;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Choose a Theme',
-          style: TextStyle(color: _selectedPalette['text']),
-        ),
-        backgroundColor: _selectedPalette['primary'],
+        title: const Text('Choose Theme Colors',
+            style: TextStyle(color: Colors.white)),
+        backgroundColor: colors['primary'],
+        automaticallyImplyLeading: false,
       ),
       body: Container(
-        color: _selectedPalette['background'],
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              'Choose a Theme',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: _selectedPalette['text'],
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                itemCount: colorPalettes.length,
-                itemBuilder: (context, index) {
-                  final palette = colorPalettes[index];
-                  return GestureDetector(
-                    onTap: () => _selectPalette(palette),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 12),
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: _selectedPalette == palette
-                              ? palette['accent']!
-                              : Colors.grey,
-                          width: _selectedPalette == palette ? 3 : 1,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: [
-                          _buildColorPreview('Primary', palette['primary']!),
-                          _buildColorPreview(
-                              'Background', palette['background']!),
-                          _buildColorPreview('Text', palette['text']!),
-                          _buildColorPreview('Accent', palette['accent']!),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _navigateToFontScreen,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _selectedPalette['primary'],
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: Text(
-                'Next',
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Choose Your Accessibility Theme',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: _selectedPalette['text'],
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: colors['primary'],
+                  letterSpacing: 0.3,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'Select the option that best suits your visual preferences',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+              const SizedBox(height: 24),
 
-  Widget _buildColorPreview(String label, Color color) {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      color: color,
-      child: Center(
-        child: Text(
-          label,
-          style: TextStyle(
-            color: color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
-            fontWeight: FontWeight.bold,
+              // Palette list
+              Expanded(
+                child: ListView.builder(
+                  itemCount: colorPalettes.length,
+                  itemBuilder: (context, index) {
+                    return _buildPaletteCard(colorPalettes[index]);
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // Preview
+              _buildSamplePreview(),
+
+              const SizedBox(height: 24),
+
+              // Next button
+              ElevatedButton(
+                onPressed: _navigateToFontScreen,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colors['primary'],
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

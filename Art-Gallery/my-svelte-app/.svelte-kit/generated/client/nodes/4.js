@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/artist/dan-bullock/+page.svelte";

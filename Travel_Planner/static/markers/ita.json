@@ -1,0 +1,305 @@
+{
+    "poi": {
+        "recommended": [
+            {
+                "name": "Colosseum",
+                "description": "Ancient Roman gladiatorial arena and iconic symbol of Imperial Rome.",
+                "coordinates": [
+                    12.4922,
+                    41.8902
+                ],
+                "image": "/images/colosseum.jpg",
+                "zoomLevel": 5,
+                "location": "Piazza del Colosseo, 1, 00184 Rome, Italy",
+                "openingHours": "8:30 AM - 7:00 PM",
+                "price": "From €16 for adults",
+                "additionalInfo": "Built in AD 80, it hosted gladiator contests and public spectacles.",
+                "transport": {
+                    "metroStations": [
+                        "Colosseo (Metro Line B)"
+                    ],
+                    "busLines": [
+                        "75",
+                        "87",
+                        "87B"
+                    ],
+                    "parking": "Limited parking in the vicinity; public transport recommended."
+                }
+            },
+            {
+                "name": "Vatican Museums",
+                "description": "A vast collection of art and historical artifacts housed in the Vatican City.",
+                "coordinates": [
+                    12.4534,
+                    41.9069
+                ],
+                "image": "/images/vatican-museums.jpg",
+                "zoomLevel": 5,
+                "location": "Viale Vaticano, 00165 Rome, Italy",
+                "openingHours": "9:00 AM - 6:00 PM (Closed on Sundays, except the last Sunday of the month)",
+                "price": "From €17 for adults",
+                "additionalInfo": "Home to the Sistine Chapel, Raphael Rooms, and a vast collection of classical sculptures."
+            },
+            {
+                "name": "Roman Forum",
+                "description": "Ancient government complex with ruins of historic temples and public spaces.",
+                "coordinates": [
+                    12.4853,
+                    41.8925
+                ],
+                "image": "/images/roman-forum.jpg",
+                "zoomLevel": 5,
+                "location": "Via della Salara Vecchia, 5/6, 00186 Rome, Italy",
+                "openingHours": "8:30 AM - 7:00 PM",
+                "price": "Included with Colosseum ticket",
+                "additionalInfo": "The center of ancient Roman public life for centuries."
+            },
+            {
+                "name": "Pantheon",
+                "description": "Former Roman temple now church with a magnificent dome and oculus.",
+                "coordinates": [
+                    12.4768,
+                    41.8986
+                ],
+                "image": "/images/pantheon.jpg",
+                "zoomLevel": 5,
+                "location": "Piazza della Rotonda, 00186 Rome, Italy",
+                "openingHours": "9:00 AM - 7:00 PM",
+                "price": "Free",
+                "additionalInfo": "One of the best-preserved ancient Roman buildings, completed around 126 AD."
+            },
+            {
+                "name": "St. Peter's Basilica",
+                "description": "The largest church in the world and center of Roman Catholicism.",
+                "coordinates": [
+                    12.4534,
+                    41.9022
+                ],
+                "image": "/images/st-peters-basilica.jpg",
+                "zoomLevel": 5,
+                "location": "Piazza San Pietro, 00120 Vatican City",
+                "openingHours": "7:00 AM - 6:30 PM",
+                "price": "Free (Dome access €8)",
+                "additionalInfo": "Houses Michelangelo's Pietà and offers stunning views from its dome."
+            },
+            {
+                "name": "Leaning Tower of Pisa",
+                "description": "Famous for its unintended tilt, this medieval bell tower is a must-see Italian landmark.",
+                "coordinates": [
+                    10.3966,
+                    43.723
+                ],
+                "image": "/images/leaning-tower-pisa.jpg",
+                "zoomLevel": 5,
+                "location": "Piazza del Duomo, 56126 Pisa, Italy",
+                "openingHours": "9:00 AM - 8:00 PM",
+                "price": "From €18 for adults",
+                "additionalInfo": "Construction began in 1173 and the tower started leaning during building due to soft ground."
+            },
+            {
+                "name": "Pompeii Archaeological Park",
+                "description": "Ancient Roman city preserved under volcanic ash from Mt. Vesuvius's eruption.",
+                "coordinates": [
+                    14.4843,
+                    40.7512
+                ],
+                "image": "/images/pompeii.jpg",
+                "zoomLevel": 5,
+                "location": "Via Villa dei Misteri, 80045 Pompei, Italy",
+                "openingHours": "9:00 AM - 7:00 PM",
+                "price": "From €16 for adults",
+                "additionalInfo": "Buried in 79 AD and rediscovered in 1748, offering unparalleled insights into Roman life."
+            },
+            {
+                "name": "Duomo di Milano",
+                "description": "Gothic cathedral with ornate façade and hundreds of spires and statues.",
+                "coordinates": [
+                    9.1919,
+                    45.4641
+                ],
+                "image": "/images/duomo-milano.jpg",
+                "zoomLevel": 5,
+                "location": "Piazza del Duomo, 20122 Milano, Italy",
+                "openingHours": "8:00 AM - 7:00 PM",
+                "price": "From €3 for cathedral, €10 for rooftop",
+                "additionalInfo": "Took nearly six centuries to complete, with construction beginning in 1386."
+            },
+            {
+                "name": "Grand Canal",
+                "description": "Venice's main waterway lined with historic palaces and spanned by iconic bridges.",
+                "coordinates": [
+                    12.3352,
+                    45.4371
+                ],
+                "image": "/images/grand-canal.jpg",
+                "zoomLevel": 5,
+                "location": "Venice, Italy",
+                "openingHours": "Always open",
+                "price": "Vaporetto ride from €7.50",
+                "additionalInfo": "S-shaped canal running 3.8 km through Venice with over 170 buildings along its banks."
+            },
+            {
+                "name": "Valley of the Temples",
+                "description": "Archaeological site with well-preserved Greek temples dating back to 5th century BC.",
+                "coordinates": [
+                    13.5839,
+                    37.2891
+                ],
+                "image": "/images/valley-temples.jpg",
+                "zoomLevel": 5,
+                "location": "92100 Agrigento, Sicily, Italy",
+                "openingHours": "8:30 AM - 8:00 PM",
+                "price": "From €10 for adults",
+                "additionalInfo": "UNESCO World Heritage site featuring the remarkably intact Temple of Concordia."
+            }
+        ],
+        "filters": {
+            "Landmarks": [
+                {
+                    "name": "Castel Sant'Angelo",
+                    "description": "Towering cylindrical fortress originally built as Emperor Hadrian's mausoleum.",
+                    "coordinates": [
+                        12.4666,
+                        41.9031
+                    ],
+                    "image": "/images/castel-santangelo.jpg",
+                    "zoomLevel": 7,
+                    "location": "Lungotevere Castello, 50, 00193 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:30 PM (Closed Mondays)",
+                    "price": "From €15 for adults",
+                    "additionalInfo": "Connected to the Vatican by the Passetto di Borgo, an elevated passage."
+                },
+                {
+                    "name": "Fontana dell'Acqua Paola",
+                    "description": "Monumental fountain known locally as 'Il Fontanone' offering panoramic views of Rome.",
+                    "coordinates": [
+                        12.4615,
+                        41.8892
+                    ],
+                    "image": "/images/fontana-acqua-paola.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Garibaldi, 00153 Rome, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "Featured in the opening scene of Paolo Sorrentino's film 'The Great Beauty'."
+                },
+                {
+                    "name": "Quartiere Coppedè",
+                    "description": "Small district with fantastical Art Nouveau architecture unlike anywhere else in Rome.",
+                    "coordinates": [
+                        12.5104,
+                        41.9172
+                    ],
+                    "image": "/images/quartiere-coppede.jpg",
+                    "zoomLevel": 10,
+                    "location": "Piazza Mincio, 00198 Rome, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "Designed by architect Gino Coppedè between 1913 and 1927."
+                }
+            ],
+            "Museums": [
+                {
+                    "name": "Capitoline Museums",
+                    "description": "The world's oldest public museums, housing an exceptional collection of classical art.",
+                    "coordinates": [
+                        12.4826,
+                        41.8933
+                    ],
+                    "image": "/images/capitoline-museums.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza del Campidoglio, 1, 00186 Rome, Italy",
+                    "openingHours": "9:30 AM - 7:30 PM (Closed Mondays)",
+                    "price": "From €15 for adults",
+                    "additionalInfo": "Founded in 1471 when Pope Sixtus IV donated a collection of ancient bronzes."
+                },
+                {
+                    "name": "Borghese Gallery",
+                    "description": "Elegant villa housing an impressive collection of paintings, sculptures, and antiquities.",
+                    "coordinates": [
+                        12.4922,
+                        41.9138
+                    ],
+                    "image": "/images/borghese-gallery.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazzale Scipione Borghese, 5, 00197 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM (Closed Mondays)",
+                    "price": "From €13 for adults",
+                    "additionalInfo": "Features works by Bernini, Caravaggio, and Raphael in a stunning setting."
+                },
+                {
+                    "name": "Centrale Montemartini",
+                    "description": "Unique museum where classical Roman statues are displayed against industrial machinery.",
+                    "coordinates": [
+                        12.4797,
+                        41.8673
+                    ],
+                    "image": "/images/centrale-montemartini.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Ostiense, 106, 00154 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM (Closed Mondays)",
+                    "price": "From €10 for adults",
+                    "additionalInfo": "Housed in Rome's first public power plant, offering striking visual contrasts."
+                }
+            ],
+            "Cultural": [
+                {
+                    "name": "National Roman Museum",
+                    "description": "Multi-site museum showcasing ancient Roman art and archaeological findings.",
+                    "coordinates": [
+                        12.4977,
+                        41.9016
+                    ],
+                    "image": "/images/national-roman-museum.jpg",
+                    "zoomLevel": 7,
+                    "location": "Palazzo Massimo, Piazza dei Cinquecento, 67, 00185 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:45 PM (Closed Mondays)",
+                    "price": "From €10 for adults",
+                    "additionalInfo": "Spread across four sites with one of the world's finest collections of classical art."
+                },
+                {
+                    "name": "Palazzo Doria Pamphilj",
+                    "description": "Opulent palace with a remarkable private art collection still owned by the original family.",
+                    "coordinates": [
+                        12.4809,
+                        41.8979
+                    ],
+                    "image": "/images/palazzo-doria-pamphilj.jpg",
+                    "zoomLevel": 7,
+                    "location": "Via del Corso, 305, 00186 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM",
+                    "price": "From €12 for adults",
+                    "additionalInfo": "Houses masterpieces by Caravaggio, Velázquez, and Bernini in sumptuous interiors."
+                },
+                {
+                    "name": "Crypt of the Capuchin Friars",
+                    "description": "Unusual crypt decorated with the bones of over 4,000 Capuchin friars.",
+                    "coordinates": [
+                        12.4882,
+                        41.9049
+                    ],
+                    "image": "/images/capuchin-crypt.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Vittorio Veneto, 27, 00187 Rome, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM (Closed Wednesdays)",
+                    "price": "From €8.50 for adults",
+                    "additionalInfo": "A memento mori displaying bones arranged in intricate patterns."
+                },
+                {
+                    "name": "Palazzo Spada",
+                    "description": "Renaissance palace famous for Borromini's forced perspective gallery optical illusion.",
+                    "coordinates": [
+                        12.4715,
+                        41.8935
+                    ],
+                    "image": "/images/palazzo-spada.jpg",
+                    "zoomLevel": 10,
+                    "location": "Piazza Capo di Ferro, 13, 00186 Rome, Italy",
+                    "openingHours": "8:30 AM - 7:30 PM (Closed Tuesdays)",
+                    "price": "From €5 for adults",
+                    "additionalInfo": "The gallery appears 37 meters long but is actually only 8 meters in length."
+                }
+            ]
+        }
+    }
+}

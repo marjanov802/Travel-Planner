@@ -5,11 +5,19 @@
     },
     {
         "code": "CAN",
-        "value": -4.22
+        "value": 50
+    },
+    {
+        "code": "COD",
+        "value": 43
+    },
+    {
+        "code": "SSD",
+        "value": 47
     },
     {
         "code": "RUS",
-        "value": -2.87
+        "value": -50
     },
     {
         "code": "MNG",

@@ -53,22 +53,6 @@
 	let itineraryData = null;
 	let currentDayIndex = 0;
 
-<<<<<<< HEAD
-	// Load JSON file based on selected month
-	async function loadRecommendationData(month: string) {
-		try {
-			// Fetches the correct json file to be mapped onto the globe
-			const response = await fetch(`/recommendations/${month.toLowerCase()}_recommendations.json`);
-			if (response.ok) {
-				const data = await response.json();
-				countryRecommendationData = [...new Set(data)];
-				applyRecommendationDataToGlobe(countryRecommendationData);
-			} else {
-				console.error(`Failed to load recommendation data for ${month}`);
-			}
-		} catch (error) {
-			console.error('Error fetching recommendation data:', error);
-=======
 	let isLoadingItinerary = false;
 
 	async function continueSelection() {
@@ -86,7 +70,6 @@
 	function prevDay() {
 		if (currentDayIndex > 0 && itineraryData?.days) {
 			currentDayIndex--;
->>>>>>> Travel-Planner
 		}
 	}
 
@@ -208,11 +191,6 @@ Include exactly these activities: ${JSON.stringify(activities.map((a) => a.name)
 Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":"","transport":"","cost":""},"departure":{"airport":"","date":"","time":"","transport":"","checkIn":"","recommendedDeparture":"","cost":""}},"days":[{"activities":[{"time":"","category":"","name":"","description":"","duration":"","location":"","transport":"","next":""}]}]}`;
 
 		try {
-<<<<<<< HEAD
-			//why no work? filter month in lower case and the selected filter with an underscore. THAT IS FILE NAME
-			//inspect element, console log with throw error or data used to know if it works
-			const response = await fetch(`/${filter}/${month.toLowerCase()}_${filter}.json`);
-=======
 			const response = await inference.chatCompletion({
 				model: 'Qwen/Qwen2.5-Coder-32B-Instruct',
 				messages: [{ role: 'user', content: message }],
@@ -311,7 +289,6 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 			const response = await fetch(
 				'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 			);
->>>>>>> Travel-Planner
 			if (response.ok) {
 				const data = await response.json();
 				countriesData = data.features;
@@ -527,17 +504,8 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		if (filter === 'temperature') {
 			const minTemp = -50;
 			const maxTemp = 50;
-<<<<<<< HEAD
-			const normalizedValue = (value - minTemp) / (maxTemp - minTemp); // Normalize between 0 and 1
-
-			// Interpolate hue: from deep blue (240°) to red (0°), skipping green (no 120° hue) because colour theory i researched is for red to blue
-			// Green (120° hue) would not be intutitve for the user
-			// We transition directly from blue (240°) to yellow (60°) to red (0°)
-			// All are rgb values
-=======
 			const normalizedTemp =
 				Math.max(0, Math.min((value - minTemp) / (maxTemp - minTemp), 1)) * 100;
->>>>>>> Travel-Planner
 			const hue =
 				normalizedTemp < 50
 					? 240 - (normalizedTemp / 50) * 180

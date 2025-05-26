@@ -303,9 +303,9 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 		if (modalActiveTab === 'Recommended') {
 			filteredCountries = countriesData;
 		} else {
-			filteredCountries = countriesData.filter((country) =>
-				country.properties.ADMIN.startsWith(modalActiveTab.charAt(0))
-			);
+			filteredCountries = countriesData.filter((country) => {
+				country.properties['ISO3166-1-Alpha-3'] == selectedCountryISO; //(modalActiveTab.charAt(0));
+			});
 		}
 	}
 
@@ -443,7 +443,7 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 
 	// Function to map recommendation data to the globe using colors
 	function applyRecommendationDataToGlobe(data: any[]) {
-		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']]; // ISO is the code in the json file
+		const matchExpression: (string | number)[] = ['match', ['get', 'ISO3166-1-Alpha-3']]; // ISO is the code in the json file
 		data.forEach((row) => {
 			const color = getColorForRecommendation(row.value);
 			matchExpression.push(row.code, color);
@@ -467,7 +467,7 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 
 	// Function to map filter data (e.g., temperature, danger, rainfall) to the globe using colors
 	function applyFilterDataToGlobe(data: any[], filter: string) {
-		const matchExpression: (string | number)[] = ['match', ['get', 'ISO_A3']];
+		const matchExpression: (string | number)[] = ['match', ['get', 'ISO3166-1-Alpha-3']];
 
 		data.forEach((row) => {
 			const value = row.value; // Always use 'value' for any filter
@@ -830,22 +830,17 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 			map.on('mousemove', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const hoveredFeature = e.features[0];
-					const hoveredISO = hoveredFeature.properties.ISO_A3;
+					const hoveredISO = hoveredFeature.properties['ISO3166-1-Alpha-3'];
 
-					if (hoveredCountryISO !== hoveredISO) {
-						if (hoveredCountryISO !== null) {
-							map.setPaintProperty('hover-outline', 'line-opacity', [
-								'case',
-								['==', ['get', 'ISO_A3'], hoveredCountryISO || ''],
-								0,
-								1
-							]);
+					if (hoveredCountryISO != hoveredISO) {
+						if (hoveredCountryISO != null) {
+							map.setPaintProperty('hover-outline', 'line-opacity', 0);
 						}
 
 						hoveredCountryISO = hoveredISO;
 						map.setPaintProperty('hover-outline', 'line-opacity', [
 							'case',
-							['==', ['get', 'ISO_A3'], hoveredCountryISO],
+							['==', ['get', 'ISO3166-1-Alpha-3'], hoveredCountryISO],
 							1,
 							0
 						]);
@@ -857,7 +852,7 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 				if (hoveredCountryISO !== null) {
 					map.setPaintProperty('hover-outline', 'line-opacity', [
 						'case',
-						['==', ['get', 'ISO_A3'], hoveredCountryISO || ''],
+						['==', ['get', 'ISO3166-1-Alpha-3'], hoveredCountryISO || ''],
 						1,
 						0
 					]);
@@ -870,7 +865,7 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 			map.on('click', 'country-fills', (e) => {
 				if (e.features.length > 0) {
 					const country = e.features[0];
-					const countryISO = country.properties.ISO_A3; // ISO_A3 code for identification
+					const countryISO = country.properties['ISO3166-1-Alpha-3']; // ISO3166-1-Alpha-3 code for identification
 					const countryGeometry = country.geometry;
 					selectedCountryISO = countryISO;
 					showFilters = true;
@@ -899,14 +894,14 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 
 					map.setPaintProperty('country-fills', 'fill-color', [
 						'case',
-						['==', ['get', 'ISO_A3'], countryISO],
+						['==', ['get', 'ISO3166-1-Alpha-3'], countryISO],
 						'rgba(0, 0, 0, 0)',
 						'rgba(50, 50, 50, 0.8)'
 					]);
 
 					map.setPaintProperty('country-fills', 'fill-opacity', [
 						'case',
-						['==', ['get', 'ISO_A3'], countryISO],
+						['==', ['get', 'ISO3166-1-Alpha-3'], countryISO],
 						0,
 						1
 					]);

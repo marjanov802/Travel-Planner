@@ -218,6 +218,62 @@
                         "/images/beach-sample-2.jpg",
                         "/images/beach-sample-3.jpg"
                     ]
+                },
+                {
+                    "name": "Plage de la Côte des Basques",
+                    "description": "Famous surfing beach in Biarritz with golden sand and excellent waves.",
+                    "coordinates": [
+                        -1.5686,
+                        43.4817
+                    ],
+                    "image": "/images/cote-des-basques.jpg",
+                    "zoomLevel": 7,
+                    "location": "64200 Biarritz, France",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (surf lessons from €40)",
+                    "additionalInfo": "Birthplace of surfing in Europe with stunning views of the Pyrenees."
+                },
+                {
+                    "name": "Plage de Palombaggia",
+                    "description": "Pristine white sand beach with turquoise waters in Corsica.",
+                    "coordinates": [
+                        9.3369,
+                        41.5847
+                    ],
+                    "image": "/images/palombaggia-beach.jpg",
+                    "zoomLevel": 5,
+                    "location": "20137 Porto-Vecchio, Corsica, France",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (parking €8/day)",
+                    "additionalInfo": "Consistently ranked among Europe's most beautiful beaches."
+                },
+                {
+                    "name": "Plage de la Promenade des Anglais",
+                    "description": "Iconic pebble beach along Nice's famous promenade.",
+                    "coordinates": [
+                        7.2662,
+                        43.6947
+                    ],
+                    "image": "/images/nice-beach.jpg",
+                    "zoomLevel": 7,
+                    "location": "06000 Nice, France",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (private beach clubs €15-30/day)",
+                    "additionalInfo": "7km of Mediterranean coastline with the famous blue chairs."
+                },
+                {
+                    "name": "Plage de Saint-Malo",
+                    "description": "Historic beach with tidal pools and views of the walled city.",
+                    "coordinates": [
+                        -2.0260,
+                        48.6523
+                    ],
+                    "image": "/images/saint-malo-beach.jpg",
+                    "zoomLevel": 7,
+                    "location": "35400 Saint-Malo, Brittany, France",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "Famous for Europe's highest tides and thalassotherapy centers."
                 }
             ],
             "Landmarks": [
@@ -289,6 +345,63 @@
                     "yearBuilt": "1163",
                     "architecturalStyle": "Gothic",
                     "historicalSignificance": "A symbol of French cultural heritage and resilience, Notre Dame has witnessed centuries of history and remains one of the most celebrated landmarks in Paris."
+                },
+                {
+                    "name": "Arc de Triomphe",
+                    "description": "Monumental arch honoring those who fought for France, with panoramic views from the top.",
+                    "coordinates": [
+                        2.2950,
+                        48.8738
+                    ],
+                    "image": "/images/arc-de-triomphe.jpg",
+                    "zoomLevel": 5,
+                    "location": "Place Charles de Gaulle, 75008 Paris, France",
+                    "openingHours": "10:00 AM - 10:30 PM",
+                    "price": "From €13 for adults",
+                    "additionalInfo": "Commissioned by Napoleon in 1806, features the Tomb of the Unknown Soldier.",
+                    "yearBuilt": "1836"
+                },
+                {
+                    "name": "Palace of Versailles",
+                    "description": "Opulent royal palace with magnificent gardens and fountains.",
+                    "coordinates": [
+                        2.1204,
+                        48.8049
+                    ],
+                    "image": "/images/versailles-palace.jpg",
+                    "zoomLevel": 5,
+                    "location": "Place d'Armes, 78000 Versailles, France",
+                    "openingHours": "9:00 AM - 6:30 PM (Closed Mondays)",
+                    "price": "From €18 for adults",
+                    "additionalInfo": "Former residence of French kings, featuring the Hall of Mirrors and 800 hectares of gardens."
+                },
+                {
+                    "name": "Pont du Gard",
+                    "description": "Ancient Roman aqueduct bridge and UNESCO World Heritage site.",
+                    "coordinates": [
+                        4.5350,
+                        43.9474
+                    ],
+                    "image": "/images/pont-du-gard.jpg",
+                    "zoomLevel": 7,
+                    "location": "30210 Vers-Pont-du-Gard, France",
+                    "openingHours": "Open 24 hours",
+                    "price": "From €9.50 for adults",
+                    "additionalInfo": "Built in the 1st century AD, standing 49 meters high across the Gardon River."
+                },
+                {
+                    "name": "Sacré-Cœur",
+                    "description": "Romano-Byzantine basilica offering panoramic views of Paris from Montmartre.",
+                    "coordinates": [
+                        2.3431,
+                        48.8867
+                    ],
+                    "image": "/images/sacre-coeur.jpg",
+                    "zoomLevel": 7,
+                    "location": "35 Rue du Chevalier de la Barre, 75018 Paris, France",
+                    "openingHours": "6:00 AM - 10:30 PM",
+                    "price": "Free (dome access €6)",
+                    "additionalInfo": "Completed in 1914, features one of the world's largest mosaics."
                 }
             ],
             "Museums": [
@@ -356,6 +469,62 @@
                     "photos": [
                         "/images/beach.jpg"
                     ]
+                },
+                {
+                    "name": "Centre Pompidou",
+                    "description": "Modern art museum with distinctive inside-out architecture.",
+                    "coordinates": [
+                        2.3522,
+                        48.8606
+                    ],
+                    "image": "/images/centre-pompidou.jpg",
+                    "zoomLevel": 7,
+                    "location": "Place Georges-Pompidou, 75004 Paris, France",
+                    "openingHours": "11:00 AM - 9:00 PM (Closed Tuesdays)",
+                    "price": "From €14 for adults",
+                    "additionalInfo": "Europe's largest collection of modern and contemporary art."
+                },
+                {
+                    "name": "Musée Rodin",
+                    "description": "Museum dedicated to sculptor Auguste Rodin with beautiful sculpture garden.",
+                    "coordinates": [
+                        2.3155,
+                        48.8553
+                    ],
+                    "image": "/images/musee-rodin.jpg",
+                    "zoomLevel": 10,
+                    "location": "77 Rue de Varenne, 75007 Paris, France",
+                    "openingHours": "10:00 AM - 6:30 PM (Closed Mondays)",
+                    "price": "From €13 for adults",
+                    "additionalInfo": "Houses The Thinker and The Gates of Hell in an 18th-century mansion."
+                },
+                {
+                    "name": "Musée de l'Orangerie",
+                    "description": "Impressionist and post-impressionist paintings including Monet's Water Lilies.",
+                    "coordinates": [
+                        2.3227,
+                        48.8638
+                    ],
+                    "image": "/images/musee-orangerie.jpg",
+                    "zoomLevel": 10,
+                    "location": "Jardin Tuileries, 75001 Paris, France",
+                    "openingHours": "9:00 AM - 6:00 PM (Closed Tuesdays)",
+                    "price": "From €12.50 for adults",
+                    "additionalInfo": "Eight panels of Monet's Water Lilies displayed in two oval rooms."
+                },
+                {
+                    "name": "Musée du Quai Branly",
+                    "description": "Museum featuring indigenous art and cultures from Africa, Asia, Oceania, and the Americas.",
+                    "coordinates": [
+                        2.2970,
+                        48.8608
+                    ],
+                    "image": "/images/quai-branly.jpg",
+                    "zoomLevel": 10,
+                    "location": "37 Quai Branly, 75007 Paris, France",
+                    "openingHours": "10:30 AM - 7:00 PM (Closed Mondays)",
+                    "price": "From €12 for adults",
+                    "additionalInfo": "Designed by Jean Nouvel with a living wall garden facade."
                 }
             ],
             "Nature": [
@@ -368,6 +537,62 @@
                     ],
                     "image": "/images/beach.jpg",
                     "zoomLevel": 9
+                },
+                {
+                    "name": "Verdon Gorge",
+                    "description": "Europe's most beautiful canyon with turquoise waters and dramatic limestone cliffs.",
+                    "coordinates": [
+                        6.3653,
+                        43.7347
+                    ],
+                    "image": "/images/verdon-gorge.jpg",
+                    "zoomLevel": 5,
+                    "location": "04120 Castellane, France",
+                    "openingHours": "Always accessible",
+                    "price": "Free",
+                    "additionalInfo": "Up to 700 meters deep, popular for kayaking, climbing, and hiking."
+                },
+                {
+                    "name": "Camargue Natural Park",
+                    "description": "Unique wetland delta famous for wild horses, flamingos, and salt marshes.",
+                    "coordinates": [
+                        4.4283,
+                        43.5256
+                    ],
+                    "image": "/images/camargue-park.jpg",
+                    "zoomLevel": 7,
+                    "location": "13200 Arles, France",
+                    "openingHours": "Always accessible",
+                    "price": "Free",
+                    "additionalInfo": "Europe's largest river delta with unique wildlife and cowboy culture."
+                },
+                {
+                    "name": "Calanques National Park",
+                    "description": "Mediterranean fjord-like inlets with crystal-clear waters between Marseille and Cassis.",
+                    "coordinates": [
+                        5.4306,
+                        43.2128
+                    ],
+                    "image": "/images/calanques.jpg",
+                    "zoomLevel": 7,
+                    "location": "13009 Marseille, France",
+                    "openingHours": "Varies by season (fire risk)",
+                    "price": "Free",
+                    "additionalInfo": "20km of dramatic coastline with hiking trails and hidden beaches."
+                },
+                {
+                    "name": "Dune du Pilat",
+                    "description": "Europe's tallest sand dune offering spectacular views of the Atlantic Ocean.",
+                    "coordinates": [
+                        -1.2142,
+                        44.5897
+                    ],
+                    "image": "/images/dune-du-pilat.jpg",
+                    "zoomLevel": 7,
+                    "location": "33115 La Teste-de-Buch, France",
+                    "openingHours": "Always accessible",
+                    "price": "Parking €6",
+                    "additionalInfo": "110 meters high and 2.7 km long, moving inland 1-5 meters annually."
                 }
             ],
             "Adventure": [
@@ -380,6 +605,62 @@
                     ],
                     "image": "/images/beach.jpg",
                     "zoomLevel": 9
+                },
+                {
+                    "name": "Val d'Isère",
+                    "description": "World-class ski resort with glacial skiing and extensive off-piste terrain.",
+                    "coordinates": [
+                        6.9806,
+                        45.4481
+                    ],
+                    "image": "/images/val-disere.jpg",
+                    "zoomLevel": 5,
+                    "location": "73150 Val-d'Isère, France",
+                    "openingHours": "December - May",
+                    "price": "Ski pass from €65/day",
+                    "additionalInfo": "Part of Espace Killy with 300km of pistes up to 3,456m altitude."
+                },
+                {
+                    "name": "Millau Viaduct Bungee",
+                    "description": "Bungee jumping from the world's tallest bridge.",
+                    "coordinates": [
+                        3.0220,
+                        44.0797
+                    ],
+                    "image": "/images/millau-viaduct.jpg",
+                    "zoomLevel": 10,
+                    "location": "12100 Millau, France",
+                    "openingHours": "May - September",
+                    "price": "Bungee jump from €120",
+                    "additionalInfo": "Jump from 343 meters, the highest bridge bungee in the world."
+                },
+                {
+                    "name": "Porquerolles Island Cycling",
+                    "description": "Mediterranean island paradise perfect for cycling and beach exploration.",
+                    "coordinates": [
+                        6.2078,
+                        43.0031
+                    ],
+                    "image": "/images/porquerolles.jpg",
+                    "zoomLevel": 10,
+                    "location": "83400 Hyères, France",
+                    "openingHours": "Ferry service year-round",
+                    "price": "Bike rental from €15/day",
+                    "additionalInfo": "Car-free island with 54km of trails through vineyards and pine forests."
+                },
+                {
+                    "name": "Loire Valley Hot Air Ballooning",
+                    "description": "Scenic balloon flights over châteaux and vineyards.",
+                    "coordinates": [
+                        0.6936,
+                        47.3961
+                    ],
+                    "image": "/images/loire-balloon.jpg",
+                    "zoomLevel": 10,
+                    "location": "37000 Tours, France",
+                    "openingHours": "April - October",
+                    "price": "Flights from €190",
+                    "additionalInfo": "Sunrise or sunset flights over UNESCO World Heritage landscapes."
                 }
             ],
             "Food": [
@@ -392,6 +673,62 @@
                     ],
                     "image": "/images/beach.jpg",
                     "zoomLevel": 10
+                },
+                {
+                    "name": "Paul Bocuse",
+                    "description": "Three-Michelin-star temple of French gastronomy near Lyon.",
+                    "coordinates": [
+                        4.8348,
+                        45.8156
+                    ],
+                    "image": "/images/paul-bocuse.jpg",
+                    "zoomLevel": 5,
+                    "location": "40 Rue de la Plage, 69660 Collonges-au-Mont-d'Or, France",
+                    "openingHours": "Lunch & Dinner (Closed Sunday evening & Monday)",
+                    "price": "Menu from €185",
+                    "additionalInfo": "Legendary restaurant holding three Michelin stars since 1965."
+                },
+                {
+                    "name": "Marché des Enfants Rouges",
+                    "description": "Paris's oldest covered market with international food stalls.",
+                    "coordinates": [
+                        2.3620,
+                        48.8640
+                    ],
+                    "image": "/images/marche-enfants-rouges.jpg",
+                    "zoomLevel": 10,
+                    "location": "39 Rue de Bretagne, 75003 Paris, France",
+                    "openingHours": "8:30 AM - 8:30 PM (Closed Mondays)",
+                    "price": "Meals from €10-20",
+                    "additionalInfo": "Dating from 1615, offering French, Moroccan, Japanese, and Italian cuisine."
+                },
+                {
+                    "name": "Les Halles de Lyon Paul Bocuse",
+                    "description": "Gourmet food market featuring Lyon's finest producers.",
+                    "coordinates": [
+                        4.8506,
+                        45.7628
+                    ],
+                    "image": "/images/halles-lyon.jpg",
+                    "zoomLevel": 10,
+                    "location": "102 Cours Lafayette, 69003 Lyon, France",
+                    "openingHours": "7:00 AM - 10:30 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "56 merchants offering the best of Lyon's legendary cuisine."
+                },
+                {
+                    "name": "L'Ami Jean",
+                    "description": "Lively Basque bistro known for generous portions and convivial atmosphere.",
+                    "coordinates": [
+                        2.3067,
+                        48.8489
+                    ],
+                    "image": "/images/ami-jean.jpg",
+                    "zoomLevel": 10,
+                    "location": "27 Rue Malar, 75007 Paris, France",
+                    "openingHours": "Lunch & Dinner (Closed Sundays & Mondays)",
+                    "price": "Prix fixe from €45",
+                    "additionalInfo": "Famous for its rice pudding and Basque-inspired dishes."
                 }
             ],
             "Shopping": [
@@ -404,6 +741,62 @@
                     ],
                     "image": "/images/beach.jpg",
                     "zoomLevel": 10
+                },
+                {
+                    "name": "Champs-Élysées",
+                    "description": "Famous avenue with flagship stores and luxury boutiques.",
+                    "coordinates": [
+                        2.3075,
+                        48.8698
+                    ],
+                    "image": "/images/champs-elysees.jpg",
+                    "zoomLevel": 5,
+                    "location": "Avenue des Champs-Élysées, 75008 Paris, France",
+                    "openingHours": "Shops typically 10:00 AM - 9:00 PM",
+                    "price": "Free to browse",
+                    "additionalInfo": "1.9km of shopping from Place de la Concorde to Arc de Triomphe."
+                },
+                {
+                    "name": "Le Marais District",
+                    "description": "Trendy neighborhood with vintage boutiques, designer shops, and Jewish quarter.",
+                    "coordinates": [
+                        2.3616,
+                        48.8566
+                    ],
+                    "image": "/images/le-marais.jpg",
+                    "zoomLevel": 7,
+                    "location": "75003/75004 Paris, France",
+                    "openingHours": "Most shops 11:00 AM - 8:00 PM (Some closed Saturdays)",
+                    "price": "Free to browse",
+                    "additionalInfo": "Mix of high-end boutiques, vintage stores, and artisan workshops."
+                },
+                {
+                    "name": "Rue de Rivoli",
+                    "description": "Major shopping street with department stores and international brands.",
+                    "coordinates": [
+                        2.3417,
+                        48.8600
+                    ],
+                    "image": "/images/rue-rivoli.jpg",
+                    "zoomLevel": 10,
+                    "location": "Rue de Rivoli, 75001 Paris, France",
+                    "openingHours": "10:00 AM - 8:00 PM",
+                    "price": "Free to browse",
+                    "additionalInfo": "Covered arcades protect shoppers from weather, home to BHV and more."
+                },
+                {
+                    "name": "Marché aux Puces de Saint-Ouen",
+                    "description": "World's largest antique market with over 2,000 vendors.",
+                    "coordinates": [
+                        2.3398,
+                        48.9014
+                    ],
+                    "image": "/images/puces-saint-ouen.jpg",
+                    "zoomLevel": 10,
+                    "location": "93400 Saint-Ouen, France",
+                    "openingHours": "Sat-Mon 10:00 AM - 6:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "Seven hectares of antiques, vintage fashion, and collectibles."
                 }
             ],
             "Nightlife": [
@@ -472,6 +865,62 @@
                     "photos": [
                         "/images/beach.jpg"
                     ]
+                },
+                {
+                    "name": "Le Baron",
+                    "description": "Exclusive nightclub popular with fashion and art crowds.",
+                    "coordinates": [
+                        2.3042,
+                        48.8669
+                    ],
+                    "image": "/images/le-baron.jpg",
+                    "zoomLevel": 10,
+                    "location": "6 Avenue Marceau, 75008 Paris, France",
+                    "openingHours": "11:00 PM - 6:00 AM",
+                    "price": "Entry €20-30",
+                    "additionalInfo": "Former brothel turned into Paris's most selective nightclub."
+                },
+                {
+                    "name": "Buddha-Bar",
+                    "description": "Asian-fusion restaurant and lounge with DJ sets and exotic cocktails.",
+                    "coordinates": [
+                        2.3264,
+                        48.8676
+                    ],
+                    "image": "/images/buddha-bar.jpg",
+                    "zoomLevel": 10,
+                    "location": "8 Rue Boissy d'Anglas, 75008 Paris, France",
+                    "openingHours": "7:00 PM - 2:00 AM",
+                    "price": "Cocktails from €18",
+                    "additionalInfo": "Famous for its giant Buddha statue and chill-out music compilations."
+                },
+                {
+                    "name": "Oberkampf District",
+                    "description": "Hip neighborhood packed with bars, clubs, and live music venues.",
+                    "coordinates": [
+                        2.3707,
+                        48.8640
+                    ],
+                    "image": "/images/oberkampf.jpg",
+                    "zoomLevel": 7,
+                    "location": "75011 Paris, France",
+                    "openingHours": "Most venues open until 2-5 AM",
+                    "price": "Drinks from €5",
+                    "additionalInfo": "Young, diverse crowd with everything from dive bars to cocktail lounges."
+                },
+                {
+                    "name": "Rex Club",
+                    "description": "Legendary techno club with one of Europe's best sound systems.",
+                    "coordinates": [
+                        2.3485,
+                        48.8697
+                    ],
+                    "image": "/images/rex-club.jpg",
+                    "zoomLevel": 10,
+                    "location": "5 Boulevard Poissonnière, 75002 Paris, France",
+                    "openingHours": "11:30 PM - 6:00 AM",
+                    "price": "Entry €10-20",
+                    "additionalInfo": "Underground electronic music institution since 1988."
                 }
             ],
             "Sports": [
@@ -539,6 +988,62 @@
                     "photos": [
                         "/images/beach.jpg"
                     ]
+                },
+                {
+                    "name": "Parc des Princes",
+                    "description": "Home stadium of Paris Saint-Germain football club.",
+                    "coordinates": [
+                        2.2530,
+                        48.8414
+                    ],
+                    "image": "/images/parc-des-princes.jpg",
+                    "zoomLevel": 5,
+                    "location": "24 Rue du Commandant Guilbaud, 75016 Paris, France",
+                    "openingHours": "Match days and tours",
+                    "price": "Tours from €15, matches from €30",
+                    "additionalInfo": "48,000 capacity stadium with passionate atmosphere during PSG matches."
+                },
+                {
+                    "name": "Roland Garros",
+                    "description": "Home of the French Open tennis tournament.",
+                    "coordinates": [
+                        2.2446,
+                        48.8459
+                    ],
+                    "image": "/images/roland-garros.jpg",
+                    "zoomLevel": 5,
+                    "location": "2 Avenue Gordon Bennett, 75016 Paris, France",
+                    "openingHours": "Museum: 10:00 AM - 6:00 PM",
+                    "price": "Museum from €12",
+                    "additionalInfo": "Clay court Grand Slam tournament held annually in May-June."
+                },
+                {
+                    "name": "Circuit de la Sarthe",
+                    "description": "Home of the legendary 24 Hours of Le Mans race.",
+                    "coordinates": [
+                        0.2240,
+                        47.9567
+                    ],
+                    "image": "/images/le-mans-circuit.jpg",
+                    "zoomLevel": 7,
+                    "location": "72019 Le Mans, France",
+                    "openingHours": "Museum: 10:00 AM - 6:00 PM",
+                    "price": "Museum from €8.50",
+                    "additionalInfo": "13.6km circuit hosting the world's oldest endurance race since 1923."
+                },
+                {
+                    "name": "Vélodrome de Marseille",
+                    "description": "Olympique de Marseille's stadium known for incredible atmosphere.",
+                    "coordinates": [
+                        5.3958,
+                        43.2699
+                    ],
+                    "image": "/images/velodrome-marseille.jpg",
+                    "zoomLevel": 7,
+                    "location": "3 Boulevard Michelet, 13008 Marseille, France",
+                    "openingHours": "Match days and tours",
+                    "price": "Tours from €12, matches from €15",
+                    "additionalInfo": "67,000 capacity stadium rebuilt for Euro 2016, famous for passionate fans."
                 }
             ]
         }

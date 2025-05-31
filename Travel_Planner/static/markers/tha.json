@@ -1,0 +1,735 @@
+{
+    "poi": {
+        "recommended": [
+            {
+                "name": "Grand Palace",
+                "description": "Former royal residence and Bangkok's most famous landmark with ornate architecture.",
+                "coordinates": [
+                    100.4927,
+                    13.7500
+                ],
+                "image": "/images/grand-palace.jpg",
+                "zoomLevel": 5,
+                "location": "Na Phra Lan Rd, Phra Nakhon, Bangkok 10200",
+                "openingHours": "8:30 AM - 3:30 PM",
+                "price": "฿500 for foreigners",
+                "additionalInfo": "Built in 1782, includes Wat Phra Kaew (Temple of the Emerald Buddha).",
+                "transport": {
+                    "boatStations": [
+                        "Tha Chang Pier"
+                    ],
+                    "busLines": [
+                        "1, 3, 9, 15, 25, 30, 32, 33, 39, 43, 44, 47, 53, 64, 80, 82"
+                    ],
+                    "parking": "Limited parking available nearby"
+                }
+            },
+            {
+                "name": "Wat Pho",
+                "description": "Temple of the Reclining Buddha and birthplace of traditional Thai massage.",
+                "coordinates": [
+                    100.4933,
+                    13.7466
+                ],
+                "image": "/images/wat-pho.jpg",
+                "zoomLevel": 5,
+                "location": "2 Sanam Chai Rd, Phra Nakhon, Bangkok 10200",
+                "openingHours": "8:00 AM - 6:30 PM",
+                "price": "฿200 for foreigners",
+                "additionalInfo": "Houses a 46-meter-long reclining Buddha covered in gold leaf."
+            },
+            {
+                "name": "Phi Phi Islands",
+                "description": "Stunning island archipelago famous for limestone cliffs and crystal-clear waters.",
+                "coordinates": [
+                    98.7664,
+                    7.7407
+                ],
+                "image": "/images/phi-phi-islands.jpg",
+                "zoomLevel": 5,
+                "location": "Krabi Province, Thailand",
+                "openingHours": "Always accessible",
+                "price": "National Park fee ฿400",
+                "additionalInfo": "Maya Bay, featured in 'The Beach' movie, is located here."
+            },
+            {
+                "name": "Ayutthaya Historical Park",
+                "description": "UNESCO World Heritage site with ancient temple ruins of former capital.",
+                "coordinates": [
+                    100.5587,
+                    14.3567
+                ],
+                "image": "/images/ayutthaya.jpg",
+                "zoomLevel": 5,
+                "location": "Ayutthaya 13000, Thailand",
+                "openingHours": "8:00 AM - 6:00 PM",
+                "price": "฿50 per temple",
+                "additionalInfo": "Founded in 1350, was Siam's capital for 417 years."
+            },
+            {
+                "name": "Doi Suthep",
+                "description": "Sacred mountain temple overlooking Chiang Mai with golden chedi.",
+                "coordinates": [
+                    98.9217,
+                    18.8047
+                ],
+                "image": "/images/doi-suthep.jpg",
+                "zoomLevel": 5,
+                "location": "Huay Kaew Rd, Chiang Mai 50200",
+                "openingHours": "6:00 AM - 6:00 PM",
+                "price": "฿30 for foreigners",
+                "additionalInfo": "309 steps to reach the temple, or take the cable car."
+            }
+        ],
+        "filters": {
+            "Beach": [
+                {
+                    "name": "Railay Beach",
+                    "description": "Peninsula paradise accessible only by boat with dramatic limestone cliffs.",
+                    "coordinates": [
+                        98.8381,
+                        8.0111
+                    ],
+                    "image": "/images/railay-beach.jpg",
+                    "zoomLevel": 7,
+                    "location": "Ao Nang, Krabi 81000",
+                    "openingHours": "Always open",
+                    "price": "Free (boat from Ao Nang ฿100)",
+                    "additionalInfo": "World-class rock climbing destination with four connected beaches."
+                },
+                {
+                    "name": "Maya Bay",
+                    "description": "Iconic beach surrounded by towering limestone cliffs, featured in 'The Beach'.",
+                    "coordinates": [
+                        98.7669,
+                        7.6789
+                    ],
+                    "image": "/images/maya-bay.jpg",
+                    "zoomLevel": 7,
+                    "location": "Ko Phi Phi Le, Krabi",
+                    "openingHours": "8:00 AM - 6:00 PM",
+                    "price": "National Park fee ฿400",
+                    "additionalInfo": "Limited daily visitors to protect ecosystem after restoration."
+                },
+                {
+                    "name": "White Beach Koh Chang",
+                    "description": "Longest beach on Koh Chang with white sand and sunset views.",
+                    "coordinates": [
+                        102.2997,
+                        12.0433
+                    ],
+                    "image": "/images/white-beach-kohchang.jpg",
+                    "zoomLevel": 10,
+                    "location": "Ko Chang, Trat 23170",
+                    "openingHours": "Always open",
+                    "price": "Free",
+                    "additionalInfo": "Most developed beach on the island with restaurants and nightlife."
+                },
+                {
+                    "name": "Lamai Beach",
+                    "description": "Koh Samui's second-largest beach, quieter than Chaweng with great restaurants.",
+                    "coordinates": [
+                        100.0417,
+                        9.4641
+                    ],
+                    "image": "/images/lamai-beach.jpg",
+                    "zoomLevel": 10,
+                    "location": "Koh Samui, Surat Thani 84310",
+                    "openingHours": "Always open",
+                    "price": "Free",
+                    "additionalInfo": "Home to the famous Grandmother and Grandfather Rocks."
+                },
+                {
+                    "name": "Phra Nang Beach",
+                    "description": "Pristine beach with caves, crystal waters, and penis shrine.",
+                    "coordinates": [
+                        98.8261,
+                        8.0423
+                    ],
+                    "image": "/images/phra-nang-beach.jpg",
+                    "zoomLevel": 10,
+                    "location": "Railay, Krabi 81000",
+                    "openingHours": "Always open",
+                    "price": "Free",
+                    "additionalInfo": "Princess Cave contains offerings to the spirit of a drowned princess."
+                }
+            ],
+            "Landmarks": [
+                {
+                    "name": "Wat Arun",
+                    "description": "Temple of Dawn with iconic spire decorated with colorful porcelain.",
+                    "coordinates": [
+                        100.4867,
+                        13.7437
+                    ],
+                    "image": "/images/wat-arun.jpg",
+                    "zoomLevel": 5,
+                    "location": "158 Thanon Wang Doem, Bangkok 10600",
+                    "openingHours": "8:00 AM - 6:00 PM",
+                    "price": "฿100 for foreigners",
+                    "additionalInfo": "Central prang stands 70 meters tall, climbable for panoramic views."
+                },
+                {
+                    "name": "Bridge Over River Kwai",
+                    "description": "Historic WWII railway bridge and memorial.",
+                    "coordinates": [
+                        99.5028,
+                        14.0415
+                    ],
+                    "image": "/images/bridge-river-kwai.jpg",
+                    "zoomLevel": 7,
+                    "location": "Kanchanaburi 71000",
+                    "openingHours": "Always accessible",
+                    "price": "Free",
+                    "additionalInfo": "Part of the Death Railway built by POWs during WWII."
+                },
+                {
+                    "name": "White Temple (Wat Rong Khun)",
+                    "description": "Contemporary unconventional temple entirely in white with intricate carvings.",
+                    "coordinates": [
+                        99.7633,
+                        19.8243
+                    ],
+                    "image": "/images/white-temple.jpg",
+                    "zoomLevel": 7,
+                    "location": "Pa O Don Chai, Chiang Rai 57000",
+                    "openingHours": "8:00 AM - 5:00 PM",
+                    "price": "฿50 for foreigners",
+                    "additionalInfo": "Created by artist Chalermchai Kositpipat, still under construction."
+                },
+                {
+                    "name": "Sanctuary of Truth",
+                    "description": "Massive wooden structure covered in intricate carvings, no metal nails used.",
+                    "coordinates": [
+                        100.8877,
+                        12.9730
+                    ],
+                    "image": "/images/sanctuary-truth.jpg",
+                    "zoomLevel": 7,
+                    "location": "206/2 Moo 5, Pattaya-Naklua Rd, Pattaya 20150",
+                    "openingHours": "8:00 AM - 6:00 PM",
+                    "price": "฿500 for foreigners",
+                    "additionalInfo": "105-meter tall temple mixing Hindu and Buddhist iconography."
+                },
+                {
+                    "name": "Wat Phra That Doi Kham",
+                    "description": "Temple with giant sitting Buddha statue overlooking Chiang Mai.",
+                    "coordinates": [
+                        98.9147,
+                        18.7569
+                    ],
+                    "image": "/images/doi-kham.jpg",
+                    "zoomLevel": 10,
+                    "location": "Mae Hia, Chiang Mai 50100",
+                    "openingHours": "6:00 AM - 5:00 PM",
+                    "price": "Free",
+                    "additionalInfo": "17-meter tall Buddha statue and wish-granting temple."
+                }
+            ],
+            "Museums": [
+                {
+                    "name": "Jim Thompson House",
+                    "description": "Traditional Thai house museum of the American silk entrepreneur.",
+                    "coordinates": [
+                        100.5280,
+                        13.7492
+                    ],
+                    "image": "/images/jim-thompson-house.jpg",
+                    "zoomLevel": 7,
+                    "location": "6 Soi Kasemsan 2, Bangkok 10330",
+                    "openingHours": "9:00 AM - 6:00 PM",
+                    "price": "฿200 for adults",
+                    "additionalInfo": "Six traditional teak buildings with extensive art collection."
+                },
+                {
+                    "name": "Bangkok National Museum",
+                    "description": "Largest museum in Southeast Asia with Thai art and artifacts.",
+                    "coordinates": [
+                        100.4972,
+                        13.7577
+                    ],
+                    "image": "/images/bangkok-national-museum.jpg",
+                    "zoomLevel": 7,
+                    "location": "Na Phra That Rd, Bangkok 10200",
+                    "openingHours": "9:00 AM - 4:00 PM (Closed Mon-Tue)",
+                    "price": "฿200 for foreigners",
+                    "additionalInfo": "Former palace with extensive collection of Thai historical artifacts."
+                },
+                {
+                    "name": "MOCA Bangkok",
+                    "description": "Museum of Contemporary Art with five floors of modern Thai art.",
+                    "coordinates": [
+                        100.5583,
+                        13.8625
+                    ],
+                    "image": "/images/moca-bangkok.jpg",
+                    "zoomLevel": 10,
+                    "location": "499 Kamphaeng Phet 6 Rd, Bangkok 10210",
+                    "openingHours": "10:00 AM - 6:00 PM (Closed Monday)",
+                    "price": "฿250 for adults",
+                    "additionalInfo": "Features works by renowned Thai artists like Thawan Duchanee."
+                },
+                {
+                    "name": "Hellfire Pass Museum",
+                    "description": "Memorial museum dedicated to POWs who built the Death Railway.",
+                    "coordinates": [
+                        98.9508,
+                        14.3556
+                    ],
+                    "image": "/images/hellfire-pass.jpg",
+                    "zoomLevel": 10,
+                    "location": "Kanchanaburi 71000",
+                    "openingHours": "9:00 AM - 4:00 PM",
+                    "price": "Free",
+                    "additionalInfo": "Walking trail through the original railway cutting."
+                },
+                {
+                    "name": "Chiang Mai National Museum",
+                    "description": "Lanna history and culture exhibits in Northern Thailand.",
+                    "coordinates": [
+                        98.9717,
+                        18.8067
+                    ],
+                    "image": "/images/chiangmai-museum.jpg",
+                    "zoomLevel": 10,
+                    "location": "Superhighway Rd, Chiang Mai 50300",
+                    "openingHours": "9:00 AM - 4:00 PM (Closed Mon-Tue)",
+                    "price": "฿30 for foreigners",
+                    "additionalInfo": "Comprehensive collection of Lanna Kingdom artifacts."
+                }
+            ],
+            "Nature": [
+                {
+                    "name": "Khao Yai National Park",
+                    "description": "Thailand's first national park with diverse wildlife and waterfalls.",
+                    "coordinates": [
+                        101.3722,
+                        14.4395
+                    ],
+                    "image": "/images/khao-yai.jpg",
+                    "zoomLevel": 5,
+                    "location": "Nakhon Ratchasima 30320",
+                    "openingHours": "6:00 AM - 6:00 PM",
+                    "price": "฿400 for foreigners",
+                    "additionalInfo": "UNESCO World Heritage site home to elephants, gibbons, and hornbills."
+                },
+                {
+                    "name": "Erawan National Park",
+                    "description": "Seven-tiered waterfall with emerald green pools.",
+                    "coordinates": [
+                        99.1447,
+                        14.3672
+                    ],
+                    "image": "/images/erawan-falls.jpg",
+                    "zoomLevel": 7,
+                    "location": "Kanchanaburi 71250",
+                    "openingHours": "8:00 AM - 4:30 PM",
+                    "price": "฿300 for foreigners",
+                    "additionalInfo": "Named after three-headed elephant; fish spa in lower pools."
+                },
+                {
+                    "name": "Phang Nga Bay",
+                    "description": "Dramatic limestone karsts jutting from emerald waters.",
+                    "coordinates": [
+                        98.5933,
+                        8.2750
+                    ],
+                    "image": "/images/phang-nga-bay.jpg",
+                    "zoomLevel": 7,
+                    "location": "Phang Nga 82000",
+                    "openingHours": "Always accessible",
+                    "price": "National Park fee ฿300",
+                    "additionalInfo": "Features James Bond Island and sea canoe tours through caves."
+                },
+                {
+                    "name": "Doi Inthanon",
+                    "description": "Thailand's highest peak with cloud forest and twin pagodas.",
+                    "coordinates": [
+                        98.4867,
+                        18.5883
+                    ],
+                    "image": "/images/doi-inthanon.jpg",
+                    "zoomLevel": 7,
+                    "location": "Chom Thong, Chiang Mai 50160",
+                    "openingHours": "5:30 AM - 6:30 PM",
+                    "price": "฿300 for foreigners",
+                    "additionalInfo": "2,565 meters high with waterfalls and hill tribe villages."
+                },
+                {
+                    "name": "Similan Islands",
+                    "description": "Pristine island chain with world-class diving and snorkeling.",
+                    "coordinates": [
+                        97.6433,
+                        8.6567
+                    ],
+                    "image": "/images/similan-islands.jpg",
+                    "zoomLevel": 10,
+                    "location": "Phang Nga 82000",
+                    "openingHours": "October 15 - May 15",
+                    "price": "National Park fee ฿500",
+                    "additionalInfo": "Ranked among world's top 10 dive destinations."
+                }
+            ],
+            "Adventure": [
+                {
+                    "name": "Flight of the Gibbon Zipline",
+                    "description": "Jungle zipline adventure through ancient rainforest canopy.",
+                    "coordinates": [
+                        98.8683,
+                        18.7644
+                    ],
+                    "image": "/images/flight-gibbon.jpg",
+                    "zoomLevel": 10,
+                    "location": "Mae Kampong, Chiang Mai 50130",
+                    "openingHours": "7:00 AM - 5:00 PM",
+                    "price": "From ฿3,999",
+                    "additionalInfo": "5km of ziplines, sky bridges, and possible gibbon sightings."
+                },
+                {
+                    "name": "Tham Lod Cave",
+                    "description": "Massive cave system with river running through, explored by bamboo raft.",
+                    "coordinates": [
+                        98.2350,
+                        19.5661
+                    ],
+                    "image": "/images/tham-lod-cave.jpg",
+                    "zoomLevel": 10,
+                    "location": "Pang Mapha, Mae Hong Son 58150",
+                    "openingHours": "8:00 AM - 5:30 PM",
+                    "price": "฿150 entrance + ฿400 guide",
+                    "additionalInfo": "Ancient coffins and impressive stalactite formations."
+                },
+                {
+                    "name": "Khao Sok National Park",
+                    "description": "Ancient rainforest with limestone cliffs, caves, and Cheow Lan Lake.",
+                    "coordinates": [
+                        98.5214,
+                        8.9431
+                    ],
+                    "image": "/images/khao-sok.jpg",
+                    "zoomLevel": 7,
+                    "location": "Surat Thani 84250",
+                    "openingHours": "8:00 AM - 6:00 PM",
+                    "price": "฿300 for foreigners",
+                    "additionalInfo": "Floating raft houses on emerald lake surrounded by karsts."
+                },
+                {
+                    "name": "Elephant Nature Park",
+                    "description": "Ethical elephant sanctuary and rescue center.",
+                    "coordinates": [
+                        98.8633,
+                        19.2122
+                    ],
+                    "image": "/images/elephant-nature-park.jpg",
+                    "zoomLevel": 10,
+                    "location": "Kuet Chang, Chiang Mai 50100",
+                    "openingHours": "9:00 AM - 5:00 PM",
+                    "price": "Day visit from ฿2,500",
+                    "additionalInfo": "No riding; observe elephants in natural environment."
+                },
+                {
+                    "name": "Full Moon Party",
+                    "description": "World-famous beach party on Haad Rin beach.",
+                    "coordinates": [
+                        100.0678,
+                        9.6719
+                    ],
+                    "image": "/images/full-moon-party.jpg",
+                    "zoomLevel": 10,
+                    "location": "Haad Rin, Koh Phangan 84280",
+                    "openingHours": "Monthly on full moon",
+                    "price": "Entrance ฿100",
+                    "additionalInfo": "30,000 party-goers, fire shows, and beachfront DJs."
+                }
+            ],
+            "Food": [
+                {
+                    "name": "Chatuchak Weekend Market",
+                    "description": "Massive weekend market with incredible street food section.",
+                    "coordinates": [
+                        100.5503,
+                        13.7997
+                    ],
+                    "image": "/images/chatuchak-market.jpg",
+                    "zoomLevel": 7,
+                    "location": "Kamphaeng Phet 2 Rd, Bangkok 10900",
+                    "openingHours": "Sat-Sun 9:00 AM - 6:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "15,000 stalls including dedicated food sections."
+                },
+                {
+                    "name": "Gaggan Anand",
+                    "description": "Progressive Indian cuisine, former Asia's 50 Best winner.",
+                    "coordinates": [
+                        100.5450,
+                        13.7411
+                    ],
+                    "image": "/images/gaggan.jpg",
+                    "zoomLevel": 10,
+                    "location": "68/1 Soi Langsuan, Bangkok 10330",
+                    "openingHours": "6:00 PM - 11:00 PM",
+                    "price": "Tasting menu from ฿8,000",
+                    "additionalInfo": "Emoji menu with 25 courses of molecular gastronomy."
+                },
+                {
+                    "name": "Chinatown Street Food",
+                    "description": "Bangkok's most intense street food experience on Yaowarat Road.",
+                    "coordinates": [
+                        100.5074,
+                        13.7397
+                    ],
+                    "image": "/images/chinatown-food.jpg",
+                    "zoomLevel": 7,
+                    "location": "Yaowarat Rd, Bangkok 10100",
+                    "openingHours": "5:00 PM - 12:00 AM",
+                    "price": "Dishes from ฿40",
+                    "additionalInfo": "Try T&K Seafood, pad thai, and bird's nest soup."
+                },
+                {
+                    "name": "Khao Soi Mae Sai",
+                    "description": "Legendary Northern Thai curry noodle shop.",
+                    "coordinates": [
+                        98.9894,
+                        18.7964
+                    ],
+                    "image": "/images/khao-soi-mae-sai.jpg",
+                    "zoomLevel": 10,
+                    "location": "29/1 Ratchaphakhinai Rd, Chiang Mai 50200",
+                    "openingHours": "10:00 AM - 4:00 PM",
+                    "price": "฿50-60 per bowl",
+                    "additionalInfo": "Cash only, often sells out by 2 PM."
+                },
+                {
+                    "name": "Or Tor Kor Market",
+                    "description": "Premium fresh market with high-quality produce and prepared foods.",
+                    "coordinates": [
+                        100.5506,
+                        13.8070
+                    ],
+                    "image": "/images/or-tor-kor.jpg",
+                    "zoomLevel": 10,
+                    "location": "Kamphaeng Phet Rd, Bangkok 10900",
+                    "openingHours": "6:00 AM - 6:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "CNN-rated fourth best fresh market in the world."
+                }
+            ],
+            "Shopping": [
+                {
+                    "name": "Siam Paragon",
+                    "description": "Luxury shopping mall with high-end brands and gourmet food court.",
+                    "coordinates": [
+                        100.5350,
+                        13.7461
+                    ],
+                    "image": "/images/siam-paragon.jpg",
+                    "zoomLevel": 5,
+                    "location": "991 Rama I Rd, Bangkok 10330",
+                    "openingHours": "10:00 AM - 10:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "Sea Life Bangkok Ocean World in basement."
+                },
+                {
+                    "name": "Floating Market Damnoen Saduak",
+                    "description": "Traditional floating market with vendors in boats.",
+                    "coordinates": [
+                        99.9592,
+                        13.5206
+                    ],
+                    "image": "/images/floating-market.jpg",
+                    "zoomLevel": 7,
+                    "location": "Damnoen Saduak, Ratchaburi 70130",
+                    "openingHours": "7:00 AM - 11:00 AM",
+                    "price": "Free entry",
+                    "additionalInfo": "Best visited early morning before tour groups arrive."
+                },
+                {
+                    "name": "Night Bazaar Chiang Mai",
+                    "description": "Massive night market with handicrafts and souvenirs.",
+                    "coordinates": [
+                        98.9997,
+                        18.7878
+                    ],
+                    "image": "/images/night-bazaar-chiangmai.jpg",
+                    "zoomLevel": 7,
+                    "location": "Chang Khlan Rd, Chiang Mai 50100",
+                    "openingHours": "6:00 PM - 12:00 AM",
+                    "price": "Free entry",
+                    "additionalInfo": "Three floors of stalls plus street vendors."
+                },
+                {
+                    "name": "Walking Street Phuket",
+                    "description": "Sunday market in Old Phuket Town with local products.",
+                    "coordinates": [
+                        98.3881,
+                        7.8844
+                    ],
+                    "image": "/images/walking-street-phuket.jpg",
+                    "zoomLevel": 10,
+                    "location": "Thalang Rd, Phuket Town 83000",
+                    "openingHours": "Sunday 4:00 PM - 10:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "Sino-Portuguese architecture backdrop."
+                },
+                {
+                    "name": "ICONSIAM",
+                    "description": "Mega-mall on Chao Phraya River with indoor floating market.",
+                    "coordinates": [
+                        100.5097,
+                        13.7267
+                    ],
+                    "image": "/images/iconsiam.jpg",
+                    "zoomLevel": 7,
+                    "location": "299 Charoen Nakhon Rd, Bangkok 10600",
+                    "openingHours": "10:00 AM - 10:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "SookSiam recreates markets from Thailand's 77 provinces."
+                }
+            ],
+            "Nightlife": [
+                {
+                    "name": "Khao San Road",
+                    "description": "Backpacker party street with bars, clubs, and street food.",
+                    "coordinates": [
+                        100.4972,
+                        13.7589
+                    ],
+                    "image": "/images/khao-san-road.jpg",
+                    "zoomLevel": 7,
+                    "location": "Khao San Rd, Bangkok 10200",
+                    "openingHours": "24 hours (bars until 2 AM)",
+                    "price": "Free to walk",
+                    "additionalInfo": "Bucket drinks, live music, and international crowd."
+                },
+                {
+                    "name": "Sky Bar at Lebua",
+                    "description": "Rooftop bar from 'The Hangover Part II' movie.",
+                    "coordinates": [
+                        100.5167,
+                        13.7219
+                    ],
+                    "image": "/images/sky-bar-lebua.jpg",
+                    "zoomLevel": 10,
+                    "location": "1055 Si Lom, Bangkok 10500",
+                    "openingHours": "5:00 PM - 1:00 AM",
+                    "price": "Cocktails from ฿500",
+                    "additionalInfo": "63rd floor, strict dress code enforced."
+                },
+                {
+                    "name": "Route 66 Club",
+                    "description": "Massive multi-zone nightclub popular with locals and tourists.",
+                    "coordinates": [
+                        100.5697,
+                        13.7147
+                    ],
+                    "image": "/images/route66-club.jpg",
+                    "zoomLevel": 10,
+                    "location": "29 RCA, Bangkok 10110",
+                    "openingHours": "9:00 PM - 2:00 AM",
+                    "price": "Entry ฿300-500",
+                    "additionalInfo": "Hip-hop, EDM, and live band zones."
+                },
+                {
+                    "name": "Walking Street Pattaya",
+                    "description": "Neon-lit entertainment district with go-go bars and nightclubs.",
+                    "coordinates": [
+                        100.8719,
+                        12.9256
+                    ],
+                    "image": "/images/walking-street-pattaya.jpg",
+                    "zoomLevel": 7,
+                    "location": "Walking Street, Pattaya 20150",
+                    "openingHours": "6:00 PM - 2:00 AM",
+                    "price": "Free to walk",
+                    "additionalInfo": "Adults-only area after dark."
+                },
+                {
+                    "name": "Sing Sing Theater",
+                    "description": "Unique Chinese opera-themed nightclub and bar.",
+                    "coordinates": [
+                        100.5264,
+                        13.7327
+                    ],
+                    "image": "/images/sing-sing-theater.jpg",
+                    "zoomLevel": 10,
+                    "location": "45 Sukhumvit 45, Bangkok 10110",
+                    "openingHours": "7:00 PM - 2:00 AM",
+                    "price": "Free entry",
+                    "additionalInfo": "Victorian-era Shanghai aesthetic with creative cocktails."
+                }
+            ],
+            "Sports": [
+                {
+                    "name": "Rajadamnern Stadium",
+                    "description": "Historic Muay Thai boxing stadium with authentic fights.",
+                    "coordinates": [
+                        100.5083,
+                        13.7642
+                    ],
+                    "image": "/images/rajadamnern-stadium.jpg",
+                    "zoomLevel": 7,
+                    "location": "1 Ratchadamnoen Nok Rd, Bangkok 10100",
+                    "openingHours": "Fights: Mon, Wed, Thu, Sun 6:00 PM",
+                    "price": "Tickets from ฿1,000",
+                    "additionalInfo": "Built in 1945, more traditional than Lumpinee."
+                },
+                {
+                    "name": "Black Mountain Golf Club",
+                    "description": "Championship golf course hosting Asian Tour events.",
+                    "coordinates": [
+                        99.8283,
+                        12.7828
+                    ],
+                    "image": "/images/black-mountain-golf.jpg",
+                    "zoomLevel": 10,
+                    "location": "565 Moo 7, Hua Hin 77110",
+                    "openingHours": "6:00 AM - 6:00 PM",
+                    "price": "Green fees from ฿3,500",
+                    "additionalInfo": "Designed by Phil Ryan, rated Thailand's best course."
+                },
+                {
+                    "name": "Chiang Mai Rock Climbing",
+                    "description": "Crazy Horse Buttress limestone climbing area.",
+                    "coordinates": [
+                        98.7847,
+                        18.6856
+                    ],
+                    "image": "/images/crazy-horse-climbing.jpg",
+                    "zoomLevel": 10,
+                    "location": "Mae On, Chiang Mai 50130",
+                    "openingHours": "Daylight hours",
+                    "price": "Guide services from ฿2,000",
+                    "additionalInfo": "Over 200 routes from beginner to advanced."
+                },
+                {
+                    "name": "Dive Sites Koh Tao",
+                    "description": "Popular diving destination with whale sharks and coral reefs.",
+                    "coordinates": [
+                        99.8383,
+                        10.0956
+                    ],
+                    "image": "/images/koh-tao-diving.jpg",
+                    "zoomLevel": 7,
+                    "location": "Koh Tao, Surat Thani 84360",
+                    "openingHours": "Dive shops 8:00 AM - 8:00 PM",
+                    "price": "Fun dives from ฿1,000",
+                    "additionalInfo": "Over 25 dive sites, PADI courses available."
+                },
+                {
+                    "name": "Bangkok Marathon",
+                    "description": "Annual marathon through Bangkok's historic districts.",
+                    "coordinates": [
+                        100.5018,
+                        13.7563
+                    ],
+                    "image": "/images/bangkok-marathon.jpg",
+                    "zoomLevel": 10,
+                    "location": "Sanam Chai Rd, Bangkok 10200",
+                    "openingHours": "Annually in November",
+                    "price": "Entry from ฿1,200",
+                    "additionalInfo": "Starts at Grand Palace, passes major landmarks."
+                }
+            ]
+        }
+    }
+}

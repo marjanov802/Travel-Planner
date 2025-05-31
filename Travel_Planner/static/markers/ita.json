@@ -196,6 +196,76 @@
                     "openingHours": "Open 24 hours",
                     "price": "Free",
                     "additionalInfo": "Designed by architect Gino Coppedè between 1913 and 1927."
+                },
+                {
+                    "name": "Ponte Vecchio",
+                    "description": "Medieval stone bridge over the Arno River famous for its built-in shops.",
+                    "coordinates": [
+                        11.2531,
+                        43.768
+                    ],
+                    "image": "/images/ponte-vecchio.jpg",
+                    "zoomLevel": 5,
+                    "location": "Ponte Vecchio, 50125 Florence, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "The only bridge in Florence spared from destruction during World War II."
+                },
+                {
+                    "name": "Palazzo Vecchio",
+                    "description": "Imposing 14th-century fortress-palace and Florence's town hall.",
+                    "coordinates": [
+                        11.2562,
+                        43.7696
+                    ],
+                    "image": "/images/palazzo-vecchio.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza della Signoria, 50122 Florence, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM",
+                    "price": "From €12.50 for adults",
+                    "additionalInfo": "Features stunning frescoed halls and Michelangelo's Victory sculpture."
+                },
+                {
+                    "name": "Castello Sforzesco",
+                    "description": "15th-century castle housing multiple museums and Michelangelo's final sculpture.",
+                    "coordinates": [
+                        9.1792,
+                        45.4706
+                    ],
+                    "image": "/images/castello-sforzesco.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza Castello, 20121 Milan, Italy",
+                    "openingHours": "7:00 AM - 7:30 PM",
+                    "price": "Castle free, museums from €5",
+                    "additionalInfo": "Once one of the largest citadels in Europe, now Milan's cultural center."
+                },
+                {
+                    "name": "Juliet's House",
+                    "description": "13th-century house with famous balcony associated with Shakespeare's Juliet.",
+                    "coordinates": [
+                        10.9987,
+                        45.4419
+                    ],
+                    "image": "/images/juliets-house.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Cappello, 23, 37121 Verona, Italy",
+                    "openingHours": "8:30 AM - 7:30 PM",
+                    "price": "From €6 for adults",
+                    "additionalInfo": "The balcony was actually added in the 20th century for tourist appeal."
+                },
+                {
+                    "name": "Reggia di Caserta",
+                    "description": "Massive Baroque palace often called the Italian Versailles.",
+                    "coordinates": [
+                        14.3267,
+                        41.0736
+                    ],
+                    "image": "/images/reggia-caserta.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza Carlo di Borbone, 81100 Caserta, Italy",
+                    "openingHours": "8:30 AM - 7:30 PM (Closed Tuesdays)",
+                    "price": "From €12 for adults",
+                    "additionalInfo": "Features 1,200 rooms and extensive gardens with fountains and waterfalls."
                 }
             ],
             "Museums": [
@@ -240,6 +310,76 @@
                     "openingHours": "9:00 AM - 7:00 PM (Closed Mondays)",
                     "price": "From €10 for adults",
                     "additionalInfo": "Housed in Rome's first public power plant, offering striking visual contrasts."
+                },
+                {
+                    "name": "Uffizi Gallery",
+                    "description": "One of the world's most important art museums with Renaissance masterpieces.",
+                    "coordinates": [
+                        11.2558,
+                        43.7687
+                    ],
+                    "image": "/images/uffizi-gallery.jpg",
+                    "zoomLevel": 5,
+                    "location": "Piazzale degli Uffizi, 6, 50122 Florence, Italy",
+                    "openingHours": "8:15 AM - 6:50 PM (Closed Mondays)",
+                    "price": "From €20 for adults",
+                    "additionalInfo": "Houses Botticelli's Birth of Venus and works by Leonardo, Michelangelo, and Raphael."
+                },
+                {
+                    "name": "Galleria dell'Accademia",
+                    "description": "Home to Michelangelo's David and other Renaissance sculptures.",
+                    "coordinates": [
+                        11.2589,
+                        43.7769
+                    ],
+                    "image": "/images/accademia-gallery.jpg",
+                    "zoomLevel": 7,
+                    "location": "Via Ricasoli, 58/60, 50129 Florence, Italy",
+                    "openingHours": "8:15 AM - 6:50 PM (Closed Mondays)",
+                    "price": "From €12 for adults",
+                    "additionalInfo": "The David statue stands 17 feet tall and was carved from a single block of marble."
+                },
+                {
+                    "name": "Peggy Guggenheim Collection",
+                    "description": "Premier modern art museum in Venice housed in an 18th-century palace.",
+                    "coordinates": [
+                        12.3316,
+                        45.4309
+                    ],
+                    "image": "/images/peggy-guggenheim.jpg",
+                    "zoomLevel": 7,
+                    "location": "Dorsoduro, 701-704, 30123 Venice, Italy",
+                    "openingHours": "10:00 AM - 6:00 PM (Closed Tuesdays)",
+                    "price": "From €15 for adults",
+                    "additionalInfo": "Features works by Picasso, Pollock, Dalí in Peggy Guggenheim's former home."
+                },
+                {
+                    "name": "Egyptian Museum of Turin",
+                    "description": "World's second-largest Egyptian collection outside Cairo.",
+                    "coordinates": [
+                        7.6847,
+                        45.0685
+                    ],
+                    "image": "/images/egyptian-museum-turin.jpg",
+                    "zoomLevel": 7,
+                    "location": "Via Accademia delle Scienze, 6, 10123 Turin, Italy",
+                    "openingHours": "9:00 AM - 6:30 PM (Closed Mondays)",
+                    "price": "From €15 for adults",
+                    "additionalInfo": "Houses over 30,000 artifacts including the intact tomb of Kha and Merit."
+                },
+                {
+                    "name": "MAXXI",
+                    "description": "National museum of 21st-century arts designed by Zaha Hadid.",
+                    "coordinates": [
+                        12.4667,
+                        41.9286
+                    ],
+                    "image": "/images/maxxi.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Guido Reni, 4/a, 00196 Rome, Italy",
+                    "openingHours": "11:00 AM - 7:00 PM (Closed Mondays)",
+                    "price": "From €12 for adults",
+                    "additionalInfo": "Features contemporary art and architecture in a stunning modern building."
                 }
             ],
             "Cultural": [
@@ -298,6 +438,510 @@
                     "openingHours": "8:30 AM - 7:30 PM (Closed Tuesdays)",
                     "price": "From €5 for adults",
                     "additionalInfo": "The gallery appears 37 meters long but is actually only 8 meters in length."
+                }
+            ],
+            "Beach": [
+                {
+                    "name": "Positano Beach",
+                    "description": "Iconic Amalfi Coast beach with colorful cliffside houses and crystal-clear waters.",
+                    "coordinates": [
+                        14.4879,
+                        40.6281
+                    ],
+                    "image": "/images/positano-beach.jpg",
+                    "zoomLevel": 5,
+                    "location": "84017 Positano, Salerno, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (beach clubs €20-40/day)",
+                    "additionalInfo": "Features both a larger public beach (Spiaggia Grande) and smaller Fornillo Beach."
+                },
+                {
+                    "name": "Monterosso Beach",
+                    "description": "Largest sandy beach in Cinque Terre with stunning views of colorful villages.",
+                    "coordinates": [
+                        9.6545,
+                        44.1457
+                    ],
+                    "image": "/images/monterosso-beach.jpg",
+                    "zoomLevel": 7,
+                    "location": "19016 Monterosso al Mare, La Spezia, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (umbrellas €15-25/day)",
+                    "additionalInfo": "Divided into old town and new town sections by a tunnel through the rock."
+                },
+                {
+                    "name": "Cala Goloritzé",
+                    "description": "Pristine Sardinian cove with white pebbles and turquoise waters, accessible by boat or hike.",
+                    "coordinates": [
+                        9.6886,
+                        40.1045
+                    ],
+                    "image": "/images/cala-goloritze.jpg",
+                    "zoomLevel": 10,
+                    "location": "08040 Baunei, Nuoro, Sardinia, Italy",
+                    "openingHours": "8:00 AM - 7:00 PM (Summer)",
+                    "price": "€6 entry fee",
+                    "additionalInfo": "UNESCO World Heritage site featuring a 143-meter limestone pinnacle."
+                },
+                {
+                    "name": "Isola Bella Beach",
+                    "description": "Beautiful pebble beach below Taormina connected to a tiny island nature reserve.",
+                    "coordinates": [
+                        15.3008,
+                        37.8517
+                    ],
+                    "image": "/images/isola-bella-beach.jpg",
+                    "zoomLevel": 7,
+                    "location": "98039 Taormina, Messina, Sicily, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free (island reserve €4)",
+                    "additionalInfo": "Known as the 'Pearl of the Ionian Sea' with cable car access from Taormina."
+                },
+                {
+                    "name": "San Vito Lo Capo",
+                    "description": "Caribbean-like beach in Sicily with white sand and shallow turquoise waters.",
+                    "coordinates": [
+                        12.7336,
+                        38.1742
+                    ],
+                    "image": "/images/san-vito-lo-capo.jpg",
+                    "zoomLevel": 7,
+                    "location": "91010 San Vito Lo Capo, Trapani, Sicily, Italy",
+                    "openingHours": "Open 24 hours",
+                    "price": "Free",
+                    "additionalInfo": "Famous for its annual Cous Cous Fest celebrating Mediterranean cultures."
+                }
+            ],
+            "Nature": [
+                {
+                    "name": "Dolomites",
+                    "description": "Dramatic mountain range in northeastern Italy with jagged peaks and alpine meadows.",
+                    "coordinates": [
+                        11.8293,
+                        46.4102
+                    ],
+                    "image": "/images/dolomites.jpg",
+                    "zoomLevel": 5,
+                    "location": "Trentino-Alto Adige/Südtirol, Italy",
+                    "openingHours": "Always accessible",
+                    "price": "Free (cable cars vary)",
+                    "additionalInfo": "UNESCO World Heritage site featuring unique pale limestone formations."
+                },
+                {
+                    "name": "Lake Como",
+                    "description": "Glacial lake surrounded by mountains and elegant villas in the Italian Alps.",
+                    "coordinates": [
+                        9.2574,
+                        46.016
+                    ],
+                    "image": "/images/lake-como.jpg",
+                    "zoomLevel": 5,
+                    "location": "Province of Como, Lombardy, Italy",
+                    "openingHours": "Always accessible",
+                    "price": "Free",
+                    "additionalInfo": "Third-largest Italian lake, famous for celebrity villas and picturesque towns."
+                },
+                {
+                    "name": "Cinque Terre National Park",
+                    "description": "Protected coastal area featuring five colorful fishing villages connected by hiking trails.",
+                    "coordinates": [
+                        9.7276,
+                        44.1264
+                    ],
+                    "image": "/images/cinque-terre-park.jpg",
+                    "zoomLevel": 7,
+                    "location": "19017 Riomaggiore, La Spezia, Italy",
+                    "openingHours": "Trails: 8:00 AM - 7:00 PM",
+                    "price": "Cinque Terre Card from €7.50",
+                    "additionalInfo": "UNESCO site with terraced vineyards and the famous Sentiero Azzurro coastal path."
+                },
+                {
+                    "name": "Mount Etna",
+                    "description": "Europe's most active volcano offering lunar landscapes and views of Sicily.",
+                    "coordinates": [
+                        14.9995,
+                        37.751
+                    ],
+                    "image": "/images/mount-etna.jpg",
+                    "zoomLevel": 5,
+                    "location": "95031 Adrano, Catania, Sicily, Italy",
+                    "openingHours": "Varies by season and volcanic activity",
+                    "price": "Cable car from €30",
+                    "additionalInfo": "Standing at 3,329 meters, it's been erupting for over 500,000 years."
+                },
+                {
+                    "name": "Blue Grotto Capri",
+                    "description": "Sea cave illuminated by brilliant blue light created by sunlight filtering through seawater.",
+                    "coordinates": [
+                        14.2061,
+                        40.5609
+                    ],
+                    "image": "/images/blue-grotto-capri.jpg",
+                    "zoomLevel": 10,
+                    "location": "80071 Anacapri, Naples, Italy",
+                    "openingHours": "9:00 AM - 5:00 PM (weather permitting)",
+                    "price": "€14 entrance fee",
+                    "additionalInfo": "Known to Romans as Gradola Azzurra; entrance possible only in small rowboats."
+                }
+            ],
+            "Adventure": [
+                {
+                    "name": "Via Ferrata delle Trincee",
+                    "description": "Historic WWI climbing route through tunnels and trenches in the Dolomites.",
+                    "coordinates": [
+                        12.2058,
+                        46.6369
+                    ],
+                    "image": "/images/via-ferrata-trincee.jpg",
+                    "zoomLevel": 10,
+                    "location": "32043 Cortina d'Ampezzo, Belluno, Italy",
+                    "openingHours": "June - October",
+                    "price": "Free (equipment rental €40/day)",
+                    "additionalInfo": "Combines mountain climbing with WWI history at 2,700 meters altitude."
+                },
+                {
+                    "name": "Stromboli Volcano Trek",
+                    "description": "Guided hike to the summit of one of the world's most active volcanoes.",
+                    "coordinates": [
+                        15.2134,
+                        38.7893
+                    ],
+                    "image": "/images/stromboli-trek.jpg",
+                    "zoomLevel": 7,
+                    "location": "98050 Stromboli, Messina, Sicily, Italy",
+                    "openingHours": "Afternoon departures for sunset viewing",
+                    "price": "Guided tours from €28",
+                    "additionalInfo": "3-hour ascent to 924 meters to witness spectacular nighttime eruptions."
+                },
+                {
+                    "name": "Gole dell'Alcantara",
+                    "description": "Spectacular river canyon with basalt columns perfect for canyoning and river trekking.",
+                    "coordinates": [
+                        15.1758,
+                        37.8799
+                    ],
+                    "image": "/images/gole-alcantara.jpg",
+                    "zoomLevel": 10,
+                    "location": "98034 Francavilla di Sicilia, Messina, Sicily, Italy",
+                    "openingHours": "9:00 AM - 6:00 PM",
+                    "price": "Entry from €13",
+                    "additionalInfo": "Formed by ancient lava flows from Mount Etna meeting the cold river water."
+                },
+                {
+                    "name": "Marmore Falls Rafting",
+                    "description": "White water rafting below Italy's tallest man-made waterfall.",
+                    "coordinates": [
+                        12.7156,
+                        42.5562
+                    ],
+                    "image": "/images/marmore-rafting.jpg",
+                    "zoomLevel": 10,
+                    "location": "05100 Terni, Umbria, Italy",
+                    "openingHours": "March - October",
+                    "price": "Rafting from €45",
+                    "additionalInfo": "165-meter waterfall created by Romans in 271 BC, now used for hydroelectric power."
+                },
+                {
+                    "name": "Cortina Ski Resort",
+                    "description": "Premier ski destination that hosted the 1956 Winter Olympics.",
+                    "coordinates": [
+                        12.1351,
+                        46.5369
+                    ],
+                    "image": "/images/cortina-ski.jpg",
+                    "zoomLevel": 7,
+                    "location": "32043 Cortina d'Ampezzo, Belluno, Italy",
+                    "openingHours": "December - April",
+                    "price": "Ski pass from €62/day",
+                    "additionalInfo": "120 km of slopes in the Dolomiti Superski area with stunning mountain views."
+                }
+            ],
+            "Food": [
+                {
+                    "name": "Mercato Centrale Firenze",
+                    "description": "Historic covered market with fresh produce downstairs and gourmet food court upstairs.",
+                    "coordinates": [
+                        11.2541,
+                        43.7768
+                    ],
+                    "image": "/images/mercato-centrale-florence.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza del Mercato Centrale, 50123 Florence, Italy",
+                    "openingHours": "8:00 AM - 12:00 AM",
+                    "price": "Free entry",
+                    "additionalInfo": "Iron and glass structure from 1874 housing traditional vendors and modern eateries."
+                },
+                {
+                    "name": "Osteria Francescana",
+                    "description": "Massimo Bottura's three-Michelin-star restaurant ranked among world's best.",
+                    "coordinates": [
+                        10.9255,
+                        44.6447
+                    ],
+                    "image": "/images/osteria-francescana.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Stella, 22, 41121 Modena, Italy",
+                    "openingHours": "Lunch & Dinner (Closed Sun-Mon)",
+                    "price": "Tasting menu from €290",
+                    "additionalInfo": "Innovative interpretations of Italian cuisine; reservations essential months ahead."
+                },
+                {
+                    "name": "Parmigiano Reggiano Dairy Tours",
+                    "description": "Visit authentic dairies to see traditional Parmesan cheese production.",
+                    "coordinates": [
+                        10.4603,
+                        44.7978
+                    ],
+                    "image": "/images/parmigiano-dairy.jpg",
+                    "zoomLevel": 10,
+                    "location": "Various locations near Parma, Italy",
+                    "openingHours": "Tours typically 9:00 AM",
+                    "price": "Tours from €20",
+                    "additionalInfo": "See the 1000-year-old process and taste cheese aged 12-36 months."
+                },
+                {
+                    "name": "Testaccio Market",
+                    "description": "Authentic Roman food market in the traditional working-class neighborhood.",
+                    "coordinates": [
+                        12.4756,
+                        41.8768
+                    ],
+                    "image": "/images/testaccio-market.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Aldo Manuzio, 00153 Rome, Italy",
+                    "openingHours": "7:00 AM - 3:00 PM (Closed Sundays)",
+                    "price": "Free entry",
+                    "additionalInfo": "Try Mordi e Vai for traditional Roman sandwiches and local street food."
+                },
+                {
+                    "name": "Pizza School Naples",
+                    "description": "Learn authentic Neapolitan pizza-making at the birthplace of pizza.",
+                    "coordinates": [
+                        14.2559,
+                        40.8485
+                    ],
+                    "image": "/images/pizza-school-naples.jpg",
+                    "zoomLevel": 10,
+                    "location": "Various pizzerias, Naples, Italy",
+                    "openingHours": "Classes vary",
+                    "price": "Classes from €80",
+                    "additionalInfo": "Learn the art of pizza from masters at historic pizzerias like Da Michele."
+                }
+            ],
+            "Shopping": [
+                {
+                    "name": "Galleria Vittorio Emanuele II",
+                    "description": "Stunning 19th-century glass-roofed shopping arcade with luxury boutiques.",
+                    "coordinates": [
+                        9.19,
+                        45.4658
+                    ],
+                    "image": "/images/galleria-vittorio-emanuele.jpg",
+                    "zoomLevel": 5,
+                    "location": "Piazza del Duomo, 20123 Milan, Italy",
+                    "openingHours": "Open 24 hours (shops 10 AM - 9 PM)",
+                    "price": "Free entry",
+                    "additionalInfo": "One of the world's oldest shopping malls, featuring a famous mosaic bull."
+                },
+                {
+                    "name": "Via Montenapoleone",
+                    "description": "Milan's most prestigious shopping street in the Fashion Quadrilateral.",
+                    "coordinates": [
+                        9.1953,
+                        45.4692
+                    ],
+                    "image": "/images/via-montenapoleone.jpg",
+                    "zoomLevel": 7,
+                    "location": "Via Montenapoleone, 20121 Milan, Italy",
+                    "openingHours": "Shops 10:00 AM - 7:30 PM",
+                    "price": "Free to browse",
+                    "additionalInfo": "Home to flagship stores of Italian fashion houses like Gucci, Versace, and Armani."
+                },
+                {
+                    "name": "San Lorenzo Market",
+                    "description": "Florence's largest market for leather goods, souvenirs, and local crafts.",
+                    "coordinates": [
+                        11.2542,
+                        43.7764
+                    ],
+                    "image": "/images/san-lorenzo-market.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza San Lorenzo, 50123 Florence, Italy",
+                    "openingHours": "9:00 AM - 7:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "Hundreds of stalls selling Florentine leather, paper goods, and artisan products."
+                },
+                {
+                    "name": "The Mall Luxury Outlets",
+                    "description": "Designer outlet with discounts on Italian and international luxury brands.",
+                    "coordinates": [
+                        11.3947,
+                        43.7033
+                    ],
+                    "image": "/images/the-mall-outlet.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Europa 8, 50066 Leccio Reggello, Florence, Italy",
+                    "openingHours": "10:00 AM - 7:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "30-70% discounts on Gucci, Prada, Valentino; shuttle bus from Florence available."
+                },
+                {
+                    "name": "Porta Portese Flea Market",
+                    "description": "Rome's largest and most famous Sunday flea market.",
+                    "coordinates": [
+                        12.4755,
+                        41.8844
+                    ],
+                    "image": "/images/porta-portese.jpg",
+                    "zoomLevel": 10,
+                    "location": "Piazza di Porta Portese, 00153 Rome, Italy",
+                    "openingHours": "Sundays only: 6:30 AM - 2:00 PM",
+                    "price": "Free entry",
+                    "additionalInfo": "Thousands of stalls selling everything from antiques to vintage clothing."
+                }
+            ],
+            "Nightlife": [
+                {
+                    "name": "Navigli District",
+                    "description": "Milan's canal district packed with bars, restaurants, and nightlife venues.",
+                    "coordinates": [
+                        9.1776,
+                        45.4496
+                    ],
+                    "image": "/images/navigli-nightlife.jpg",
+                    "zoomLevel": 7,
+                    "location": "Navigli, 20143 Milan, Italy",
+                    "openingHours": "Bars typically 6 PM - 2 AM",
+                    "price": "Aperitivo from €8-15",
+                    "additionalInfo": "Famous for aperitivo culture with free buffets and canal-side drinking."
+                },
+                {
+                    "name": "Trastevere",
+                    "description": "Rome's bohemian neighborhood with cobblestone streets and vibrant nightlife.",
+                    "coordinates": [
+                        12.4696,
+                        41.8896
+                    ],
+                    "image": "/images/trastevere-nightlife.jpg",
+                    "zoomLevel": 7,
+                    "location": "Trastevere, 00153 Rome, Italy",
+                    "openingHours": "Most venues open until 2 AM",
+                    "price": "Drinks from €5",
+                    "additionalInfo": "Mix of traditional wine bars, modern cocktail lounges, and late-night venues."
+                },
+                {
+                    "name": "Piazza Santo Spirito",
+                    "description": "Florence's alternative nightlife hub with bars and live music venues.",
+                    "coordinates": [
+                        11.2484,
+                        43.7656
+                    ],
+                    "image": "/images/santo-spirito-nightlife.jpg",
+                    "zoomLevel": 10,
+                    "location": "Piazza Santo Spirito, 50125 Florence, Italy",
+                    "openingHours": "Venues open until 2 AM",
+                    "price": "Drinks from €6",
+                    "additionalInfo": "Popular with students and locals, less touristy than other Florence areas."
+                },
+                {
+                    "name": "Chiaia District",
+                    "description": "Naples' upscale nightlife area with elegant bars and clubs.",
+                    "coordinates": [
+                        14.2389,
+                        40.8351
+                    ],
+                    "image": "/images/chiaia-nightlife.jpg",
+                    "zoomLevel": 10,
+                    "location": "Chiaia, 80121 Naples, Italy",
+                    "openingHours": "10 PM - 4 AM",
+                    "price": "Club entry €10-20",
+                    "additionalInfo": "Trendy area between the seafront and Vomero hill with rooftop bars."
+                },
+                {
+                    "name": "Campo de' Fiori",
+                    "description": "Historic Roman square transforming from market to nightlife hotspot after dark.",
+                    "coordinates": [
+                        12.4721,
+                        41.8956
+                    ],
+                    "image": "/images/campo-de-fiori-nightlife.jpg",
+                    "zoomLevel": 7,
+                    "location": "Piazza Campo de' Fiori, 00186 Rome, Italy",
+                    "openingHours": "Bars open until 2 AM",
+                    "price": "Drinks from €6",
+                    "additionalInfo": "Popular with young Romans and tourists; outdoor drinking in the piazza."
+                }
+            ],
+            "Sports": [
+                {
+                    "name": "San Siro Stadium",
+                    "description": "Iconic stadium home to AC Milan and Inter Milan football clubs.",
+                    "coordinates": [
+                        9.1248,
+                        45.4781
+                    ],
+                    "image": "/images/san-siro-stadium.jpg",
+                    "zoomLevel": 5,
+                    "location": "Piazzale Angelo Moratti, 20151 Milan, Italy",
+                    "openingHours": "Tours: 10 AM - 6 PM",
+                    "price": "Tours from €17, matches from €25",
+                    "additionalInfo": "Capacity of 80,000; museum showcases history of both Milan clubs."
+                },
+                {
+                    "name": "Stadio Olimpico",
+                    "description": "Rome's largest sports facility hosting AS Roma, Lazio, and major events.",
+                    "coordinates": [
+                        12.4567,
+                        41.9341
+                    ],
+                    "image": "/images/stadio-olimpico.jpg",
+                    "zoomLevel": 7,
+                    "location": "Viale dei Gladiatori, 00135 Rome, Italy",
+                    "openingHours": "Match days and tours",
+                    "price": "Matches from €20",
+                    "additionalInfo": "70,000 capacity venue that hosted 1960 Olympics and 1990 World Cup final."
+                },
+                {
+                    "name": "Autodromo Nazionale Monza",
+                    "description": "Historic Formula 1 circuit known as the 'Temple of Speed'.",
+                    "coordinates": [
+                        9.2897,
+                        45.6206
+                    ],
+                    "image": "/images/monza-circuit.jpg",
+                    "zoomLevel": 7,
+                    "location": "Viale di Vedano, 5, 20900 Monza, Italy",
+                    "openingHours": "Open for events and track days",
+                    "price": "Tour from €8, F1 tickets from €85",
+                    "additionalInfo": "Fastest track in F1; features original banked oval from 1922."
+                },
+                {
+                    "name": "Allianz Stadium",
+                    "description": "Juventus FC's modern stadium with museum and tours.",
+                    "coordinates": [
+                        7.6413,
+                        45.1096
+                    ],
+                    "image": "/images/allianz-stadium.jpg",
+                    "zoomLevel": 7,
+                    "location": "Corso Gaetano Scirea, 50, 10151 Turin, Italy",
+                    "openingHours": "Tours: 10:30 AM - 6:30 PM",
+                    "price": "Tours from €15, matches from €30",
+                    "additionalInfo": "41,500 capacity stadium opened in 2011 with excellent viewing from all seats."
+                },
+                {
+                    "name": "Mugello Circuit",
+                    "description": "Challenging motorcycle racing circuit hosting MotoGP Italian Grand Prix.",
+                    "coordinates": [
+                        11.3667,
+                        43.9975
+                    ],
+                    "image": "/images/mugello-circuit.jpg",
+                    "zoomLevel": 10,
+                    "location": "Via Senni, 15, 50038 Scarperia, Florence, Italy",
+                    "openingHours": "Open for events and experiences",
+                    "price": "Track experiences from €150",
+                    "additionalInfo": "Set in beautiful Tuscan hills; owned by Ferrari for testing and events."
                 }
             ]
         }

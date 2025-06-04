@@ -1,666 +1,854 @@
 [
     {
         "code": "GRL",
-        "value": 42.17
+        "value": -25
     },
     {
         "code": "CAN",
-        "value": -13.55
+        "value": -8
     },
     {
         "code": "RUS",
-        "value": 6.34
+        "value": -12
     },
     {
         "code": "MNG",
-        "value": -22.89
+        "value": -2
     },
     {
         "code": "ISL",
-        "value": 18.76
+        "value": 5
     },
     {
         "code": "NOR",
-        "value": 33.62
+        "value": 3
     },
     {
         "code": "FIN",
-        "value": -5.41
+        "value": 1
     },
     {
         "code": "SWE",
-        "value": 14.29
+        "value": 5
     },
     {
         "code": "KGZ",
-        "value": -9.87
+        "value": 12
     },
     {
         "code": "TJK",
-        "value": 27.53
+        "value": 15
     },
     {
         "code": "EST",
-        "value": -16.22
+        "value": 6
     },
     {
         "code": "FRO",
-        "value": 39.81
+        "value": 7
     },
     {
         "code": "LVA",
-        "value": 11.65
+        "value": 7
     },
     {
         "code": "PRK",
-        "value": -3.29
+        "value": 4
     },
     {
         "code": "LTU",
-        "value": 20.47
+        "value": 8
     },
     {
         "code": "BLR",
-        "value": -7.66
+        "value": 5
     },
     {
         "code": "KAZ",
-        "value": 15.93
+        "value": 2
     },
     {
         "code": "CHE",
-        "value": 31.24
+        "value": 22
     },
     {
         "code": "CHN",
-        "value": -18.45
+        "value": 18
     },
     {
         "code": "ARM",
-        "value": 8.92
+        "value": 25
     },
     {
         "code": "AUT",
-        "value": -12.34
+        "value": 20
     },
     {
         "code": "LIE",
-        "value": 25.67
+        "value": 21
     },
     {
         "code": "CHL",
-        "value": 16.89
+        "value": 26
     },
     {
         "code": "POL",
-        "value": -5.76
+        "value": 12
     },
     {
         "code": "CZE",
-        "value": 37.42
+        "value": 14
     },
     {
         "code": "USA",
-        "value": -20.11
+        "value": 23
     },
     {
         "code": "AND",
-        "value": 12.55
+        "value": 24
     },
     {
         "code": "DNK",
-        "value": 29.93
+        "value": 13
     },
     {
         "code": "SVK",
-        "value": -8.47
+        "value": 15
     },
     {
         "code": "GEO",
-        "value": 22.36
+        "value": 26
     },
     {
         "code": "UKR",
-        "value": -14.82
+        "value": 11
     },
     {
         "code": "GBR",
-        "value": 17.64
+        "value": 18
     },
     {
         "code": "IRL",
-        "value": 33.79
+        "value": 19
     },
     {
         "code": "BTN",
-        "value": -6.23
+        "value": 29
     },
     {
         "code": "DEU",
-        "value": 26.45
+        "value": 16
     },
     {
         "code": "MNE",
-        "value": 9.81
+        "value": 23
     },
     {
         "code": "SVN",
-        "value": -17.39
+        "value": 21
     },
     {
         "code": "ROU",
-        "value": 14.57
+        "value": 13
     },
     {
         "code": "LUX",
-        "value": 38.26
+        "value": 17
     },
     {
         "code": "BIH",
-        "value": -3.95
+        "value": 22
     },
     {
         "code": "NZL",
-        "value": 19.23
+        "value": 23
     },
     {
         "code": "MKD",
-        "value": 7.64
+        "value": 24
     },
     {
         "code": "NLD",
-        "value": 32.11
+        "value": 15
     },
     {
         "code": "MDA",
-        "value": -11.68
+        "value": 12
     },
     {
         "code": "BEL",
-        "value": 24.79
+        "value": 16
     },
     {
         "code": "TUR",
-        "value": -15.43
+        "value": 28
     },
     {
         "code": "BGR",
-        "value": 13.96
+        "value": 20
     },
     {
         "code": "JPN",
-        "value": 36.85
+        "value": 25
     },
     {
         "code": "SRB",
-        "value": -9.12
+        "value": 21
     },
     {
         "code": "HUN",
-        "value": 21.57
+        "value": 18
     },
     {
         "code": "LSO",
-        "value": -2.76
+        "value": 22
     },
     {
         "code": "KOR",
-        "value": 28.34
+        "value": 14
     },
     {
         "code": "FRA",
-        "value": 16.79
+        "value": 20
     },
     {
         "code": "HRV",
-        "value": -16.55
+        "value": 22
     },
     {
         "code": "ALB",
-        "value": 34.62
+        "value": 26
     },
     {
         "code": "AZE",
-        "value": 10.37
+        "value": 24
     },
     {
         "code": "SMR",
-        "value": -7.29
+        "value": 27
     },
     {
         "code": "ITA",
-        "value": 25.93
+        "value": 27
     },
     {
         "code": "NPL",
-        "value": -13.76
+        "value": 32
     },
     {
         "code": "AFG",
-        "value": 19.84
+        "value": 21
     },
     {
         "code": "UZB",
-        "value": 30.45
+        "value": 23
     },
     {
         "code": "GRC",
-        "value": -5.12
+        "value": 30
     },
     {
         "code": "MCO",
-        "value": 22.78
+        "value": 29
     },
     {
         "code": "ARG",
-        "value": 11.63
+        "value": 28
     },
     {
         "code": "ESP",
-        "value": 35.49
+        "value": 28
     },
     {
         "code": "LBN",
-        "value": -18.97
+        "value": 33
     },
     {
         "code": "PRT",
-        "value": 8.26
+        "value": 26
     },
     {
         "code": "TKM",
-        "value": 27.35
+        "value": 25
     },
     {
         "code": "URY",
-        "value": -10.54
+        "value": 29
     },
     {
         "code": "ZAF",
-        "value": 20.16
+        "value": 27
     },
     {
         "code": "MAR",
-        "value": 39.67
+        "value": 31
     },
     {
         "code": "RWA",
-        "value": -6.89
+        "value": 26
     },
     {
         "code": "SYR",
-        "value": 15.32
+        "value": 30
     },
     {
         "code": "IRN",
-        "value": 33.05
+        "value": 27
     },
     {
         "code": "CYP",
-        "value": -14.26
+        "value": 32
     },
     {
         "code": "PER",
-        "value": 23.71
+        "value": 26
     },
     {
         "code": "PSE",
-        "value": 9.45
+        "value": 32
     },
     {
         "code": "JOR",
-        "value": -11.83
+        "value": 31
     },
     {
         "code": "ISR",
-        "value": 26.94
+        "value": 34
     },
     {
         "code": "NAM",
-        "value": 17.39
+        "value": 29
     },
     {
         "code": "MLT",
-        "value": -8.65
+        "value": 31
     },
     {
         "code": "BDI",
-        "value": 31.76
+        "value": 27
     },
     {
         "code": "BOL",
-        "value": 12.54
+        "value": 24
     },
     {
         "code": "TWN",
-        "value": -16.88
+        "value": 33
     },
     {
         "code": "SWZ",
-        "value": 38.13
+        "value": 28
     },
     {
         "code": "ECU",
-        "value": 7.29
+        "value": 23
     },
     {
         "code": "TUN",
-        "value": -19.57
+        "value": 29
     },
     {
         "code": "AGO",
-        "value": 22.46
+        "value": 29
     },
     {
         "code": "MEX",
-        "value": -4.38
+        "value": 34
     },
     {
         "code": "ZWE",
-        "value": 16.75
+        "value": 27
     },
     {
         "code": "ZMB",
-        "value": 29.61
+        "value": 28
     },
     {
         "code": "AUS",
-        "value": -11.29
+        "value": 29
     },
     {
         "code": "BWA",
-        "value": 25.84
+        "value": 29
     },
     {
         "code": "PAK",
-        "value": 37.92
+        "value": 30
     },
     {
         "code": "MWI",
-        "value": -7.63
+        "value": 28
     },
     {
         "code": "CPV",
-        "value": 20.45
+        "value": 26
     },
     {
         "code": "MDG",
-        "value": 14.86
+        "value": 29
     },
     {
         "code": "LBY",
-        "value": -17.54
+        "value": 32
     },
     {
         "code": "TZA",
-        "value": 32.27
+        "value": 28
     },
     {
         "code": "UGA",
-        "value": 9.73
+        "value": 28
     },
     {
         "code": "EGY",
-        "value": -15.69
+        "value": 34
     },
     {
         "code": "MUS",
-        "value": 23.58
+        "value": 29
     },
     {
         "code": "NCL",
-        "value": 11.46
+        "value": 29
     },
     {
         "code": "MAC",
-        "value": -9.35
+        "value": 34
     },
     {
         "code": "ETH",
-        "value": 28.64
+        "value": 26
     },
     {
         "code": "HKG",
-        "value": 18.97
+        "value": 35
     },
     {
         "code": "COM",
-        "value": -6.52
+        "value": 29
     },
     {
         "code": "GTM",
-        "value": 35.21
+        "value": 24
     },
     {
         "code": "IRQ",
-        "value": 13.64
+        "value": 31
     },
     {
         "code": "PRY",
-        "value": -20.37
+        "value": 29
     },
     {
         "code": "MMR",
-        "value": 26.83
+        "value": 27
     },
     {
         "code": "LAO",
-        "value": 8.76
+        "value": 25
     },
     {
         "code": "PYF",
-        "value": -14.59
+        "value": 29
     },
     {
         "code": "DZA",
-        "value": 31.45
+        "value": 30
     },
     {
         "code": "COG",
-        "value": 17.32
+        "value": 29
     },
     {
         "code": "MOZ",
-        "value": -8.91
+        "value": 29
     },
     {
         "code": "DOM",
-        "value": 22.16
+        "value": 27
     },
     {
         "code": "CRI",
-        "value": 39.53
+        "value": 26
     },
     {
         "code": "STP",
-        "value": 12.87
+        "value": 29
     },
     {
         "code": "HND",
-        "value": -16.24
+        "value": 27
     },
     {
         "code": "COL",
-        "value": 33.79
+        "value": 23
     },
     {
         "code": "VNM",
-        "value": 7.95
+        "value": 24
     },
     {
         "code": "VUT",
-        "value": -12.67
+        "value": 29
     },
     {
         "code": "PNG",
-        "value": 25.36
+        "value": 29
     },
     {
         "code": "MYT",
-        "value": 19.54
+        "value": 29
     },
     {
         "code": "GNQ",
-        "value": -5.83
+        "value": 29
     },
     {
         "code": "PRI",
-        "value": 36.27
+        "value": 27
     },
     {
         "code": "CMR",
-        "value": 15.69
+        "value": 27
     },
     {
         "code": "FJI",
-        "value": -9.42
+        "value": 29
     },
     {
         "code": "HTI",
-        "value": 27.86
+        "value": 27
     },
     {
         "code": "TON",
-        "value": 11.23
+        "value": 29
     },
     {
         "code": "IND",
-        "value": -18.76
+        "value": 31
     },
     {
         "code": "KEN",
-        "value": 34.57
+        "value": 28
     },
     {
         "code": "SLV",
-        "value": 8.64
+        "value": 27
     },
     {
         "code": "PAN",
-        "value": -13.95
+        "value": 27
     },
     {
         "code": "GAB",
-        "value": 29.38
+        "value": 29
     },
     {
         "code": "LBR",
-        "value": 16.52
+        "value": 29
     },
     {
         "code": "YEM",
-        "value": -7.24
+        "value": 27
     },
     {
         "code": "VEN",
-        "value": 38.91
+        "value": 29
     },
     {
         "code": "BRA",
-        "value": 21.79
+        "value": 27
     },
     {
         "code": "CAF",
-        "value": -11.67
+        "value": 27
     },
     {
         "code": "BGD",
-        "value": 30.14
+        "value": 32
     },
     {
         "code": "NIC",
-        "value": 13.26
+        "value": 27
     },
     {
         "code": "BLZ",
-        "value": -16.58
+        "value": 27
     },
     {
         "code": "SLB",
-        "value": 24.37
+        "value": 29
     },
     {
         "code": "GIN",
-        "value": 9.84
+        "value": 29
     },
     {
         "code": "IDN",
-        "value": -20.65
+        "value": 29
     },
     {
         "code": "VCT",
-        "value": 35.72
+        "value": 29
     },
     {
         "code": "JAM",
-        "value": 17.63
+        "value": 27
     },
     {
         "code": "BHS",
-        "value": -8.39
+        "value": 26
     },
     {
         "code": "CUB",
-        "value": 26.95
+        "value": 26
     },
     {
         "code": "GUY",
-        "value": 12.37
+        "value": 29
     },
     {
         "code": "GRD",
-        "value": -14.96
+        "value": 29
     },
     {
         "code": "MYS",
-        "value": 32.68
+        "value": 29
     },
     {
         "code": "BRB",
-        "value": 20.11
+        "value": 29
     },
     {
         "code": "TTO",
-        "value": -6.57
+        "value": 29
     },
     {
         "code": "SAU",
-        "value": 37.24
+        "value": 33
     },
     {
         "code": "ERI",
-        "value": 14.39
+        "value": 27
     },
     {
         "code": "SUR",
-        "value": -19.28
+        "value": 29
     },
     {
         "code": "PHL",
-        "value": 28.76
+        "value": 29
     },
     {
         "code": "SLE",
-        "value": 10.95
+        "value": 29
     },
     {
         "code": "DMA",
-        "value": -11.84
+        "value": 29
     },
     {
         "code": "THA",
-        "value": 23.67
+        "value": 27
     },
     {
         "code": "LCA",
-        "value": 39.15
+        "value": 29
     },
     {
         "code": "VGB",
-        "value": 16.29
+        "value": 27
     },
     {
         "code": "CIV",
-        "value": -8.73
+        "value": 29
+    },
+    {
+        "code": "ATG",
+        "value": 29
+    },
+    {
+        "code": "SOM",
+        "value": 29
+    },
+    {
+        "code": "SYC",
+        "value": 29
+    },
+    {
+        "code": "NGA",
+        "value": 29
+    },
+    {
+        "code": "LKA",
+        "value": 29
+    },
+    {
+        "code": "MNP",
+        "value": 27
+    },
+    {
+        "code": "KHM",
+        "value": 29
+    },
+    {
+        "code": "TCD",
+        "value": 34
+    },
+    {
+        "code": "ASM",
+        "value": 29
+    },
+    {
+        "code": "KNA",
+        "value": 29
+    },
+    {
+        "code": "FSM",
+        "value": 29
+    },
+    {
+        "code": "TGO",
+        "value": 29
+    },
+    {
+        "code": "WSM",
+        "value": 29
+    },
+    {
+        "code": "PLW",
+        "value": 29
+    },
+    {
+        "code": "GUM",
+        "value": 29
+    },
+    {
+        "code": "SDN",
+        "value": 36
+    },
+    {
+        "code": "KWT",
+        "value": 31
+    },
+    {
+        "code": "NER",
+        "value": 35
+    },
+    {
+        "code": "SGP",
+        "value": 29
+    },
+    {
+        "code": "GHA",
+        "value": 29
+    },
+    {
+        "code": "KIR",
+        "value": 29
+    },
+    {
+        "code": "MHL",
+        "value": 29
+    },
+    {
+        "code": "OMN",
+        "value": 34
+    },
+    {
+        "code": "CYM",
+        "value": 26
+    },
+    {
+        "code": "GNB",
+        "value": 29
+    },
+    {
+        "code": "MDV",
+        "value": 29
+    },
+    {
+        "code": "BEN",
+        "value": 29
+    },
+    {
+        "code": "GMB",
+        "value": 27
+    },
+    {
+        "code": "DJI",
+        "value": 29
+    },
+    {
+        "code": "ABW",
+        "value": 29
+    },
+    {
+        "code": "BHR",
+        "value": 33
+    },
+    {
+        "code": "MRT",
+        "value": 34
+    },
+    {
+        "code": "ARE",
+        "value": 35
+    },
+    {
+        "code": "SEN",
+        "value": 27
+    },
+    {
+        "code": "QAT",
+        "value": 35
+    },
+    {
+        "code": "MLI",
+        "value": 36
+    },
+    {
+        "code": "BFA",
+        "value": 35
+    },
+    {
+        "code": "TLS",
+        "value": 29
+    },
+    {
+        "code": "BRN",
+        "value": 29
+    },
+    {
+        "code": "NRU",
+        "value": 29
+    },
+    {
+        "code": "TUV",
+        "value": 29
+    },
+    {
+        "code": "SSD",
+        "value": 36
+    },
+    {
+        "code": "VAT",
+        "value": 27
+    },
+    {
+        "code": "COD",
+        "value": 27
+    },
+    {
+        "code": "XKX",
+        "value": 22
+    },
+    {
+        "code": "AIA",
+        "value": 29
+    },
+    {
+        "code": "TCA",
+        "value": 27
     }
 ]

@@ -496,8 +496,14 @@ Format must match: {"flightDetails":{"arrival":{"airport":"","date":"","time":""
 	}
 
 	function getColorForRecommendation(value: number): string {
-		const normalizedValue = Math.max(1, Math.min(value, 100));
-		return calculateHSL(120, normalizedValue, [60, 40]);
+		const minValue = -18.62; // Your minimum (Greenland)
+		const maxValue = 29.28; // Your maximum (Burkina Faso)
+
+		// Normalize to 0-1, then to 0-120 hue range
+		const normalizedValue = (value - minValue) / (maxValue - minValue);
+		const hue = normalizedValue * 120; // 0 = red, 120 = green
+
+		return calculateHSL(hue, 100, [60, 40]);
 	}
 
 	function getColorForFilter(value: number, filter: string): string {
